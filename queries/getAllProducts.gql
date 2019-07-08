@@ -1,0 +1,20 @@
+query {
+  getAllProducts {
+    edges {
+      node {
+        id
+        title
+        handle
+        description
+        priceRange {
+          min
+        }
+        featuredMedia {
+          id
+          src
+          type
+        }
+      }
+    }
+  }
+}

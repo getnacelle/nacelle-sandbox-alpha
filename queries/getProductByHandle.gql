@@ -1,0 +1,37 @@
+query GetProductByHandle($handle: String!) {
+  getProductByHandle(handle: $handle) {
+    id
+    title
+    handle
+    description
+    priceRange {
+      min
+    }
+    featuredMedia {
+      src
+      thumbnailSrc
+      id
+      src
+      type
+    }
+    media {
+      edges {
+        node {
+          thumbnailSrc
+          id
+          src
+          type
+        }
+      }
+    }
+    variants {
+      edges {
+        node {
+          id
+          title
+          price
+        }
+      }
+    }
+  }
+}
