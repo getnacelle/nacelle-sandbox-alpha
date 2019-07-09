@@ -8,11 +8,33 @@ query {
         description
         priceRange {
           min
+          max
         }
         featuredMedia {
+          src
+          thumbnailSrc
           id
           src
           type
+        }
+        media {
+          edges {
+            node {
+              thumbnailSrc
+              id
+              src
+              type
+            }
+          }
+        }
+        variants {
+          edges {
+            node {
+              id
+              title
+              price
+            }
+          }
         }
       }
     }
