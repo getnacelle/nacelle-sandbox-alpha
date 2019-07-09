@@ -1,0 +1,53 @@
+query GetPageContentByHandle($handle: String!) {
+  getBlogByHandle(handle: $handle) {
+    id,
+    handle,
+    source,
+    title,
+    fields,
+    collection {
+      products(limit: 6) {
+        edges {
+          node{
+            id,
+        		handle,
+        		title,
+        		priceRange {
+              min,
+              max
+            },
+            featuredMedia {
+              src,
+              thumbnailSrc
+            },
+            variants {
+              edges {
+                node {
+                  id
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    articles {
+      edges {
+        node {
+          id,
+          handle,
+          source,
+          title,
+          description,
+          tags,
+          featuredMedia {
+            id
+            type,
+            src
+          },
+          fields
+        }
+      }
+    }
+  }
+}

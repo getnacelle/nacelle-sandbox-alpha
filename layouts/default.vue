@@ -1,10 +1,13 @@
 <template>
   <div>
-    <cart-flyout class="cart">
-      <template v-slot="item">
-        <cart-flyout-item :item="item" />
+    <site-header>
+      <template v-slot:menu>
+        <router-link class="main-nav-item" :to="'/shop'">Shop</router-link>
       </template>
-    </cart-flyout>
+      <template v-slot:flyout-menu>
+        <router-link class="main-nav-item" :to="'/shop'">Shop</router-link>
+      </template>
+    </site-header>
     <nuxt />
   </div>
 </template>

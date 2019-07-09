@@ -1,7 +1,6 @@
 <template>
   <section class="section">
     <div class="container">
-      <nuxt-link to="/">Go Back</nuxt-link>
       <div v-if="$apollo.loading">Loading...</div>
       <div v-if="product" class="product columns is-vcentered">
         <div class="column is-6">
@@ -14,14 +13,21 @@
             <ProductPrice :price="product.variants[0].price" />
           </p>
           <ProductDescription :description="product.description" />
-          <ProductAddToCartButton
-            :image="product.featuredMedia"
-            :title="product.title"
-            :productId="product.id"
-            :handle="product.handle"
-            :variant="product.variants[0]"
-            @click.native="showCart"
-          />
+          <div class="columns">
+            <div class="column is-half">
+              <product-quantity-update :variantId="product.variants[0].id" />
+            </div>
+            <div class="column is-half">
+              <ProductAddToCartButton
+                :image="product.featuredMedia"
+                :title="product.title"
+                :productId="product.id"
+                :handle="product.handle"
+                :variant="product.variants[0]"
+                @click.native="showCart"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>
