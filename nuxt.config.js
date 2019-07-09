@@ -1,3 +1,5 @@
+import fetchProductRoutes from './plugins/utils/fetchProductRoutes.js'
+
 // Name of the localStorage item
 const AUTH_TOKEN = 'apollo-token'
 
@@ -49,11 +51,11 @@ export default {
     }
   },
 
-  // generate: {
-  //   routes: async () => {
-  //     return ['/hi']
-  //   }
-  // },
+  generate: {
+    routes: async () => {
+      return fetchProductRoutes()
+    }
+  },
 
   build: {
     postcss: {
