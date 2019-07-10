@@ -1,6 +1,8 @@
 <template>
   <div>
-    <site-header>
+    <site-header
+      :logoSrc="'/starship_logo.png'"
+    >
       <template v-slot:menu>
         <router-link class="main-nav-item" :to="'/shop'">Shop</router-link>
       </template>
