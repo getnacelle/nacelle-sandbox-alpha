@@ -23,7 +23,9 @@ query GetPageContentByHandle($handle: String!) {
             variants {
               edges {
                 node {
-                  id
+                  id,
+                  title,
+                  price
                 }
               }
             }

@@ -1,4 +1,9 @@
+require('dotenv').config()
+
 import fetchProductRoutes from './plugins/utils/fetchProductRoutes.js'
+
+const nacelleEndpoint = process.env.NACELLE_GRAPHQL_ENDPOINT
+const nacelleToken = process.env.NACELLE_GRAPHQL_TOKEN
 
 // Name of the localStorage item
 const AUTH_TOKEN = 'apollo-token'
@@ -37,6 +42,7 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
+  
   /*
    ** Nuxt.js modules
    */
@@ -48,11 +54,43 @@ export default {
     '@nacelle/nacelle-nuxt-module'
   ],
 
+  nacelle: {
+    endpoint: nacelleEndpoint,
+    token: nacelleToken
+  },
+
   apollo: {
     includeNodeModules: true,
-
     clientConfigs: {
-      default: '~/plugins/apollo-default-config.js'
+      default: {
+        httpEndpoint: nacelleEndpoint,
+        httpLinkOptions: {
+          headers: {
+            'x-nacelle-token': nacelleToken
+          }
+        },
+        // getAuth: () => {
+        //   // get the authentication token from local storage if it exists
+        //   const token =
+        //     'Om01bFUxbFBWWFBDUEo5cWtXMlBreTZJV0tCZU9oYjdXYWdrZGQwTnBHaWNmd2pHbjFEc01TTldTY2pET05LRFg='
+        //   // return the headers to the context so httpLink can read them
+        //   if (token) {
+        //     return 'Bearer ' + token
+        //   } else {
+        //     return ''
+        //   }
+        // },
+        inMemoryCacheOptions: {
+          freezeResults: false,
+          dataIdFromObject: object => object.handle || null,
+          cacheRedirects: {
+            Query: {
+              getProductByHandle: (_, args, { getCacheKey }) =>
+                getCacheKey({ __typename: 'Product', handle: args.handle })
+            }
+          }
+        }
+      }
     }
   },
 
