@@ -4,10 +4,22 @@
       :logoSrc="'/starship_logo.png'"
     >
       <template v-slot:menu>
-        <router-link class="main-nav-item" :to="'/shop'">Shop</router-link>
+        <router-link
+          :to="'/shop'"
+          class="main-nav-item"
+          @click.native="disableMenu"
+        >
+          Shop
+        </router-link>
       </template>
       <template v-slot:flyout-menu>
-        <router-link class="main-nav-item" :to="'/shop'">Shop</router-link>
+        <router-link
+          :to="'/shop'"
+          class="main-nav-item"
+          @click.native="disableMenu"
+        >
+          Shop
+        </router-link>
       </template>
     </site-header>
     <nuxt />
@@ -18,6 +30,7 @@
 import { mapMutations, mapActions } from 'vuex'
 export default {
   methods: {
+    ...mapMutations('menu', ['disableMenu']),
     ...mapMutations('cart', ['hideCart', 'setFreeShippingThreshold']),
     ...mapActions('cart', ['updateLocalCart'])
   },
