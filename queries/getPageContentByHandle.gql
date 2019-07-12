@@ -6,25 +6,39 @@ query GetPageContentByHandle($handle: String!) {
     title,
     fields,
     collection {
-      products(limit: 6) {
+      products {
         edges {
-          node{
-            id,
-        		handle,
-        		title,
-        		priceRange {
-              min,
+          node {
+            id
+            title
+            handle
+            description
+            priceRange {
+              min
               max
-            },
+            }
             featuredMedia {
-              src,
+              src
               thumbnailSrc
-            },
+              id
+              src
+              type
+            }
+            media {
+              edges {
+                node {
+                  thumbnailSrc
+                  id
+                  src
+                  type
+                }
+              }
+            }
             variants {
               edges {
                 node {
-                  id,
-                  title,
+                  id
+                  title
                   price
                 }
               }
