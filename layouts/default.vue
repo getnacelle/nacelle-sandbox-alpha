@@ -4,22 +4,22 @@
       :logoSrc="'/starship_logo.png'"
     >
       <template v-slot:menu>
-        <router-link
+        <nuxt-link
           :to="'/shop'"
           class="main-nav-item"
           @click.native="disableMenu"
         >
           Shop
-        </router-link>
+        </nuxt-link>
       </template>
       <template v-slot:flyout-menu>
-        <router-link
+        <nuxt-link
           :to="'/shop'"
           class="main-nav-item"
           @click.native="disableMenu"
         >
           Shop
-        </router-link>
+        </nuxt-link>
       </template>
     </site-header>
     <nuxt />
@@ -113,5 +113,14 @@ html {
 .button--grey:hover {
   color: #fff;
   background-color: #35495e;
+}
+
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 0.2s;
+}
+.page-enter,
+.page-leave-active {
+  opacity: 0;
 }
 </style>
