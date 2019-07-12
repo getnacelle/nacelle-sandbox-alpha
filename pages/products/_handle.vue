@@ -1,7 +1,6 @@
 <template>
   <section class="section">
     <div class="container">
-      <div v-if="$apollo.loading">Loading...</div>
       <div v-if="product" class="product columns is-vcentered">
         <div class="column is-6">
           <product-media-select-view :featuredMedia="product.featuredMedia" :media="product.media" />

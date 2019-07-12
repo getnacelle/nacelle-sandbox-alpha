@@ -28,6 +28,9 @@
 
 <script>
 import { mapMutations, mapActions } from 'vuex'
+import getAllProducts from '../queries/getAllProducts.gql'
+import transformEdges from '../plugins/utils/transformEdges'
+
 export default {
   methods: {
     ...mapMutations('menu', ['disableMenu']),
@@ -40,6 +43,19 @@ export default {
     this.setFreeShippingThreshold(100)
 
     this.hideCart()
+
+    this.$apollo.addSmartQuery('products', {
+      query: getAllProducts,
+      update(data) {
+        return transformEdges(data.getAllProducts).map(product => {
+          let { images, variants, ...rest } = product
+          return {
+            ...rest,
+            variants: transformEdges(variants)
+          }
+        })
+      }
+    })
   }
 }
 </script>
@@ -50,6 +66,7 @@ export default {
   z-index: 9999;
   background: white;
 }
+
 html {
   font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
     Roboto, 'Helvetica Neue', Arial, sans-serif;

@@ -1,20 +1,25 @@
 <template>
-  <section class="section">
-    <div class="container">
-      <div v-if="$apollo.loading">Loading...</div>
-      <content-product-grid
-        v-if="!$apollo.loading"
-        :title="'Shop'"
-        :products="products"
-      />
-    </div>
-  </section>
+  <div class="page page-shop">
+    <component
+      :is="sourceComponent"
+      :content="pageContent"
+    />
+    <section class="section">
+      <div class="container">
+        <product-grid
+          :products="products"
+        />
+      </div>
+    </section>
+  </div>
 </template>
 
 <script>
 import { mapState, mapMutations } from 'vuex'
 import getAllProducts from '../queries/getAllProducts.gql'
+import getPageContentWithoutCollectionByHandle from '../queries/getPageContentWithoutCollectionByHandle.gql'
 import transformEdges from '../plugins/utils/transformEdges'
+
 export default {
   name: 'home',
   data() {
@@ -34,6 +39,42 @@ export default {
           }
         })
       }
+    },
+    page: {
+      query: getPageContentWithoutCollectionByHandle,
+      variables() {
+        return { handle: 'shop' }
+      },
+      update(data) {
+        const { source, articles } = data.getBlogByHandle
+
+        return {
+          source,
+          content: transformEdges(articles)
+        }
+      }
+    }
+  },
+  computed: {
+    sourceComponent() {
+      if (this.page && this.page.source) {
+        if (this.page.source === 'shopify') {
+          return 'ShopifyPageContent'
+        }
+      }
+
+      return 'div'
+    },
+    pageContent() {
+      if (
+        this.page &&
+        this.page.content &&
+        this.page.content.length > 0
+      ) {
+        return this.page.content
+      }
+
+      return null
     }
   }
 }

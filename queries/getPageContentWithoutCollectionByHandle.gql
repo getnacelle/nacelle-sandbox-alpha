@@ -1,0 +1,27 @@
+query GetPageContentWithoutCollectionByHandle($handle: String!) {
+  getBlogByHandle(handle: $handle) {
+    id,
+    handle,
+    source,
+    title,
+    fields,
+    articles {
+      edges {
+        node {
+          id,
+          handle,
+          source,
+          title,
+          description,
+          tags,
+          featuredMedia {
+            id
+            type,
+            src
+          },
+          fields
+        }
+      }
+    }
+  }
+}

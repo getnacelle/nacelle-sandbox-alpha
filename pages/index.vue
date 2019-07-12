@@ -3,8 +3,8 @@
     <div v-if="$apollo.loading">Loading...</div>
     <component
       :is="sourceComponent"
-      :content="page.content"
-      :products="page.products"
+      :content="pageContent"
+      :products="pageProducts"
     />
   </div>
 </template>
@@ -42,11 +42,35 @@ export default {
   },
   computed: {
     sourceComponent() {
-      if (this.page.source === 'shopify') {
-        return 'ShopifyPageContent'
+      if (this.page && this.page.source) {
+        if (this.page.source === 'shopify') {
+          return 'ShopifyPageContent'
+        }
       }
 
       return 'div'
+    },
+    pageProducts() {
+      if (
+        this.page &&
+        this.page.products &&
+        this.page.products.length > 0
+      ) {
+        return this.page.products
+      }
+
+      return null
+    },
+    pageContent() {
+      if (
+        this.page &&
+        this.page.content &&
+        this.page.content.length > 0
+      ) {
+        return this.page.content
+      }
+
+      return null
     }
   }
 }
