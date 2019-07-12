@@ -15,7 +15,13 @@
           <ProductDescription :description="product.description" />
           <div class="columns">
             <div class="column is-half">
-              <product-quantity-update :variantId="product.variants[0].id" />
+              <product-quantity-update 
+                :image="product.featuredMedia"
+                :title="product.title"
+                :productId="product.id"
+                :handle="product.handle"
+                :variant="product.variants[0]"
+              />
             </div>
             <div class="column is-half">
               <ProductAddToCartButton
