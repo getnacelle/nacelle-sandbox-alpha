@@ -100,11 +100,19 @@ export default {
 }
 
 .product-meta .column {
-  padding-top: 3rem;
+  padding-bottom: 2rem;
+
+  @media screen and (min-width: 769px) {
+    padding-top: 3rem;
+    padding-bottom: 0;
+  }
 }
 
 .column.highlight {
-  padding: 3rem;
   background-color: #f5f5f5;
+
+  @media screen and (min-width: 769px) {
+    padding: 3rem;
+  }
 }
 </style>
