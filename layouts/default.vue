@@ -1,6 +1,6 @@
 <template>
   <div>
-    <site-header :logoSrc="'/starship_logo.png'">
+    <site-header :logoSrc="'/starship_logo.png'" ref="header">
       <template v-slot:menu>
         <nuxt-link :to="'/shop'" class="main-nav-item" @click.native="disableMenu">Shop</nuxt-link>
       </template>
@@ -8,7 +8,8 @@
         <nuxt-link :to="'/shop'" class="main-nav-item" @click.native="disableMenu">Shop</nuxt-link>
       </template>
     </site-header>
-    <nuxt />
+    <nuxt :style="{'margin-top': `${headerHeight}px`}" />
+    <site-footer />
   </div>
 </template>
 
@@ -17,14 +18,24 @@ import { mapMutations, mapActions } from 'vuex'
 import getAllProducts from '../queries/getAllProducts.gql'
 import transformEdges from '../plugins/utils/transformEdges'
 import getPageContentWithoutCollectionByHandle from '../queries/getPageContentWithoutCollectionByHandle.gql'
+import SiteFooter from '~/components/SiteFooter'
 export default {
+  components: {
+    SiteFooter
+  },
   methods: {
     ...mapMutations('menu', ['disableMenu']),
     ...mapMutations('cart', ['hideCart', 'setFreeShippingThreshold']),
     ...mapActions('cart', ['updateLocalCart'])
   },
+  data() {
+    return {
+      headerHeight: null
+    }
+  },
   created() {},
   mounted() {
+    this.headerHeight = this.$refs.header.$el.clientHeight
     this.updateLocalCart()
     this.setFreeShippingThreshold(100)
 

@@ -7,7 +7,7 @@
     <section class="section">
       <div class="container">
         <product-grid
-          :products="products"
+          :products="products" :showAddToCart="false" :showQuantityUpdate="false"
         />
       </div>
     </section>
