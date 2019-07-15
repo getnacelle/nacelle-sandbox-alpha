@@ -12,8 +12,13 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
+<<<<<<< HEAD
     "@nacelle/nacelle-nuxt-module": "0.0.41",
     "@nuxtjs/apollo": "^4.0.0-rc8.1",
+=======
+    "@nacelle/nacelle-nuxt-module": "0.0.42",
+    "@nuxtjs/apollo": "^4.0.0-rc7",
+>>>>>>> 8e16cc9a1e4c3e55587a23d76e9db1fffb747438
     "@nuxtjs/axios": "^5.3.6",
     "@nuxtjs/bulma": "^1.2.1",
     "@nuxtjs/pwa": "^2.6.0",
