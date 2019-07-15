@@ -1,14 +1,9 @@
 <template>
   <div class="page page-shop">
-    <component
-      :is="sourceComponent"
-      :content="pageContent"
-    />
+    <component :is="sourceComponent" :content="pageContent" />
     <section class="section">
       <div class="container">
-        <product-grid
-          :products="products" :showAddToCart="false" :showQuantityUpdate="false"
-        />
+        <product-grid :products="products" :showAddToCart="true" :showQuantityUpdate="true" />
       </div>
     </section>
   </div>
@@ -70,11 +65,7 @@ export default {
       return 'div'
     },
     pageContent() {
-      if (
-        this.page &&
-        this.page.content &&
-        this.page.content.length > 0
-      ) {
+      if (this.page && this.page.content && this.page.content.length > 0) {
         return this.page.content
       }
 

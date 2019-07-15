@@ -1,12 +1,12 @@
 <template>
   <div class="site-footer">
     <div class="container">
-      <div class="columns is-vcentered">
-        <div class="column is-3 logo">
+      <div class="columns is-multiline">
+        <div class="column is-4 is-offset-4 logo">
           <img src="/starship_logo.png" />
         </div>
 
-        <div class="column is-2 is-offset-7">© NACELLE 2019</div>
+        <div class="column is-12">© NACELLE 2019</div>
       </div>
     </div>
   </div>
@@ -19,9 +19,8 @@ export default {}
 <style lang="scss" scoped>
 .logo {
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   @media screen and (max-width: 786px) {
-    justify-content: center;
     align-content: center;
   }
 }

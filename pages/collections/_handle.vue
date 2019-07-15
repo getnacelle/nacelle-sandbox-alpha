@@ -10,6 +10,8 @@
         <product-grid
           v-if="products"
           :products="products"
+          :showAddToCart="true"
+          :showQuantityUpdate="true"
         />
       </div>
     </section>

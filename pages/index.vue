@@ -1,11 +1,7 @@
 <template>
   <div class="page">
     <div v-if="$apollo.loading">Loading...</div>
-    <component
-      :is="sourceComponent"
-      :content="pageContent"
-      :products="pageProducts"
-    />
+    <component :is="sourceComponent" :content="pageContent" :products="pageProducts" />
   </div>
 </template>
 
@@ -22,7 +18,10 @@ export default {
       },
       update(data) {
         const { source, articles, collection } = data.getBlogByHandle
-        const products = (collection && collection.products) ? transformEdges(collection.products) : []
+        const products =
+          collection && collection.products
+            ? transformEdges(collection.products)
+            : []
         const transformedProducts = products.map(product => {
           const variants = transformEdges(product.variants)
 
@@ -51,22 +50,14 @@ export default {
       return 'div'
     },
     pageProducts() {
-      if (
-        this.page &&
-        this.page.products &&
-        this.page.products.length > 0
-      ) {
+      if (this.page && this.page.products && this.page.products.length > 0) {
         return this.page.products
       }
 
       return null
     },
     pageContent() {
-      if (
-        this.page &&
-        this.page.content &&
-        this.page.content.length > 0
-      ) {
+      if (this.page && this.page.content && this.page.content.length > 0) {
         return this.page.content
       }
 
