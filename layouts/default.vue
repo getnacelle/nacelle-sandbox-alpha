@@ -1,25 +1,11 @@
 <template>
   <div>
-    <site-header
-      :logoSrc="'/starship_logo.png'"
-    >
+    <site-header :logoSrc="'/starship_logo.png'">
       <template v-slot:menu>
-        <nuxt-link
-          :to="'/shop'"
-          class="main-nav-item"
-          @click.native="disableMenu"
-        >
-          Shop
-        </nuxt-link>
+        <nuxt-link :to="'/shop'" class="main-nav-item" @click.native="disableMenu">Shop</nuxt-link>
       </template>
       <template v-slot:flyout-menu>
-        <nuxt-link
-          :to="'/shop'"
-          class="main-nav-item"
-          @click.native="disableMenu"
-        >
-          Shop
-        </nuxt-link>
+        <nuxt-link :to="'/shop'" class="main-nav-item" @click.native="disableMenu">Shop</nuxt-link>
       </template>
     </site-header>
     <nuxt />
@@ -30,7 +16,7 @@
 import { mapMutations, mapActions } from 'vuex'
 import getAllProducts from '../queries/getAllProducts.gql'
 import transformEdges from '../plugins/utils/transformEdges'
-
+import getPageContentWithoutCollectionByHandle from '../queries/getPageContentWithoutCollectionByHandle.gql'
 export default {
   methods: {
     ...mapMutations('menu', ['disableMenu']),
@@ -44,6 +30,20 @@ export default {
 
     this.hideCart()
 
+    this.$apollo.addSmartQuery('page', {
+      query: getPageContentWithoutCollectionByHandle,
+      variables() {
+        return { handle: 'shop' }
+      },
+      update(data) {
+        const { source, articles } = data.getBlogByHandle
+
+        return {
+          source,
+          content: transformEdges(articles)
+        }
+      }
+    })
     this.$apollo.addSmartQuery('products', {
       query: getAllProducts,
       update(data) {

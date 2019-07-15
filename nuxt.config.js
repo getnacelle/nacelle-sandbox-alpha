@@ -25,11 +25,13 @@ export default {
       }
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
-    link: [{
-      rel: 'stylesheet',
-      type: 'text/css',
-      href: '//dmf8x4ovgacxs.cloudfront.net/6789.styles.css'
-    }]
+    link: [
+      {
+        rel: 'stylesheet',
+        type: 'text/css',
+        href: '//dmf8x4ovgacxs.cloudfront.net/6789.styles.css'
+      }
+    ]
   },
   /*
    ** Customize the progress-bar color
@@ -42,7 +44,7 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  
+
   /*
    ** Nuxt.js modules
    */
@@ -62,35 +64,7 @@ export default {
   apollo: {
     includeNodeModules: true,
     clientConfigs: {
-      default: {
-        httpEndpoint: nacelleEndpoint,
-        httpLinkOptions: {
-          headers: {
-            'x-nacelle-token': nacelleToken
-          }
-        },
-        // getAuth: () => {
-        //   // get the authentication token from local storage if it exists
-        //   const token =
-        //     'Om01bFUxbFBWWFBDUEo5cWtXMlBreTZJV0tCZU9oYjdXYWdrZGQwTnBHaWNmd2pHbjFEc01TTldTY2pET05LRFg='
-        //   // return the headers to the context so httpLink can read them
-        //   if (token) {
-        //     return 'Bearer ' + token
-        //   } else {
-        //     return ''
-        //   }
-        // },
-        inMemoryCacheOptions: {
-          freezeResults: false,
-          dataIdFromObject: object => object.handle || null,
-          cacheRedirects: {
-            Query: {
-              getProductByHandle: (_, args, { getCacheKey }) =>
-                getCacheKey({ __typename: 'Product', handle: args.handle })
-            }
-          }
-        }
-      }
+      default: '~/plugins/apollo-default-config.js'
     }
   },
 
