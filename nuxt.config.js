@@ -28,7 +28,7 @@ export default {
     link: [{
       rel: 'stylesheet',
       type: 'text/css',
-      href: '//dmf8x4ovgacxs.cloudfront.net/6789.styles.css'
+      href: '//space-styles.s3.amazonaws.com/6789.styles.css'
     }]
   },
   /*
