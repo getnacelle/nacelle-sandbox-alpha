@@ -1,6 +1,7 @@
 require("dotenv").config();
 
 import fetchProductRoutes from "./plugins/utils/fetchProductRoutes.js";
+import fetchCollectionRoutes from "./plugins/utils/fetchCollectionRoutes.js"
 
 const nacelleEndpoint = process.env.NACELLE_GRAPHQL_ENDPOINT;
 const nacelleToken = process.env.NACELLE_GRAPHQL_TOKEN;
@@ -70,7 +71,13 @@ export default {
 
   generate: {
     routes: async () => {
-      return fetchProductRoutes();
+      const products = await fetchProductRoutes()
+      const collections = await fetchCollectionRoutes()
+
+      return [
+        ...products,
+        ...collections
+      ]
     }
   },
 

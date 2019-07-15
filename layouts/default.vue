@@ -2,10 +2,18 @@
   <div>
     <site-header :logoSrc="'/starship_logo.png'" ref="header">
       <template v-slot:menu>
-        <nuxt-link :to="'/shop'" class="main-nav-item" @click.native="disableMenu">Shop</nuxt-link>
+        <nuxt-link :to="'/shop'" class="main-nav-item" @click.native="disableMenu">Shop All</nuxt-link>
+        <nuxt-link :to="'/collections/beds'" class="main-nav-item" @click.native="disableMenu">Beds</nuxt-link>
+        <nuxt-link :to="'/collections/blankets'" class="main-nav-item" @click.native="disableMenu">Blankets</nuxt-link>
+        <nuxt-link :to="'/collections/Sheets'" class="main-nav-item" @click.native="disableMenu">Sheets</nuxt-link>
+        <nuxt-link :to="'/collections/consoles'" class="main-nav-item" @click.native="disableMenu">Consoles</nuxt-link>
       </template>
       <template v-slot:flyout-menu>
         <nuxt-link :to="'/shop'" class="main-nav-item" @click.native="disableMenu">Shop</nuxt-link>
+        <nuxt-link :to="'/collections/beds'" class="main-nav-item" @click.native="disableMenu">Beds</nuxt-link>
+        <nuxt-link :to="'/collections/blankets'" class="main-nav-item" @click.native="disableMenu">Blankets</nuxt-link>
+        <nuxt-link :to="'/collections/Sheets'" class="main-nav-item" @click.native="disableMenu">Sheets</nuxt-link>
+        <nuxt-link :to="'/collections/consoles'" class="main-nav-item" @click.native="disableMenu">Consoles</nuxt-link>
       </template>
     </site-header>
     <nuxt :style="{'margin-top': `${headerHeight}px`}" />
@@ -72,7 +80,7 @@ export default {
 </script>
 
 
-<style>
+<style lang="scss">
 .cart {
   z-index: 9999;
   background: white;
@@ -133,5 +141,21 @@ html {
 .page-enter,
 .page-leave-active {
   opacity: 0;
+}
+
+// Custom site header styles
+.main-nav-right {
+  flex-grow: 1;
+}
+
+.main-nav-menu {
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+}
+
+button.main-nav-cart {
+  width: 112px;
+  text-align: right;
 }
 </style>

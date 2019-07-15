@@ -1,0 +1,52 @@
+query GetCollectByHandle($handle: String!) {
+  getCollectionByHandle(handle: $handle) {
+    id,
+    description,
+    handle,
+    title,
+    featuredMedia {
+      id,
+      src
+    },
+    products {
+      edges {
+        node {
+          id
+          title
+          handle
+          description
+          priceRange {
+            min
+            max
+          }
+          featuredMedia {
+            src
+            thumbnailSrc
+            id
+            src
+            type
+          }
+          media {
+            edges {
+              node {
+                thumbnailSrc
+                id
+                src
+                type
+              }
+            }
+          }
+          variants {
+            edges {
+              node {
+                id
+                title
+                price
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
