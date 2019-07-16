@@ -7,6 +7,7 @@
         <nuxt-link :to="'/collections/blankets'" class="main-nav-item" @click.native="disableMenu">Blankets</nuxt-link>
         <nuxt-link :to="'/collections/Sheets'" class="main-nav-item" @click.native="disableMenu">Sheets</nuxt-link>
         <nuxt-link :to="'/collections/consoles'" class="main-nav-item" @click.native="disableMenu">Consoles</nuxt-link>
+        <nuxt-link :to="'/blog/'" class="main-nav-item" @click.native="disableMenu">Blog</nuxt-link>
       </template>
       <template v-slot:flyout-menu>
         <nuxt-link :to="'/shop'" class="main-nav-item" @click.native="disableMenu">Shop</nuxt-link>
@@ -14,6 +15,7 @@
         <nuxt-link :to="'/collections/blankets'" class="main-nav-item" @click.native="disableMenu">Blankets</nuxt-link>
         <nuxt-link :to="'/collections/Sheets'" class="main-nav-item" @click.native="disableMenu">Sheets</nuxt-link>
         <nuxt-link :to="'/collections/consoles'" class="main-nav-item" @click.native="disableMenu">Consoles</nuxt-link>
+        <nuxt-link :to="'/blog/'" class="main-nav-item" @click.native="disableMenu">Blog</nuxt-link>
       </template>
     </site-header>
     <nuxt :style="{'margin-top': `${headerHeight}px`}" />
