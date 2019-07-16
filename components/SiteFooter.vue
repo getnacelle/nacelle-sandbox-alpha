@@ -1,7 +1,7 @@
 <template>
   <div class="site-footer">
     <div class="container">
-      <div class="columns is-multiline">
+      <div class="columns is-multiline is-marginless">
         <div class="column is-4 is-offset-4 logo">
           <img src="/starship_logo.png" />
         </div>
