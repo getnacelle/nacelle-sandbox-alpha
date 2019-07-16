@@ -1,0 +1,29 @@
+query GetBlogByHandle($handle: String!) {
+  getBlogByHandle(handle: $handle) {
+    id,
+    handle,
+    source,
+    title,
+    fields,
+    articles {
+      edges {
+        node {
+          id,
+          handle,
+          source,
+          title,
+          description,
+          tags,
+          publishDate,
+          excerpt,
+          featuredMedia {
+            id
+            type,
+            src
+          },
+          fields
+        }
+      }
+    }
+  }
+}

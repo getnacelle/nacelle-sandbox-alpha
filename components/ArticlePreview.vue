@@ -1,0 +1,126 @@
+<template>
+  <div class="article-preview nacelle" :class="{ 'is-featured': isFeatured }">
+    <router-link :to="link">
+      <featured-media :media="featuredMedia" />
+    </router-link>
+    <div class="article-preview-content">
+      <div class="article-preview-inner content">
+        <h5 v-if="tags && tags.length > 0">{{ tags.join(', ') }}</h5>
+        <router-link :to="link">
+          <h3 class="title is-4">
+            {{ title }}
+          </h3>
+        </router-link>
+        <p>
+          {{ excerpt }}
+        </p>
+        <p>
+          <router-link :to="link">
+            {{ readMoreText }}
+          </router-link>
+        </p>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import FeaturedMedia from '~/components/FeaturedMedia'
+
+export default {
+  components: {
+    FeaturedMedia
+  },
+  props: {
+    title: {
+      type: String,
+      default: '',
+      required: true
+    },
+    handle: {
+      type: String,
+      default: '',
+      required: true
+    },
+    excerpt: {
+      type: String,
+      default: '',
+      required: true
+    },
+    tags: {
+      type: Array,
+      default: () => {
+        return []
+      }
+    },
+    pathFragment: {
+      type: String,
+      default: '/blog/'
+    },
+    featuredMedia: {
+      type: Object,
+      default: () => {
+        return null
+      }
+    },
+    isFeatured: {
+      type: Boolean,
+      default: false
+    },
+    readMoreText: {
+      type: String,
+      default: 'Read More'
+    }
+  },
+  computed: {
+    link() {
+      return `${this.pathFragment}${this.handle}`
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+.is-featured {
+  position: relative;
+  background-color: #f5f5f5;
+}
+
+.is-featured /deep/ .featured-media {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 60%;
+
+  figure {
+    width: 100%;
+    height: 100%;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+}
+
+.is-featured .article-preview-content {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 3rem 1rem;
+  max-width: 1200px;
+  min-height: 500px;
+}
+
+.is-featured .article-preview-inner {
+  padding: 2rem;
+  width: 42%;
+  background-color: #ffffff;
+}
+</style>
+
