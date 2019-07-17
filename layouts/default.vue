@@ -4,17 +4,41 @@
       <template v-slot:menu>
         <nuxt-link :to="'/shop'" class="main-nav-item" @click.native="disableMenu">Shop All</nuxt-link>
         <nuxt-link :to="'/collections/beds'" class="main-nav-item" @click.native="disableMenu">Beds</nuxt-link>
-        <nuxt-link :to="'/collections/blankets'" class="main-nav-item" @click.native="disableMenu">Blankets</nuxt-link>
-        <nuxt-link :to="'/collections/Sheets'" class="main-nav-item" @click.native="disableMenu">Sheets</nuxt-link>
-        <nuxt-link :to="'/collections/consoles'" class="main-nav-item" @click.native="disableMenu">Consoles</nuxt-link>
+        <nuxt-link
+          :to="'/collections/blankets'"
+          class="main-nav-item"
+          @click.native="disableMenu"
+        >Blankets</nuxt-link>
+        <nuxt-link
+          :to="'/collections/Sheets'"
+          class="main-nav-item"
+          @click.native="disableMenu"
+        >Sheets</nuxt-link>
+        <nuxt-link
+          :to="'/collections/consoles'"
+          class="main-nav-item"
+          @click.native="disableMenu"
+        >Consoles</nuxt-link>
         <nuxt-link :to="'/blog/'" class="main-nav-item" @click.native="disableMenu">Blog</nuxt-link>
       </template>
       <template v-slot:flyout-menu>
         <nuxt-link :to="'/shop'" class="main-nav-item" @click.native="disableMenu">Shop</nuxt-link>
         <nuxt-link :to="'/collections/beds'" class="main-nav-item" @click.native="disableMenu">Beds</nuxt-link>
-        <nuxt-link :to="'/collections/blankets'" class="main-nav-item" @click.native="disableMenu">Blankets</nuxt-link>
-        <nuxt-link :to="'/collections/Sheets'" class="main-nav-item" @click.native="disableMenu">Sheets</nuxt-link>
-        <nuxt-link :to="'/collections/consoles'" class="main-nav-item" @click.native="disableMenu">Consoles</nuxt-link>
+        <nuxt-link
+          :to="'/collections/blankets'"
+          class="main-nav-item"
+          @click.native="disableMenu"
+        >Blankets</nuxt-link>
+        <nuxt-link
+          :to="'/collections/Sheets'"
+          class="main-nav-item"
+          @click.native="disableMenu"
+        >Sheets</nuxt-link>
+        <nuxt-link
+          :to="'/collections/consoles'"
+          class="main-nav-item"
+          @click.native="disableMenu"
+        >Consoles</nuxt-link>
         <nuxt-link :to="'/blog/'" class="main-nav-item" @click.native="disableMenu">Blog</nuxt-link>
       </template>
     </site-header>
@@ -27,6 +51,7 @@
 import { mapMutations, mapActions } from 'vuex'
 import getAllProducts from '../queries/getAllProducts.gql'
 import transformEdges from '../plugins/utils/transformEdges'
+import getCollectionByHandle from '~/queries/getCollectionByHandle.gql'
 import getPageContentWithoutCollectionByHandle from '../queries/getPageContentWithoutCollectionByHandle.gql'
 import SiteFooter from '~/components/SiteFooter'
 export default {
@@ -36,7 +61,43 @@ export default {
   methods: {
     ...mapMutations('menu', ['disableMenu']),
     ...mapMutations('cart', ['hideCart', 'setFreeShippingThreshold']),
-    ...mapActions('cart', ['updateLocalCart'])
+    ...mapActions('cart', ['updateLocalCart']),
+    prefetchCollection(collectionHandle) {
+      this.$apollo.addSmartQuery('collection', {
+        query: getCollectionByHandle,
+        variables() {
+          return { handle: collectionHandle }
+        },
+        update(data) {
+          const { products, ...rest } = data.getCollectionByHandle || {}
+
+          if (products) {
+            const transformedProducts = transformEdges(products).map(
+              product => {
+                if (product) {
+                  let { images, variants, ...rest } = product
+                  return {
+                    ...rest,
+                    variants: transformEdges(variants)
+                  }
+                }
+
+                return product
+              }
+            )
+
+            return {
+              products: transformedProducts,
+              ...rest
+            }
+          }
+
+          return {
+            ...rest
+          }
+        }
+      })
+    }
   },
   data() {
     return {
@@ -77,6 +138,10 @@ export default {
         })
       }
     })
+    // this.prefetchCollection('beds')
+    // this.prefetchCollection('blankets')
+    // this.prefetchCollection('Sheets')
+    // this.prefetchCollection('consoles')
   }
 }
 </script>
