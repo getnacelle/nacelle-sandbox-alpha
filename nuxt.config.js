@@ -71,6 +71,7 @@ export default {
   },
 
   generate: {
+    interval: 100,
     routes: async () => {
       const products = await fetchProductRoutes()
       const collections = await fetchCollectionRoutes()
