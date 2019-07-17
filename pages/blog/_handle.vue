@@ -23,8 +23,17 @@
             </h1>
             <blog-publish-date :date="article.publishDate" />
           </div>
-          <div class="column is-9">
-            <div class="content" v-html="content" />
+          <div class="column is-9 content">
+            <div v-html="content" ref="content" />
+            <no-ssr>
+              <shop-look
+                v-for="(shopImage, index) in shopImages"
+                :key="index"
+                :imageSrc="shopImage.src"
+                :product="shopImage.product"
+                @ready="(node) => moveImage(shopImage.node, node)"
+              />
+            </no-ssr>
           </div>
         </div>
       </transition>
@@ -33,13 +42,22 @@
 </template>
 
 <script>
+import Vue from 'vue'
 import getArticleByHandle from '~/queries/getArticleByHandle.gql'
 import transformEdges from '~/plugins/utils/transformEdges'
 import FeaturedMedia from '~/components/FeaturedMedia'
+import ShopLook from '~/components/ShopLook'
 
 export default {
   components: {
-    FeaturedMedia
+    FeaturedMedia,
+    ShopLook
+  },
+  data() {
+    return {
+      waitingToUpdate: true,
+      shopImages: []
+    }
   },
   apollo: {
     article: {
@@ -52,11 +70,22 @@ export default {
       },
       update(data) {
         const { collection, ...rest } = data.getArticleByHandle || {}
-        const products = (collection && collection.products) ? transformEdges(collection.products) : []
+        const products =
+          collection && collection.products
+            ? transformEdges(collection.products)
+            : []
+        const transformedProducts = products.map(product => {
+          const variants = transformEdges(product.variants)
+
+          return {
+            ...product,
+            variants
+          }
+        })
 
         return {
           ...rest,
-          products
+          products: transformedProducts
         }
       }
     }
@@ -66,22 +95,54 @@ export default {
       if (
         this.article &&
         this.article.fields &&
-        this.article.fields.content
+        this.article.fields.contentHtml
       ) {
-        return this.article.fields.content
+        return this.article.fields.contentHtml
       }
 
       return ''
+    }
+  },
+  updated() {
+    this.$nextTick(() => {
+      if (
+        this.waitingToUpdate &&
+        this.article &&
+        this.article.products &&
+        typeof this.$refs.content !== 'undefined' &&
+        this.$refs.content.innerHTML.length > 0
+      ) {
+        this.updateImages()
+      }
+    })
+  },
+  methods: {
+    updateImages() {
+      this.shopImages = []
+      const images = [ ...this.$el.querySelectorAll('.article-body img') ]
+
+      images.forEach(image => {
+        const product = this.article.products.find(({ handle }) => handle === image.alt)
+
+        if (product) {
+          this.shopImages.push({
+            node: image,
+            src: image.src,
+            product: product
+          })
+        }
+      })
+
+      this.waitingToUpdate = false
+    },
+    moveImage(imageNode, shopLookNode) {
+      imageNode.parentNode.replaceChild(shopLookNode, imageNode)
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.article {
-
-}
-
 .article-hero {
   height: 300px;
   background: #f5f5f5;
@@ -118,6 +179,10 @@ export default {
 
 .article-tags {
   margin-bottom: 1em;
+}
+
+.article-body .content {
+  position: relative;
 }
 
 .fade-enter-active {
