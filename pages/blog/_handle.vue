@@ -26,15 +26,13 @@
           <div class="column is-9 content">
             <div v-html="content" ref="content" />
             <no-ssr>
-              <template>
-                <shop-look
-                  v-for="(shopImage, index) in shopImages"
-                  :key="index"
-                  :imageSrc="shopImage.src"
-                  :product="shopImage.product"
-                  @ready="(node) => moveImage(shopImage.node, node)"
-                />
-              </template>
+              <shop-look
+                v-for="(shopImage, index) in shopImages"
+                :key="index"
+                :imageSrc="shopImage.src"
+                :product="shopImage.product"
+                @ready="(node) => moveImage(shopImage.node, node)"
+              />
             </no-ssr>
           </div>
         </div>
@@ -57,6 +55,7 @@ export default {
   },
   data() {
     return {
+      waitingToUpdate: true,
       shopImages: []
     }
   },
@@ -104,29 +103,37 @@ export default {
       return ''
     }
   },
-  mounted() {
-    this.updateImages()
+  updated() {
+    this.$nextTick(() => {
+      if (
+        this.waitingToUpdate &&
+        this.article &&
+        this.article.products &&
+        typeof this.$refs.content !== 'undefined' &&
+        this.$refs.content.innerHTML.length > 0
+      ) {
+        this.updateImages()
+      }
+    })
   },
   methods: {
     updateImages() {
       this.shopImages = []
+      const images = [ ...this.$el.querySelectorAll('.article-body img') ]
 
-      if (this.article && this.article.products) {
+      images.forEach(image => {
+        const product = this.article.products.find(({ handle }) => handle === image.alt)
 
-        const images = [ ...this.$el.querySelectorAll('.article-body img') ]
+        if (product) {
+          this.shopImages.push({
+            node: image,
+            src: image.src,
+            product: product
+          })
+        }
+      })
 
-        images.forEach(image => {
-          const product = this.article.products.find(({ handle }) => handle === image.alt)
-
-          if (product) {
-            this.shopImages.push({
-              node: image,
-              src: image.src,
-              product: product
-            })
-          }
-        })
-      }
+      this.waitingToUpdate = false
     },
     moveImage(imageNode, shopLookNode) {
       imageNode.parentNode.replaceChild(shopLookNode, imageNode)
