@@ -2,30 +2,23 @@
   <div class="article">
     <div class="article-hero">
       <transition name="fade">
-        <featured-media
-          v-if="article && article.featuredMedia"
-          :media="article.featuredMedia"
-        />
+        <featured-media v-if="article && article.featuredMedia" :media="article.featuredMedia" />
       </transition>
     </div>
     <div class="article-body container">
       <transition name="fadeDelay">
         <div v-if="article" class="columns is-centered is-multiline">
-          <div  class="article-header column is-6 has-text-centered">
+          <div class="article-header column is-6 has-text-centered">
             <h5
               v-if="article.tags && article.tags.length > 0"
               class="article-tags"
-            >
-              {{ article.tags.join(', ') }}
-            </h5>
-            <h1 class="title is-3">
-              {{ article.title }}
-            </h1>
-            <blog-publish-date :date="article.publishDate" />
+            >{{ article.tags.join(', ') }}</h5>
+            <h1 class="title is-3">{{ article.title }}</h1>
+            <blog-publish-date v-if="article.publishDate" :date="article.publishDate" />
           </div>
           <div class="column is-9 content">
             <div v-html="content" ref="content" />
-            <no-ssr>
+            <no-ssr v-if="collection">
               <shop-look
                 v-for="(shopImage, index) in shopImages"
                 :key="index"
@@ -44,6 +37,7 @@
 <script>
 import Vue from 'vue'
 import getArticleByHandle from '~/queries/getArticleByHandle.gql'
+import getArticleCollectionByHandle from '~/queries/getArticleCollectionByHandle'
 import transformEdges from '~/plugins/utils/transformEdges'
 import FeaturedMedia from '~/components/FeaturedMedia'
 import ShopLook from '~/components/ShopLook'
@@ -62,6 +56,18 @@ export default {
   apollo: {
     article: {
       query: getArticleByHandle,
+      variables() {
+        return {
+          blogHandle: 'blog',
+          articleHandle: this.$route.params.handle
+        }
+      },
+      update(data) {
+        return data.getArticleByHandle || {}
+      }
+    },
+    collection: {
+      query: getArticleCollectionByHandle,
       variables() {
         return {
           blogHandle: 'blog',
@@ -107,8 +113,8 @@ export default {
     this.$nextTick(() => {
       if (
         this.waitingToUpdate &&
-        this.article &&
-        this.article.products &&
+        this.collection &&
+        this.collection.products &&
         typeof this.$refs.content !== 'undefined' &&
         this.$refs.content.innerHTML.length > 0
       ) {
@@ -119,10 +125,12 @@ export default {
   methods: {
     updateImages() {
       this.shopImages = []
-      const images = [ ...this.$el.querySelectorAll('.article-body img') ]
+      const images = [...this.$el.querySelectorAll('.article-body img')]
 
       images.forEach(image => {
-        const product = this.article.products.find(({ handle }) => handle === image.alt)
+        const product = this.collection.products.find(
+          ({ handle }) => handle === image.alt
+        )
 
         if (product) {
           this.shopImages.push({
@@ -186,14 +194,14 @@ export default {
 }
 
 .fade-enter-active {
-  transition: opacity .25s;
+  transition: opacity 0.25s;
 }
 .fade-enter {
   opacity: 0;
 }
 
 .fadeDelay-enter-active {
-  transition: opacity .55s 0.25s;
+  transition: opacity 0.55s 0.25s;
 }
 .fadeDelay-enter {
   opacity: 0;

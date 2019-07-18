@@ -1,60 +1,60 @@
 query GetArticleByHandle($blogHandle: String!, $articleHandle: String!) {
   getArticleByHandle(blogHandle: $blogHandle, articleHandle: $articleHandle) {
-    id,
-    handle,
-    source,
-    title,
-    description,
-    tags,
-    publishDate,
-    excerpt,
+    id
+    handle
+    source
+    title
+    description
+    tags
+    publishDate
+    excerpt
     featuredMedia {
       id
-      type,
+      type
       src
-    },
-    fields,
-    collection {
-      products {
-        edges {
-          node {
-            id
-            title
-            handle
-            description
-            priceRange {
-              min
-              max
-            }
-            featuredMedia {
-              src
-              thumbnailSrc
-              id
-              src
-              type
-            }
-            media {
-              edges {
-                node {
-                  thumbnailSrc
-                  id
-                  src
-                  type
-                }
-              }
-            }
-            variants {
-              edges {
-                node {
-                  id
-                  title
-                  price
-                }
-              }
-            }
-          }
-        }
-      }
     }
+    fields
+    # collection {
+    #   products {
+    #     edges {
+    #       node {
+    #         id
+    #         title
+    #         handle
+    #         description
+    #         priceRange {
+    #           min
+    #           max
+    #         }
+    #         featuredMedia {
+    #           src
+    #           thumbnailSrc
+    #           id
+    #           src
+    #           type
+    #         }
+    #         media {
+    #           edges {
+    #             node {
+    #               thumbnailSrc
+    #               id
+    #               src
+    #               type
+    #             }
+    #           }
+    #         }
+    #         variants {
+    #           edges {
+    #             node {
+    #               id
+    #               title
+    #               price
+    #             }
+    #           }
+    #         }
+    #       }
+    #     }
+    #   }
+    # }
   }
 }

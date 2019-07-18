@@ -1,10 +1,6 @@
-query GetPageContentByHandle($handle: String!) {
-  getBlogByHandle(handle: $handle) {
-    id
+query GetArticleByHandle($blogHandle: String!, $articleHandle: String!) {
+  getArticleByHandle(blogHandle: $blogHandle, articleHandle: $articleHandle) {
     handle
-    source
-    title
-    fields
     collection {
       products {
         edges {
@@ -44,25 +40,6 @@ query GetPageContentByHandle($handle: String!) {
               }
             }
           }
-        }
-      }
-    }
-    articles {
-      edges {
-        node {
-          id
-          handle
-          source
-          title
-          description
-          tags
-          publishDate
-          featuredMedia {
-            id
-            type
-            src
-          }
-          fields
         }
       }
     }

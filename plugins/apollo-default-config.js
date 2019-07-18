@@ -27,7 +27,9 @@ export default function(context) {
       cacheRedirects: {
         Query: {
           getProductByHandle: (_, args, { getCacheKey }) =>
-            getCacheKey({ __typename: 'Product', handle: args.handle })
+            getCacheKey({ __typename: 'Product', handle: args.handle }),
+          getArticleByHandle: (_, args, { getCacheKey }) =>
+            getCacheKey({ __typename: 'Article', handle: args.articleHandle })
         }
       }
     }
