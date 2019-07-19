@@ -27,6 +27,9 @@
                 @ready="(node) => moveImage(shopImage.node, node)"
               />
             </no-ssr>
+            <nuxt-link :to="'/blog'" class="breadcrumb">
+              Back to Blog
+            </nuxt-link>
           </div>
         </div>
       </transition>

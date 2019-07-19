@@ -5,8 +5,10 @@
       Shop the look
     </button>
     <div class="shop-look-product" :class="{ 'is-visible': productVisible }">
-      <product-card :product="product" />
-      <interface-close-button class="close" v-on:close="toggleProductCard" />
+      <div style="position: relative">
+        <product-card :product="product" />
+        <interface-close-button class="close" v-on:close="toggleProductCard" />
+      </div>
     </div>
   </div>
 </template>
@@ -85,19 +87,36 @@ img {
 }
 
 .shop-look-product {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   bottom: 0;
   width: 100%;
-  max-width: 400px;
-  transform: translate3d(-100%, 0, 0);
+  transform: translate3d(0, -100%, 0);
   background-color: #ffffff;
-  transition: all 0.15s linear;
+  transition: all 0.15s cubic-bezier(0.755, 0.05, 0.855, 0.06);
   overflow: scroll;
 
   &.is-visible {
     transform: translate3d(0, 0, 0);
+    transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  @media screen and (max-width: 499px) {
+    padding-top: 4rem;
+    box-shadow: 0 8px 10px 0 rgba(#3b3b3b, 0.5);
+
+    .close {
+      position: fixed;
+      top: 4rem;
+      left: auto;
+    }
+  }
+
+  @media screen and (min-width: 500px) {
+    position: absolute;
+    max-width: 400px;
+    transform: translate3d(-100%, 0, 0);
   }
 }
 

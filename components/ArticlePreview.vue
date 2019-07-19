@@ -87,20 +87,22 @@ export default {
 }
 
 .is-featured /deep/ .featured-media {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  width: 60%;
+  @media screen and (min-width: 769px) {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 60%;
 
-  figure {
-    width: 100%;
-    height: 100%;
-
-    img {
+    figure {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
     }
   }
 }
@@ -112,15 +114,26 @@ export default {
   justify-content: flex-end;
   margin-left: auto;
   margin-right: auto;
-  padding: 3rem 1rem;
+  padding: 1rem;
+  padding-bottom: 2rem;
   max-width: 1200px;
-  min-height: 500px;
+
+  @media screen and (min-width: 769px) {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    min-height: 500px;
+  }
 }
 
 .is-featured .article-preview-inner {
+  margin-top: -4rem;
   padding: 2rem;
-  width: 42%;
   background-color: #ffffff;
+
+  @media screen and (min-width: 769px) {
+    margin-top: 0;
+    width: 42%;
+  }
 }
 </style>
 
