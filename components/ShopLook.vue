@@ -94,11 +94,12 @@ img {
   width: 100%;
   transform: translate3d(0, -100%, 0);
   background-color: #ffffff;
-  transition: all 0.15s linear;
+  transition: all 0.15s cubic-bezier(0.755, 0.05, 0.855, 0.06);
   overflow: scroll;
 
   &.is-visible {
     transform: translate3d(0, 0, 0);
+    transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
   }
 
   @media screen and (max-width: 499px) {
