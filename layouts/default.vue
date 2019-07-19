@@ -276,6 +276,14 @@ html {
 // Custom site header styles
 .main-nav-right {
   flex-grow: 1;
+  @media screen and (max-width: 786px) {
+    flex-grow: unset;
+  }
+}
+.main-nav-brand {
+  @media screen and (max-width: 786px) {
+    margin-left: -1rem;
+  }
 }
 
 .main-nav-menu {
@@ -285,7 +293,7 @@ html {
 }
 
 button.main-nav-cart {
-  width: 112px;
+  // width: 112px;
   text-align: right;
 }
 </style>

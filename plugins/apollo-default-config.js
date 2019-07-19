@@ -10,17 +10,6 @@ export default function(context) {
         'x-nacelle-token': 'tokenForStarshipFurniture'
       }
     },
-    // getAuth: () => {
-    //   // get the authentication token from local storage if it exists
-    //   const token =
-    //     'Om01bFUxbFBWWFBDUEo5cWtXMlBreTZJV0tCZU9oYjdXYWdrZGQwTnBHaWNmd2pHbjFEc01TTldTY2pET05LRFg='
-    //   // return the headers to the context so httpLink can read them
-    //   if (token) {
-    //     return 'Bearer ' + token
-    //   } else {
-    //     return ''
-    //   }
-    // },
     inMemoryCacheOptions: {
       freezeResults: false,
       dataIdFromObject: object => object.handle || null,

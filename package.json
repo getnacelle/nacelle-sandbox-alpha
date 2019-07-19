@@ -20,6 +20,7 @@
     "@nuxtjs/pwa": "^2.6.0",
     "apollo-cache-inmemory": "^1.6.2",
     "dotenv": "^8.0.0",
+    "fs": "0.0.1-security",
     "graphql-tag": "^2.10.1",
     "node-sass": "^4.12.0",
     "nuxt": "^2.8.1",
