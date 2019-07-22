@@ -4,12 +4,14 @@
     <button class="button is-primary" @click="toggleProductCard">
       Shop the look
     </button>
-    <div class="shop-look-product" :class="{ 'is-visible': productVisible }">
-      <div style="position: relative">
-        <product-card :product="product" />
-        <interface-close-button class="close" v-on:close="toggleProductCard" />
+    <transition name="fade">
+      <div v-if="productVisible" class="shop-look-modal">
+        <div class="shop-look-modal-inner">
+          <product-card :product="product" />
+          <interface-close-button class="close" v-on:close="toggleProductCard" />
+        </div>
       </div>
-    </div>
+    </transition>
   </div>
 </template>
 
@@ -86,38 +88,34 @@ img {
   }
 }
 
-.shop-look-product {
+.shop-look-modal {
   position: fixed;
   top: 0;
   left: 0;
   bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
-  transform: translate3d(0, -100%, 0);
-  background-color: #ffffff;
-  transition: all 0.15s cubic-bezier(0.755, 0.05, 0.855, 0.06);
+  background-color: rgba(#000, 0.7);
+  //transition: all 0.15s cubic-bezier(0.755, 0.05, 0.855, 0.06);
   overflow: scroll;
 
   &.is-visible {
-    transform: translate3d(0, 0, 0);
-    transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+    //transform: translate3d(0, 0, 0);
+    //transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
   }
 
-  @media screen and (max-width: 499px) {
-    padding-top: 4rem;
-    box-shadow: 0 8px 10px 0 rgba(#3b3b3b, 0.5);
+  // @media screen and (max-width: 499px) {
+  //   padding-top: 4rem;
+  //   box-shadow: 0 8px 10px 0 rgba(#3b3b3b, 0.5);
 
-    .close {
-      position: fixed;
-      top: 4rem;
-      left: auto;
-    }
-  }
-
-  @media screen and (min-width: 500px) {
-    position: absolute;
-    max-width: 400px;
-    transform: translate3d(-100%, 0, 0);
-  }
+  //   .close {
+  //     position: fixed;
+  //     top: 4rem;
+  //     left: auto;
+  //   }
+  // }
 }
 
 .close {
@@ -125,6 +123,21 @@ img {
   top: 1rem;
   right: 1rem;
   width: 0.87rem;
+}
+
+.shop-look-modal-inner {
+  position: relative;
+  padding: 1rem;
+  max-width: 400px;
+  background-color: #ffffff;
+}
+
+.fade-enter-active {
+  transition: opacity 0.25s;
+}
+
+.fade-enter {
+  opacity: 0;
 }
 </style>
 
