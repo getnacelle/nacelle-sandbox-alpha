@@ -23,7 +23,7 @@
                 v-for="(shopImage, index) in shopImages"
                 :key="index"
                 :imageSrc="shopImage.src"
-                :product="shopImage.product"
+                :products="shopImage.products"
                 @ready="(node) => moveImage(shopImage.node, node)"
               />
             </no-ssr>
@@ -131,15 +131,16 @@ export default {
       const images = [...this.$el.querySelectorAll('.article-body img')]
 
       images.forEach(image => {
-        const product = this.collection.products.find(
-          ({ handle }) => handle === image.alt
+        const handles = image.alt.split(',')
+        const products = this.collection.products.filter(
+          ({ handle }) => handles.includes(handle)
         )
 
-        if (product) {
+        if (products.length > 0) {
           this.shopImages.push({
             node: image,
             src: image.src,
-            product: product
+            products: products
           })
         }
       })
