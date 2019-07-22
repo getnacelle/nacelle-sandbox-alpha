@@ -104,6 +104,7 @@ img {
   width: 100%;
   background-color: rgba(#000, 0.7);
   overflow: scroll;
+  z-index: 998;
 
   @media screen and (min-width: 769px) {
     display: flex;
