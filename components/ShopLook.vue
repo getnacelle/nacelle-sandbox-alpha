@@ -7,7 +7,13 @@
     <transition name="fade">
       <div v-if="productVisible" class="shop-look-modal">
         <div class="shop-look-modal-inner">
-          <product-card :product="product" />
+          <div
+            v-for="product in products"
+            :key="product.id"
+            class="shop-look-product"
+          >
+            <product-card :product="product" />
+          </div>
           <interface-close-button class="close" v-on:close="toggleProductCard" />
         </div>
       </div>
@@ -28,8 +34,8 @@ export default {
       default: '',
       required: true
     },
-    product: {
-      type: Object,
+    products: {
+      type: Array,
       required: true
     },
     top: {
@@ -93,29 +99,17 @@ img {
   top: 0;
   left: 0;
   bottom: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  padding: 2rem;
+  padding-top: 6rem;
   width: 100%;
   background-color: rgba(#000, 0.7);
-  //transition: all 0.15s cubic-bezier(0.755, 0.05, 0.855, 0.06);
   overflow: scroll;
 
-  &.is-visible {
-    //transform: translate3d(0, 0, 0);
-    //transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  @media screen and (min-width: 769px) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
-
-  // @media screen and (max-width: 499px) {
-  //   padding-top: 4rem;
-  //   box-shadow: 0 8px 10px 0 rgba(#3b3b3b, 0.5);
-
-  //   .close {
-  //     position: fixed;
-  //     top: 4rem;
-  //     left: auto;
-  //   }
-  // }
 }
 
 .close {
@@ -127,9 +121,17 @@ img {
 
 .shop-look-modal-inner {
   position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 auto;
   padding: 1rem;
-  max-width: 400px;
+  max-width: 800px;
   background-color: #ffffff;
+}
+
+.shop-look-product {
+  margin: 0 auto;
+  max-width: 330px;
 }
 
 .fade-enter-active {
