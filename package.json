@@ -13,7 +13,7 @@
     "heroku-postbuild": "npm run build"
   },
   "dependencies": {
-    "@nacelle/nacelle-nuxt-module": "0.0.51",
+    "@nacelle/nacelle-nuxt-module": "0.0.52",
     "@nuxtjs/apollo": "^4.0.0-rc8.2",
     "@nuxtjs/axios": "^5.3.6",
     "@nuxtjs/bulma": "^1.2.1",
