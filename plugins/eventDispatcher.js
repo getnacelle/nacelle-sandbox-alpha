@@ -10,6 +10,7 @@ export default ({ app }, inject) => {
       case 'pageView':
         break
       case 'search':
+        console.log('search')
         break
     }
   })
