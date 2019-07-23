@@ -10,7 +10,10 @@
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
-    "heroku-postbuild": "npm run build"
+    "heroku-postbuild": "npm run build",
+    "deploy staging": "git push staging development",
+    "deploy preview": "git push preview master",
+    "deploy production": "git push production master"
   },
   "dependencies": {
     "@nacelle/nacelle-nuxt-module": "0.0.52",
