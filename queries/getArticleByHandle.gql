@@ -13,6 +13,7 @@ query GetArticleByHandle($blogHandle: String!, $articleHandle: String!) {
       type
       src
     }
+    contentHtml
     fields
     # collection {
     #   products {

@@ -103,10 +103,9 @@ export default {
     content() {
       if (
         this.article &&
-        this.article.fields &&
-        this.article.fields.contentHtml
+        this.article.contentHtml
       ) {
-        return this.article.fields.contentHtml
+        return this.article.contentHtml
       }
 
       return ''
