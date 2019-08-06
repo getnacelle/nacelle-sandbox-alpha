@@ -1,6 +1,6 @@
 <template>
   <div>
-    <site-header :logoSrc="'/starship_logo.png'" ref="header">
+    <site-header :logoSrc="'/starship_logo.png'" logoAlt="Starship" ref="header">
       <template v-slot:menu>
         <nuxt-link :to="'/shop'" class="main-nav-item" @click.native="disableMenu">Shop All</nuxt-link>
         <nuxt-link :to="'/collections/beds'" class="main-nav-item" @click.native="disableMenu">Beds</nuxt-link>
