@@ -1,12 +1,8 @@
 export const state = () => ({
-  counter: 0
+  collectionLimit: 99
 })
 
-export const mutations = {
-  increment(state) {
-    state.counter++
-  }
-}
+export const mutations = {}
 
 export const actions = {
   nuxtServerInit({ commit, dispatch }) {}

@@ -8,11 +8,11 @@
     <section class="section">
       <div class="container">
         <div class="columns is-multiline">
-          <product-card-wrapper
-            class="column is-4"
-            v-for="product in products"
-            :product="product"
-            :key="product.id"
+          <product-grid
+            v-if="products"
+            :products="products"
+            :showAddToCart="true"
+            :showQuantityUpdate="true"
           />
         </div>
       </div>

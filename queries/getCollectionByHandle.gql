@@ -1,4 +1,4 @@
-query GetCollectByHandle($handle: String!) {
+query GetCollectByHandle($handle: String!, $cursor: String, $limit: Int) {
   getCollectionByHandle(handle: $handle) {
     id
     description
@@ -8,7 +8,7 @@ query GetCollectByHandle($handle: String!) {
       id
       src
     }
-    products {
+    products(limit: $limit, cursor: $cursor) {
       edges {
         node {
           id
@@ -51,6 +51,9 @@ query GetCollectByHandle($handle: String!) {
           }
         }
       }
+      # pageInfo {
+      #   hasNextPage
+      # }
     }
   }
 }

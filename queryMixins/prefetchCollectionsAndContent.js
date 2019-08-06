@@ -3,14 +3,19 @@ import transformEdges from '~/plugins/utils/transformEdges'
 import getCollectionByHandle from '~/queries/getCollectionByHandle.gql'
 import getPageContentWithoutCollectionByHandle from '~/queries/getPageContentWithoutCollectionByHandle.gql'
 import getBlogByHandle from '~/queries/getBlogByHandle.gql'
+import { mapState } from 'vuex'
 
 export default {
+  computed: {
+    ...mapState(['collectionLimit'])
+  },
   methods: {
     prefetchCollection(collectionHandle) {
+      let vm = this
       this.$apollo.addSmartQuery(collectionHandle, {
         query: getCollectionByHandle,
         variables() {
-          return { handle: collectionHandle }
+          return { handle: collectionHandle, limit: vm.collectionLimit }
         },
         update(data) {
           const { products, ...rest } = data.getCollectionByHandle || {}

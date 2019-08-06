@@ -1,5 +1,5 @@
-query {
-  getAllProducts {
+query getAllProducts($cursor: String, $limit: Int) {
+  getAllProducts(limit: $limit, cursor: $cursor) {
     edges {
       node {
         id
@@ -41,6 +41,9 @@ query {
           }
         }
       }
+    }
+    pageInfo {
+      hasNextPage
     }
   }
 }
