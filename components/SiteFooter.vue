@@ -3,7 +3,7 @@
     <div class="container">
       <div class="columns is-multiline is-marginless">
         <div class="column is-4 is-offset-4 logo">
-          <img src="/starship_logo.png" />
+          <img src="/starship_logo.png" alt="Starship" />
         </div>
 
         <div class="column is-12">© NACELLE 2019</div>
