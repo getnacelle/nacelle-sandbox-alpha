@@ -24,7 +24,7 @@ export default {
             const transformedProducts = transformEdges(products).map(
               product => {
                 if (product) {
-                  let { images, variants, ...rest } = product
+                  let { variants, ...rest } = product
                   return {
                     ...rest,
                     variants: transformEdges(variants)
