@@ -6,17 +6,23 @@ export default {
     products: {
       query: getAllProducts,
       update(data) {
-        return transformEdges(data.getAllProducts).map(product => {
-          if (product) {
-            let { images, variants, ...rest } = product
-            return {
-              ...rest,
-              variants: transformEdges(variants)
-            }
-          }
+        const products = data.getAllProducts
 
-          return product
-        })
+        if (products) {
+          return transformEdges(data.getAllProducts).map(product => {
+            if (product) {
+              let { images, variants, ...rest } = product
+              return {
+                ...rest,
+                variants: variants ? transformEdges(variants) : []
+              }
+            }
+
+            return product
+          })
+        }
+
+        return []
       }
     },
     page: {
@@ -32,7 +38,7 @@ export default {
 
           return {
             source,
-            content: transformEdges(articles)
+            content: articles ? transformEdges(articles) : []
           }
         }
         

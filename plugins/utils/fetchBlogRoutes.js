@@ -30,10 +30,20 @@ export default () => {
       `
     }
   }).then(res => {
-    const articles = transformEdges(res.data.data.getBlogByHandle.articles).map(article => {
-      return `/blog/${article.handle}`
-    })
+    if (
+      res &&
+      res.data &&
+      res.data.data &&
+      res.data.data.getBlogByHandle &&
+      res.data.data.getBlogByHandle.articles
+    ) {
+      const articles = transformEdges(res.data.data.getBlogByHandle.articles).map(article => {
+        return `/blog/${article.handle}`
+      })
 
-    return articles
+      return articles
+    }
+
+    return []
   })
 }

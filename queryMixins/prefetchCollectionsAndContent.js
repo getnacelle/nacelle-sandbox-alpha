@@ -27,7 +27,7 @@ export default {
                   let { variants, ...rest } = product
                   return {
                     ...rest,
-                    variants: transformEdges(variants)
+                    variants: variants ? transformEdges(variants) : []
                   }
                 }
 
@@ -62,7 +62,7 @@ export default {
 
           return {
             source,
-            content: transformEdges(articles)
+            content: articles ? transformEdges(articles) : []
           }
         }
 
@@ -72,13 +72,19 @@ export default {
     this.$apollo.addSmartQuery('products', {
       query: getAllProducts,
       update(data) {
-        return transformEdges(data.getAllProducts).map(product => {
-          let { images, variants, ...rest } = product
-          return {
-            ...rest,
-            variants: transformEdges(variants)
-          }
-        })
+        const products = data.getAllProducts
+
+        if (products) {
+          return transformEdges(data.getAllProducts).map(product => {
+            let { images, variants, ...rest } = product
+            return {
+              ...rest,
+              variants: variants ? transformEdges(variants) : []
+            }
+          })
+        }
+
+        return []
       }
     })
 
@@ -97,7 +103,7 @@ export default {
               ? transformEdges(collection.products)
               : []
           const transformedProducts = products.map(product => {
-            const variants = transformEdges(product.variants)
+            const variants = product.variants ? transformEdges(product.variants) : []
 
             return {
               ...product,
@@ -108,7 +114,7 @@ export default {
           return {
             source,
             products: transformedProducts,
-            articles: transformEdges(articles)
+            articles: articles ? transformEdges(articles) : []
           }
         }
 

@@ -17,7 +17,7 @@ export default {
               ? transformEdges(collection.products)
               : []
           const transformedProducts = products.map(product => {
-            const variants = transformEdges(product.variants)
+            const variants = product.variants ? transformEdges(product.variants) : []
 
             return {
               ...product,
@@ -28,7 +28,7 @@ export default {
           return {
             source,
             products: transformedProducts,
-            articles: transformEdges(articles)
+            articles: articles ? transformEdges(articles) : []
           }
         }
 

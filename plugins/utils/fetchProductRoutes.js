@@ -27,10 +27,19 @@ export default () => {
       `
     }
   }).then(res => {
-    const products = transformEdges(res.data.data.getAllProducts).map(product => {
-      return `/products/${product.handle}`
-    })
+    if (
+      res &&
+      res.data &&
+      res.data.data &&
+      res.data.data.getAllProducts
+    ) {
+      const products = transformEdges(res.data.data.getAllProducts).map(product => {
+        return `/products/${product.handle}`
+      })
 
-    return products
+      return products
+    }
+
+    return []
   })
 }

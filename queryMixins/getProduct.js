@@ -14,8 +14,8 @@ export default {
         if (product) {
           let { variants, media, ...rest } = product
           return {
-            variants: transformEdges(variants),
-            media: transformEdges(media),
+            variants: variants ? transformEdges(variants) : [],
+            media: media ? transformEdges(media) : [],
             ...rest
           }
         }

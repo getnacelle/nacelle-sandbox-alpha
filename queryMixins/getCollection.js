@@ -31,7 +31,7 @@ export default {
               let { variants, ...rest } = product
               return {
                 ...rest,
-                variants: transformEdges(variants)
+                variants: variants ? transformEdges(variants) : []
               }
             }
 
