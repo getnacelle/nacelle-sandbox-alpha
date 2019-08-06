@@ -33,58 +33,24 @@
 </template>
 
 <script>
-import getBlogByHandle from '~/queries/getBlogByHandle.gql'
-import transformEdges from '~/plugins/utils/transformEdges'
+import getBlog from '~/queryMixins/getBlog'
 import ArticlePreview from '~/components/ArticlePreview'
 
 export default {
   components: {
     ArticlePreview
   },
-  apollo: {
-    blog: {
-      query: getBlogByHandle,
-      variables() {
-        return { handle: 'blog' }
-      },
-      update(data) {
-        const { source, articles, collection } = data.getBlogByHandle
-        const products = (collection && collection.products) ? transformEdges(collection.products) : []
-        const transformedProducts = products.map(product => {
-          const variants = transformEdges(product.variants)
-
-          return {
-            ...product,
-            variants
-          }
-        })
-
-        return {
-          source,
-          products: transformedProducts,
-          articles: transformEdges(articles)
-        }
-      }
-    }
-  },
+  mixins: [getBlog],
   computed: {
     blogProducts() {
-      if (
-        this.blog &&
-        this.blog.products &&
-        this.blog.products.length > 0
-      ) {
+      if (this.blog && this.blog.products && this.blog.products.length > 0) {
         return this.blog.products
       }
 
       return null
     },
     articles() {
-      if (
-        this.blog &&
-        this.blog.articles &&
-        this.blog.articles.length > 0
-      ) {
+      if (this.blog && this.blog.articles && this.blog.articles.length > 0) {
         return this.blog.articles
       }
 
@@ -98,7 +64,7 @@ export default {
       return null
     },
     filteredArticles() {
-      const copy = [ ...this.articles ]
+      const copy = [...this.articles]
       return copy.splice(1, copy.length - 1)
     }
   }

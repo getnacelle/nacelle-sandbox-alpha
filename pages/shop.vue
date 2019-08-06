@@ -11,9 +11,7 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex'
-import getAllProducts from '../queries/getAllProducts.gql'
-import getPageContentWithoutCollectionByHandle from '../queries/getPageContentWithoutCollectionByHandle.gql'
-import transformEdges from '../plugins/utils/transformEdges'
+import getShopPage from '~/queryMixins/getShopPage'
 
 export default {
   name: 'home',
@@ -22,38 +20,7 @@ export default {
       products: null
     }
   },
-  apollo: {
-    products: {
-      query: getAllProducts,
-      update(data) {
-        return transformEdges(data.getAllProducts).map(product => {
-          if (product) {
-            let { images, variants, ...rest } = product
-            return {
-              ...rest,
-              variants: transformEdges(variants)
-            }
-          }
-
-          return product
-        })
-      }
-    },
-    page: {
-      query: getPageContentWithoutCollectionByHandle,
-      variables() {
-        return { handle: 'shop' }
-      },
-      update(data) {
-        const { source, articles } = data.getBlogByHandle
-
-        return {
-          source,
-          content: transformEdges(articles)
-        }
-      }
-    }
-  },
+  mixins: [getShopPage],
   computed: {
     sourceComponent() {
       if (this.page && this.page.source) {

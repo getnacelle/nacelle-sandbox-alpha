@@ -6,12 +6,13 @@ import fetchBlogRoutes from './plugins/utils/fetchBlogRoutes.js'
 
 const nacelleEndpoint = process.env.NACELLE_GRAPHQL_ENDPOINT
 const nacelleToken = process.env.NACELLE_GRAPHQL_TOKEN
+const buildMode = process.env.BUILD_MODE
 
 // Name of the localStorage item
 const AUTH_TOKEN = 'apollo-token'
 
 export default {
-  mode: 'universal',
+  mode: buildMode,
   /*
    ** Headers of the page
    */
@@ -55,7 +56,8 @@ export default {
     '@nuxtjs/bulma',
     '@nuxtjs/pwa',
     '@nuxtjs/apollo',
-    '@nacelle/nacelle-nuxt-module'
+    '@nacelle/nacelle-nuxt-module',
+    '@nuxtjs/dotenv'
   ],
 
   nacelle: {
@@ -89,15 +91,9 @@ export default {
         }
       }
     },
+    transpile: ['@nacelle/nacelle-vue-components']
     /*
      ** You can extend webpack config here
      */
-    extend(config, ctx) {
-      // config.module.rules.push({
-      //   test: /\.(graphql|gql)$/,
-      //   exclude: /node_modules/,
-      //   loader: 'graphql-tag/loader'
-      // })
-    }
   }
 }

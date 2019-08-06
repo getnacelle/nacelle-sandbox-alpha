@@ -7,17 +7,23 @@
       <product-title :title="product.title" />
       <product-category :category="product.productType" v-if="product.productType" />
       <p class="price">
-        <product-price :price="product.variants[0].price" />
+        <product-price :price="currentVariant.price" />
       </p>
       <product-description :description="product.description" />
+      <product-variant-select :product="product" :variant="currentVariant" />
+      <!-- <product-options
+        v-if="product.options[0].values.length > 1"
+        :options="product.options"
+        v-on:selectedOptions="captureOptions"
+      />
       <div class="columns">
         <div class="column is-half">
-          <product-quantity-update 
+          <product-quantity-update
             :image="product.featuredMedia"
             :title="product.title"
             :productId="product.id"
             :handle="product.handle"
-            :variant="product.variants[0]"
+            :variant="variant || {}"
           />
         </div>
         <div class="column is-half">
@@ -26,18 +32,18 @@
             :title="product.title"
             :productId="product.id"
             :handle="product.handle"
-            :variant="product.variants[0]"
+            :variant="variant || {}"
             @click.native="showCart"
           />
         </div>
-      </div>
+      </div>-->
     </div>
   </div>
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
-
+import { mapState, mapMutations, mapGetters, mapActions } from 'vuex'
+import getProductVariant from '~/queryMixins/getProductVariant'
 export default {
   props: {
     product: {
@@ -45,6 +51,23 @@ export default {
       default: () => {}
     }
   },
+  watch: {
+    variant(val) {
+      if (val != null) {
+        this.setVariant(this.variant)
+      }
+    }
+  },
+  computed: {
+    currentVariant() {
+      if (this.variant != null) {
+        return this.variant
+      } else {
+        return this.product.variants[0]
+      }
+    }
+  },
+  mixins: [getProductVariant],
   methods: {
     ...mapMutations('cart', ['showCart'])
   }

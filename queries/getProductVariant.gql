@@ -1,0 +1,15 @@
+query GetProductByHandle(
+  $handle: String!
+  $selectedOptions: [SelectedOption!]!
+) {
+  getProductByHandle(handle: $handle) {
+    id
+    handle
+    variantByOptions(selectedOptions: $selectedOptions) {
+      id
+      title
+      price
+      priceCurrency
+    }
+  }
+}

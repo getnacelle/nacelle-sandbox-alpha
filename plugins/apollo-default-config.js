@@ -1,13 +1,9 @@
-const httpEndpoint =
-  process.env.NACELLE_GRAPHQL_ENDPOINT ||
-  'https://hailfrequency.com/graphql/v1/space/6789'
-
 export default function(context) {
   return {
-    httpEndpoint: httpEndpoint,
+    httpEndpoint: context.env.NACELLE_GRAPHQL_ENDPOINT,
     httpLinkOptions: {
       headers: {
-        'x-nacelle-token': 'tokenForStarshipFurniture'
+        'x-nacelle-token': context.env.NACELLE_GRAPHQL_TOKEN
       }
     },
     inMemoryCacheOptions: {

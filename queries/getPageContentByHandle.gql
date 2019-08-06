@@ -17,6 +17,10 @@ query GetPageContentByHandle($handle: String!) {
               min
               max
             }
+            options {
+              name
+              values
+            }
             featuredMedia {
               src
               thumbnailSrc

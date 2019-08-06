@@ -7,12 +7,14 @@
     />
     <section class="section">
       <div class="container">
-        <product-grid
-          v-if="products"
-          :products="products"
-          :showAddToCart="true"
-          :showQuantityUpdate="true"
-        />
+        <div class="columns is-multiline">
+          <product-card-wrapper
+            class="column is-4"
+            v-for="product in products"
+            :product="product"
+            :key="product.id"
+          />
+        </div>
       </div>
     </section>
   </div>
@@ -20,8 +22,8 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex'
-import getCollectionByHandle from '~/queries/getCollectionByHandle.gql'
-import transformEdges from '~/plugins/utils/transformEdges'
+import ProductCardWrapper from '~/components/ProductCardWrapper'
+import getCollection from '~/queryMixins/getCollection'
 
 export default {
   name: 'home',
@@ -30,40 +32,10 @@ export default {
       collection: null
     }
   },
-  apollo: {
-    collection: {
-      query: getCollectionByHandle,
-      variables() {
-        return { handle: this.$route.params.handle }
-      },
-      update(data) {
-        const { products, ...rest } = data.getCollectionByHandle || {}
-
-        if (products) {
-          const transformedProducts = transformEdges(products).map(product => {
-            if (product) {
-              let { images, variants, ...rest } = product
-              return {
-                ...rest,
-                variants: transformEdges(variants)
-              }
-            }
-
-            return product
-          })
-
-          return {
-            products: transformedProducts,
-            ...rest
-          }
-        }
-
-        return {
-          ...rest
-        }
-      }
-    }
+  components: {
+    ProductCardWrapper
   },
+  mixins: [getCollection],
   computed: {
     products() {
       if (

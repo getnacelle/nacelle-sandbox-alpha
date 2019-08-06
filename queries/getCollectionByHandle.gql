@@ -1,13 +1,13 @@
 query GetCollectByHandle($handle: String!) {
   getCollectionByHandle(handle: $handle) {
-    id,
-    description,
-    handle,
-    title,
+    id
+    description
+    handle
+    title
     featuredMedia {
-      id,
+      id
       src
-    },
+    }
     products {
       edges {
         node {
@@ -18,6 +18,10 @@ query GetCollectByHandle($handle: String!) {
           priceRange {
             min
             max
+          }
+          options {
+            name
+            values
           }
           featuredMedia {
             src

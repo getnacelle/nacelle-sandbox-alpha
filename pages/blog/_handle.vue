@@ -27,9 +27,7 @@
                 @ready="(node) => moveImage(shopImage.node, node)"
               />
             </no-ssr>
-            <nuxt-link :to="'/blog'" class="breadcrumb">
-              Back to Blog
-            </nuxt-link>
+            <nuxt-link :to="'/blog'" class="breadcrumb">Back to Blog</nuxt-link>
           </div>
         </div>
       </transition>
@@ -39,12 +37,10 @@
 
 <script>
 import Vue from 'vue'
-import getArticleByHandle from '~/queries/getArticleByHandle.gql'
-import getArticleCollectionByHandle from '~/queries/getArticleCollectionByHandle'
-import transformEdges from '~/plugins/utils/transformEdges'
+
 import FeaturedMedia from '~/components/FeaturedMedia'
 import ShopLook from '~/components/ShopLook'
-
+import getBlogArticle from '~/queryMixins/getBlogArticle'
 export default {
   components: {
     FeaturedMedia,
@@ -56,49 +52,7 @@ export default {
       shopImages: []
     }
   },
-  apollo: {
-    article: {
-      query: getArticleByHandle,
-      variables() {
-        return {
-          blogHandle: 'blog',
-          articleHandle: this.$route.params.handle
-        }
-      },
-      update(data) {
-        return data.getArticleByHandle || {}
-      }
-    },
-    collection: {
-      query: getArticleCollectionByHandle,
-      variables() {
-        return {
-          blogHandle: 'blog',
-          articleHandle: this.$route.params.handle
-        }
-      },
-      update(data) {
-        const { collection, ...rest } = data.getArticleByHandle || {}
-        const products =
-          collection && collection.products
-            ? transformEdges(collection.products)
-            : []
-        const transformedProducts = products.map(product => {
-          const variants = transformEdges(product.variants)
-
-          return {
-            ...product,
-            variants
-          }
-        })
-
-        return {
-          ...rest,
-          products: transformedProducts
-        }
-      }
-    }
-  },
+  mixins: [getBlogArticle],
   computed: {
     content() {
       if (
@@ -132,8 +86,8 @@ export default {
 
       images.forEach(image => {
         const handles = image.alt.split(',')
-        const products = this.collection.products.filter(
-          ({ handle }) => handles.includes(handle)
+        const products = this.collection.products.filter(({ handle }) =>
+          handles.includes(handle)
         )
 
         if (products.length > 0) {
