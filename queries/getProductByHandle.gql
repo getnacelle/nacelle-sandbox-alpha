@@ -1,5 +1,5 @@
-query GetProductByHandle($handle: String!, $cursor: String, $limit: Int) {
-  getProductByHandle(handle: $handle, limit: $limit, cursor: $cursor) {
+query GetProductByHandle($handle: String!) {
+  getProductByHandle(handle: $handle) {
     id
     title
     handle

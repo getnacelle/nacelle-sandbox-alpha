@@ -1,5 +1,5 @@
 export const state = () => ({
-  collectionLimit: 99
+  collectionLimit: 20
 })
 
 export const mutations = {}

@@ -5,13 +5,58 @@ export default {
   computed: {
     fetchMoreCursor() {
       if (this.collection.products) {
-        return Array.from(this.collection.products).pop()
+        return Array.from(this.collection.products).pop().cursor
       }
     },
     ...mapState(['collectionLimit'])
   },
   methods: {
-    fetchMore() {}
+    fetchMore() {
+      // this.$apollo.queries.collection.fetchMore({
+      //   // New variables
+      //   variables: {
+      //     cursor: this.fetchMoreCursor
+      //   },
+      //   // Transform the previous result with new data
+      //   updateQuery: (previousResult, { fetchMoreResult }) => {
+      //     console.log(fetchMoreResult)
+      //     const oldProducts = transformEdges(
+      //       previousResult.getCollectionByHandle.products
+      //     ).map(product => {
+      //       if (product) {
+      //         let { images, variants, ...rest } = product
+      //         return {
+      //           ...rest,
+      //           variants: transformEdges(variants)
+      //         }
+      //       }
+      //       return product
+      //     })
+      //     const newProducts = transformEdges(
+      //       fetchMoreResult.getCollectionByHandle.products
+      //     ).map(product => {
+      //       if (product) {
+      //         let { images, variants, ...rest } = product
+      //         return {
+      //           ...rest,
+      //           variants: transformEdges(variants)
+      //         }
+      //       }
+      //       return product
+      //     })
+      //     // const hasMore = fetchMoreResult.tagsPage.hasMore
+      //     // this.showMoreEnabled = hasMore
+      //     return {
+      //       collection: {
+      //         __typename: previousResult.__typename,
+      //         // Merging the tag list
+      //         products: [...oldProducts, ...newProducts]
+      //         // hasMore,
+      //       }
+      //     }
+      //   }
+      // })
+    }
   },
   apollo: {
     collection: {

@@ -9,7 +9,7 @@ export default {
         return { handle: this.$route.params.handle }
       },
       update(data) {
-        let { images, variants, media, ...rest } = data.getProductByHandle
+        let { variants, media, ...rest } = data.getProductByHandle
         return {
           variants: transformEdges(variants),
           media: transformEdges(media),

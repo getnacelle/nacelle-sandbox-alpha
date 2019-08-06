@@ -50,6 +50,7 @@ query GetCollectByHandle($handle: String!, $cursor: String, $limit: Int) {
             }
           }
         }
+        cursor
       }
       # pageInfo {
       #   hasNextPage

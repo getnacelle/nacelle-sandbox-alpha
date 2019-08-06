@@ -8,7 +8,7 @@ export default {
       update(data) {
         return transformEdges(data.getAllProducts).map(product => {
           if (product) {
-            let { images, variants, ...rest } = product
+            let { variants, ...rest } = product
             return {
               ...rest,
               variants: transformEdges(variants)
