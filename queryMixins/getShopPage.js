@@ -25,12 +25,18 @@ export default {
         return { handle: 'shop' }
       },
       update(data) {
-        const { source, articles } = data.getBlogByHandle
+        const page = data.getBlogByHandle
 
-        return {
-          source,
-          content: transformEdges(articles)
+        if (page) {
+          const { source, articles } = page
+
+          return {
+            source,
+            content: transformEdges(articles)
+          }
         }
+        
+        return page
       }
     }
   }

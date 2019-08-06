@@ -55,12 +55,18 @@ export default {
         return { handle: 'shop' }
       },
       update(data) {
-        const { source, articles } = data.getBlogByHandle
+        const page = data.getBlogByHandle
 
-        return {
-          source,
-          content: transformEdges(articles)
+        if (page) {
+          const { source, articles } = page
+
+          return {
+            source,
+            content: transformEdges(articles)
+          }
         }
+
+        return page
       }
     })
     this.$apollo.addSmartQuery('products', {
@@ -82,25 +88,31 @@ export default {
         return { handle: 'blog' }
       },
       update(data) {
-        const { source, articles, collection } = data.getBlogByHandle
-        const products =
-          collection && collection.products
-            ? transformEdges(collection.products)
-            : []
-        const transformedProducts = products.map(product => {
-          const variants = transformEdges(product.variants)
+        const blog = data.getBlogByHandle
+
+        if (blog) {
+          const { source, articles, collection } = blog
+          const products =
+            collection && collection.products
+              ? transformEdges(collection.products)
+              : []
+          const transformedProducts = products.map(product => {
+            const variants = transformEdges(product.variants)
+
+            return {
+              ...product,
+              variants
+            }
+          })
 
           return {
-            ...product,
-            variants
+            source,
+            products: transformedProducts,
+            articles: transformEdges(articles)
           }
-        })
-
-        return {
-          source,
-          products: transformedProducts,
-          articles: transformEdges(articles)
         }
+
+        return blog
       }
     })
 
