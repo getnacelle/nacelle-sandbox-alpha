@@ -21,6 +21,7 @@ query GetBlogByHandle($handle: String!) {
             type
             src
           }
+          contentHtml
           fields
         }
       }
