@@ -41,6 +41,7 @@ query getAllProducts($cursor: String, $limit: Int) {
           }
         }
       }
+      cursor
     }
     pageInfo {
       hasNextPage

@@ -48,7 +48,6 @@ query GetPageContentByHandle($handle: String!) {
               }
             }
           }
-          cursor
         }
       }
     }

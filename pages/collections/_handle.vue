@@ -16,8 +16,8 @@
           />
         </div>
       </div>
+      <div ref="fetchMore" class="fetch-more-component"></div>
     </section>
-    <!-- <button @click="fetchMore">Get More</button> -->
   </div>
 </template>
 

@@ -23,6 +23,9 @@
     "dotenv": "^8.0.0",
     "fs": "0.0.1-security",
     "graphql-tag": "^2.10.1",
+    "lodash.union": "^4.6.0",
+    "lodash.uniq": "^4.5.0",
+    "lodash.uniqby": "^4.7.0",
     "node-sass": "^4.12.0",
     "nuxt": "^2.8.1",
     "sass-loader": "^7.1.0"

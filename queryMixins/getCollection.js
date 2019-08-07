@@ -1,63 +1,48 @@
 import getCollectionByHandle from '~/queries/getCollectionByHandle.gql'
-import transformEdges from '~/plugins/utils/transformEdges'
+import transformCollectionData from '~/plugins/utils/transformCollectionData'
 import { mapState } from 'vuex'
+import observeFetchMoreComponent from './observeFetchMoreComponent'
 export default {
   computed: {
     fetchMoreCursor() {
       if (this.collection.products) {
-        return Array.from(this.collection.products).pop().cursor
+        let index = this.collection.products.length - 1
+        return this.collection.products[index].cursor
       }
     },
     ...mapState(['collectionLimit'])
   },
   methods: {
     fetchMore() {
-      // this.$apollo.queries.collection.fetchMore({
-      //   // New variables
-      //   variables: {
-      //     cursor: this.fetchMoreCursor
-      //   },
-      //   // Transform the previous result with new data
-      //   updateQuery: (previousResult, { fetchMoreResult }) => {
-      //     console.log(fetchMoreResult)
-      //     const oldProducts = transformEdges(
-      //       previousResult.getCollectionByHandle.products
-      //     ).map(product => {
-      //       if (product) {
-      //         let { images, variants, ...rest } = product
-      //         return {
-      //           ...rest,
-      //           variants: transformEdges(variants)
-      //         }
-      //       }
-      //       return product
-      //     })
-      //     const newProducts = transformEdges(
-      //       fetchMoreResult.getCollectionByHandle.products
-      //     ).map(product => {
-      //       if (product) {
-      //         let { images, variants, ...rest } = product
-      //         return {
-      //           ...rest,
-      //           variants: transformEdges(variants)
-      //         }
-      //       }
-      //       return product
-      //     })
-      //     // const hasMore = fetchMoreResult.tagsPage.hasMore
-      //     // this.showMoreEnabled = hasMore
-      //     return {
-      //       collection: {
-      //         __typename: previousResult.__typename,
-      //         // Merging the tag list
-      //         products: [...oldProducts, ...newProducts]
-      //         // hasMore,
-      //       }
-      //     }
-      //   }
-      // })
+      this.$apollo.queries.collection.fetchMore({
+        variables: {
+          cursor: this.fetchMoreCursor
+        },
+
+        updateQuery: (previousResult, { fetchMoreResult }) => {
+          let oldProducts = previousResult.getCollectionByHandle.products
+          let newProducts = fetchMoreResult.getCollectionByHandle.products
+          let { products, ...rest } = previousResult.getCollectionByHandle
+
+          let joinedArray = union(oldProducts.edges, newProducts.edges)
+          let uniqueArray = uniqBy(joinedArray, 'node.id')
+
+          return {
+            getCollectionByHandle: {
+              ...rest,
+              products: {
+                edges: uniqueArray,
+                __typename: oldProducts.__typename
+              }
+            }
+          }
+        }
+      })
     }
   },
+
+  mixins: [observeFetchMoreComponent],
+
   apollo: {
     collection: {
       query: getCollectionByHandle,
@@ -68,30 +53,7 @@ export default {
         }
       },
       update(data) {
-        const { products, ...rest } = data.getCollectionByHandle || {}
-
-        if (products) {
-          const transformedProducts = transformEdges(products).map(product => {
-            if (product) {
-              let { variants, ...rest } = product
-              return {
-                ...rest,
-                variants: variants ? transformEdges(variants) : []
-              }
-            }
-
-            return product
-          })
-
-          return {
-            products: transformedProducts,
-            ...rest
-          }
-        }
-
-        return {
-          ...rest
-        }
+        return transformCollectionData(data)
       }
     }
   }

@@ -5,6 +5,7 @@
       <div class="container">
         <product-grid :products="products" :showAddToCart="true" :showQuantityUpdate="true" />
       </div>
+      <div ref="fetchMore" class="fetch-more-component"></div>
     </section>
   </div>
 </template>
