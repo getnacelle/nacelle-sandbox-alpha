@@ -4,9 +4,9 @@ import fetchProductRoutes from './plugins/utils/fetchProductRoutes.js'
 import fetchCollectionRoutes from './plugins/utils/fetchCollectionRoutes.js'
 import fetchBlogRoutes from './plugins/utils/fetchBlogRoutes.js'
 
-const nacelleEndpoint = process.env.NACELLE_GRAPHQL_ENDPOINT
-const nacelleToken = process.env.NACELLE_GRAPHQL_TOKEN
-const buildMode = process.env.BUILD_MODE
+const nacelleEndpoint = 'https://hailfrequency.com/graphql/v1/space/6789'
+const nacelleToken = 'tokenForStarshipFurniture'
+const buildMode = 'universal'
 
 // Name of the localStorage item
 const AUTH_TOKEN = 'apollo-token'

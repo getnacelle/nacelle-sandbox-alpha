@@ -8,25 +8,31 @@ export default {
         return { handle: 'blog' }
       },
       update(data) {
-        const { source, articles, collection } = data.getBlogByHandle
-        const products =
-          collection && collection.products
-            ? transformEdges(collection.products)
-            : []
-        const transformedProducts = products.map(product => {
-          const variants = transformEdges(product.variants)
+        const blog = data.getBlogByHandle
+
+        if (blog) {
+          const { source, articles, collection } = blog
+          const products =
+            collection && collection.products
+              ? transformEdges(collection.products)
+              : []
+          const transformedProducts = products.map(product => {
+            const variants = product.variants ? transformEdges(product.variants) : []
+
+            return {
+              ...product,
+              variants
+            }
+          })
 
           return {
-            ...product,
-            variants
+            source,
+            products: transformedProducts,
+            articles: articles ? transformEdges(articles) : []
           }
-        })
-
-        return {
-          source,
-          products: transformedProducts,
-          articles: transformEdges(articles)
         }
+
+        return blog
       }
     }
   }

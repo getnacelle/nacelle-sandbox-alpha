@@ -6,17 +6,23 @@ export default {
     products: {
       query: getAllProducts,
       update(data) {
-        return transformEdges(data.getAllProducts).map(product => {
-          if (product) {
-            let { variants, ...rest } = product
-            return {
-              ...rest,
-              variants: transformEdges(variants)
-            }
-          }
+        const products = data.getAllProducts
 
-          return product
-        })
+        if (products) {
+          return transformEdges(data.getAllProducts).map(product => {
+            if (product) {
+              let { images, variants, ...rest } = product
+              return {
+                ...rest,
+                variants: variants ? transformEdges(variants) : []
+              }
+            }
+
+            return product
+          })
+        }
+
+        return []
       }
     },
     page: {
@@ -25,12 +31,18 @@ export default {
         return { handle: 'shop' }
       },
       update(data) {
-        const { source, articles } = data.getBlogByHandle
+        const page = data.getBlogByHandle
 
-        return {
-          source,
-          content: transformEdges(articles)
+        if (page) {
+          const { source, articles } = page
+
+          return {
+            source,
+            content: articles ? transformEdges(articles) : []
+          }
         }
+
+        return page
       }
     }
   }

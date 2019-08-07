@@ -27,7 +27,7 @@ export default {
                   let { variants, ...rest } = product
                   return {
                     ...rest,
-                    variants: transformEdges(variants)
+                    variants: variants ? transformEdges(variants) : []
                   }
                 }
 
@@ -55,24 +55,36 @@ export default {
         return { handle: 'shop' }
       },
       update(data) {
-        const { source, articles } = data.getBlogByHandle
+        const page = data.getBlogByHandle
 
-        return {
-          source,
-          content: transformEdges(articles)
+        if (page) {
+          const { source, articles } = page
+
+          return {
+            source,
+            content: articles ? transformEdges(articles) : []
+          }
         }
+
+        return page
       }
     })
     this.$apollo.addSmartQuery('products', {
       query: getAllProducts,
       update(data) {
-        return transformEdges(data.getAllProducts).map(product => {
-          let { images, variants, ...rest } = product
-          return {
-            ...rest,
-            variants: transformEdges(variants)
-          }
-        })
+        const products = data.getAllProducts
+
+        if (products) {
+          return transformEdges(data.getAllProducts).map(product => {
+            let { images, variants, ...rest } = product
+            return {
+              ...rest,
+              variants: variants ? transformEdges(variants) : []
+            }
+          })
+        }
+
+        return []
       }
     })
 
@@ -82,25 +94,31 @@ export default {
         return { handle: 'blog' }
       },
       update(data) {
-        const { source, articles, collection } = data.getBlogByHandle
-        const products =
-          collection && collection.products
-            ? transformEdges(collection.products)
-            : []
-        const transformedProducts = products.map(product => {
-          const variants = transformEdges(product.variants)
+        const blog = data.getBlogByHandle
+
+        if (blog) {
+          const { source, articles, collection } = blog
+          const products =
+            collection && collection.products
+              ? transformEdges(collection.products)
+              : []
+          const transformedProducts = products.map(product => {
+            const variants = product.variants ? transformEdges(product.variants) : []
+
+            return {
+              ...product,
+              variants
+            }
+          })
 
           return {
-            ...product,
-            variants
+            source,
+            products: transformedProducts,
+            articles: articles ? transformEdges(articles) : []
           }
-        })
-
-        return {
-          source,
-          products: transformedProducts,
-          articles: transformEdges(articles)
         }
+
+        return blog
       }
     })
 

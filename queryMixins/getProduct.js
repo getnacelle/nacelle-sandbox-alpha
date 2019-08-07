@@ -9,11 +9,15 @@ export default {
         return { handle: this.$route.params.handle }
       },
       update(data) {
-        let { variants, media, ...rest } = data.getProductByHandle
-        return {
-          variants: transformEdges(variants),
-          media: transformEdges(media),
-          ...rest
+        const product = data.getProductByHandle
+
+        if (product) {
+          let { variants, media, ...rest } = product
+          return {
+            variants: variants ? transformEdges(variants) : [],
+            media: media ? transformEdges(media) : [],
+            ...rest
+          }
         }
       }
     }
