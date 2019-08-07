@@ -4,15 +4,11 @@ import fetchProductRoutes from './plugins/utils/fetchProductRoutes.js'
 import fetchCollectionRoutes from './plugins/utils/fetchCollectionRoutes.js'
 import fetchBlogRoutes from './plugins/utils/fetchBlogRoutes.js'
 
-const nacelleEndpoint = 'https://hailfrequency.com/graphql/v1/space/6789'
-const nacelleToken = 'tokenForStarshipFurniture'
-const buildMode = 'universal'
-
 // Name of the localStorage item
 const AUTH_TOKEN = 'apollo-token'
 
 export default {
-  mode: buildMode,
+  mode: process.env.buildMode,
   /*
    ** Headers of the page
    */
@@ -51,6 +47,11 @@ export default {
   /*
    ** Nuxt.js modules
    */
+  env: {
+    nacelleEndpoint: process.env.NACELLE_GRAPHQL_ENDPOINT,
+    nacelleToken: process.env.NACELLE_GRAPHQL_TOKEN,
+    buildMode: process.env.BUILD_MODE
+  },
   modules: [
     // Doc:https://github.com/nuxt-community/modules/tree/master/packages/bulma
     '@nuxtjs/bulma',
@@ -61,8 +62,8 @@ export default {
   ],
 
   nacelle: {
-    endpoint: nacelleEndpoint,
-    token: nacelleToken
+    endpoint: process.env.nacelleEndpoint,
+    token: process.env.nacelleToken
   },
 
   apollo: {

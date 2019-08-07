@@ -17,7 +17,7 @@
         </div>
       </div>
     </section>
-    <button @click="fetchMore">Get More</button>
+    <!-- <button @click="fetchMore">Get More</button> -->
   </div>
 </template>
 
