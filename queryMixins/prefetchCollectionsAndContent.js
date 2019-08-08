@@ -3,13 +3,15 @@ import transformEdges from '~/plugins/utils/transformEdges'
 import getCollectionByHandle from '~/queries/getCollectionByHandle.gql'
 import getPageContentWithoutCollectionByHandle from '~/queries/getPageContentWithoutCollectionByHandle.gql'
 import getBlogByHandle from '~/queries/getBlogByHandle.gql'
-import { mapState } from 'vuex'
+import getSpace from '~/queries/getSpace.gql'
+import { mapState, mapMutations } from 'vuex'
 
 export default {
   computed: {
     ...mapState(['collectionLimit'])
   },
   methods: {
+    ...mapMutations('space', ['setLinklists']),
     prefetchCollection(collectionHandle) {
       let vm = this
       this.$apollo.addSmartQuery(collectionHandle, {
@@ -49,6 +51,21 @@ export default {
     }
   },
   mounted() {
+    this.$apollo.addSmartQuery('space', {
+      query: getSpace,
+      update(data) {
+        const space = data.getSpace
+
+        if (space) {
+          const { linklists } = space
+          this.setLinklists(linklists)
+
+          return space
+        }
+
+        return {}
+      }
+    }),
     this.$apollo.addSmartQuery('page', {
       query: getPageContentWithoutCollectionByHandle,
       variables() {

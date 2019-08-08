@@ -1,6 +1,14 @@
-body {
-  color: #3b3b3b;
-}
+/* font is Brandon Text */
+/* headers are Romain Headline */
+/* link are brandon text bold, black */
+
+/* message header background color is 3B3B3B */
+/* header is white with black font */
+
+/* secondary background color is F8F7F5 */
+
+@import url("https://fonts.googleapis.com/css?family=Noto+Serif+SC&display=swap" rel="stylesheet");
+@import url("https://use.typekit.net/jcb5tgv.css");
 
 .site-header {
   position: fixed;
@@ -240,17 +248,6 @@ body {
   opacity: 0.8;
   background-color: #3b3b3b;
 }
-/* font is Brandon Text */
-/* headers are Romain Headline */
-/* link are brandon text bold, black */
-
-/* message header background color is 3B3B3B */
-/* header is white with black font */
-
-/* secondary background color is F8F7F5 */
-
-@import url("https://fonts.googleapis.com/css?family=Noto+Serif+SC&display=swap" rel="stylesheet");
-@import url("https://use.typekit.net/jcb5tgv.css");
 
 body {
     color: #3b3b3b;
@@ -509,13 +506,13 @@ body {
   }
 
 @media screen and (min-width: 600px) and (max-width: 768px) {
-  .columns {
+  .product-grid .columns {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
   }
 
-  .column {
+  .product-grid .column {
     -webkit-box-flex: 0;
         -ms-flex: none;
             flex: none;
