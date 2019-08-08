@@ -2,6 +2,8 @@ import getCollectionByHandle from '~/queries/getCollectionByHandle.gql'
 import transformCollectionData from '~/plugins/utils/transformCollectionData'
 import { mapState } from 'vuex'
 import observeFetchMoreComponent from './observeFetchMoreComponent'
+import uniqBy from 'lodash.uniqby'
+import union from 'lodash.union'
 export default {
   computed: {
     fetchMoreCursor() {

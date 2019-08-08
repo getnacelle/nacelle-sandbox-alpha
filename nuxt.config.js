@@ -62,8 +62,8 @@ export default {
   ],
 
   nacelle: {
-    endpoint: process.env.nacelleEndpoint,
-    token: process.env.nacelleToken
+    endpoint: process.env.NACELLE_GRAPHQL_ENDPOINT,
+    token: process.env.NACELLE_GRAPHQL_TOKEN
   },
 
   apollo: {
