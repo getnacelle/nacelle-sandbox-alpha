@@ -71,6 +71,9 @@ export default {
     })
     this.$apollo.addSmartQuery('products', {
       query: getAllProducts,
+      variables() {
+        return { limit: this.collectionLimit }
+      },
       update(data) {
         const products = data.getAllProducts
 
@@ -103,7 +106,9 @@ export default {
               ? transformEdges(collection.products)
               : []
           const transformedProducts = products.map(product => {
-            const variants = product.variants ? transformEdges(product.variants) : []
+            const variants = product.variants
+              ? transformEdges(product.variants)
+              : []
 
             return {
               ...product,
