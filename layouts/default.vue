@@ -2,44 +2,23 @@
   <div>
     <site-header :logoSrc="'/starship_logo.png'" logoAlt="Starship" ref="header">
       <template v-slot:menu>
-        <nuxt-link :to="'/shop'" class="main-nav-item" @click.native="disableMenu">Shop All</nuxt-link>
-        <nuxt-link :to="'/collections/beds'" class="main-nav-item" @click.native="disableMenu">Beds</nuxt-link>
         <nuxt-link
-          :to="'/collections/blankets'"
+          v-for="(link, index) in mainMenu"
+          :key="index"
+          :to="link.to"
+          active-class="is-active"
           class="main-nav-item"
           @click.native="disableMenu"
-        >Blankets</nuxt-link>
-        <nuxt-link
-          :to="'/collections/Sheets'"
-          class="main-nav-item"
-          @click.native="disableMenu"
-        >Sheets</nuxt-link>
-        <nuxt-link
-          :to="'/collections/consoles'"
-          class="main-nav-item"
-          @click.native="disableMenu"
-        >Consoles</nuxt-link>
-        <nuxt-link :to="'/blog/'" class="main-nav-item" @click.native="disableMenu">Blog</nuxt-link>
+        >{{ link.title }}</nuxt-link>
       </template>
       <template v-slot:flyout-menu>
-        <nuxt-link :to="'/shop'" class="main-nav-item" @click.native="disableMenu">Shop</nuxt-link>
-        <nuxt-link :to="'/collections/beds'" class="main-nav-item" @click.native="disableMenu">Beds</nuxt-link>
         <nuxt-link
-          :to="'/collections/blankets'"
+          v-for="(link, index) in mainMenu"
+          :key="index"
+          :to="link.to"
           class="main-nav-item"
           @click.native="disableMenu"
-        >Blankets</nuxt-link>
-        <nuxt-link
-          :to="'/collections/Sheets'"
-          class="main-nav-item"
-          @click.native="disableMenu"
-        >Sheets</nuxt-link>
-        <nuxt-link
-          :to="'/collections/consoles'"
-          class="main-nav-item"
-          @click.native="disableMenu"
-        >Consoles</nuxt-link>
-        <nuxt-link :to="'/blog/'" class="main-nav-item" @click.native="disableMenu">Blog</nuxt-link>
+        >{{ link.title }}</nuxt-link>
       </template>
     </site-header>
     <nuxt :style="{'margin-top': `${headerHeight}px`}" />
@@ -48,8 +27,8 @@
 </template>
 
 <script>
-import { mapMutations, mapActions } from 'vuex'
-import { prefetchCollectionsAndContent } from '@nacelle/nacelle-graphql-queries-mixins'
+import { mapState, mapMutations, mapActions } from 'vuex'
+import prefetchCollectionsAndContent from '~/queryMixins/prefetchCollectionsAndContent'
 import SiteFooter from '~/components/SiteFooter'
 export default {
   components: {
@@ -64,6 +43,24 @@ export default {
   data() {
     return {
       headerHeight: null
+    }
+  },
+  computed: {
+    ...mapState('space', ['linklists']),
+    mainMenu() {
+      if (this.linklists) {
+        const linklist = this.linklists.find(
+          linklist => linklist.handle === 'main-menu'
+        )
+
+        if (linklist) {
+          return linklist.links
+        }
+
+        return []
+      }
+
+      return []
     }
   },
   created() {},

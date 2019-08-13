@@ -1,0 +1,12 @@
+query GetSpace {
+  getSpace {
+    linklists {
+      handle,
+      links {
+        title,
+        to,
+        type
+      }
+    }
+  }
+}
