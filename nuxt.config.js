@@ -8,7 +8,7 @@ import fetchBlogRoutes from './plugins/utils/fetchBlogRoutes.js'
 const AUTH_TOKEN = 'apollo-token'
 
 export default {
-  mode: process.env.buildMode,
+  mode: process.env.BUILD_MODE,
   /*
    ** Headers of the page
    */

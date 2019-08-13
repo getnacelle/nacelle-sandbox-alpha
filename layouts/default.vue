@@ -49,7 +49,7 @@
 
 <script>
 import { mapMutations, mapActions } from 'vuex'
-import prefetchCollectionsAndContent from '~/queryMixins/prefetchCollectionsAndContent'
+import { prefetchCollectionsAndContent } from '@nacelle/nacelle-graphql-queries-mixins'
 import SiteFooter from '~/components/SiteFooter'
 export default {
   components: {

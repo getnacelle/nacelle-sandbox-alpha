@@ -23,8 +23,7 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex'
-import ProductCardWrapper from '~/components/ProductCardWrapper'
-import getCollection from '~/queryMixins/getCollection'
+import { getCollection } from '@nacelle/nacelle-graphql-queries-mixins'
 
 export default {
   name: 'home',
@@ -32,9 +31,6 @@ export default {
     return {
       collection: null
     }
-  },
-  components: {
-    ProductCardWrapper
   },
   mixins: [getCollection],
   computed: {

@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import getBlog from '~/queryMixins/getBlog'
+import { getBlog } from '@nacelle/nacelle-graphql-queries-mixins'
 import ArticlePreview from '~/components/ArticlePreview'
 
 export default {

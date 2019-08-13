@@ -29,7 +29,7 @@
 <script>
 import { mapMutations } from 'vuex'
 import ProductShop from '~/components/ProductShop'
-import getProduct from '~/queryMixins/getProduct'
+import { getProduct } from '@nacelle/nacelle-graphql-queries-mixins'
 
 export default {
   components: {

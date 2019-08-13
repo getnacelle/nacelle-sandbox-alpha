@@ -40,7 +40,7 @@ import Vue from 'vue'
 
 import FeaturedMedia from '~/components/FeaturedMedia'
 import ShopLook from '~/components/ShopLook'
-import getBlogArticle from '~/queryMixins/getBlogArticle'
+import { getBlogArticle } from '@nacelle/nacelle-graphql-queries-mixins'
 export default {
   components: {
     FeaturedMedia,
@@ -55,10 +55,7 @@ export default {
   mixins: [getBlogArticle],
   computed: {
     content() {
-      if (
-        this.article &&
-        this.article.contentHtml
-      ) {
+      if (this.article && this.article.contentHtml) {
         return this.article.contentHtml
       }
 

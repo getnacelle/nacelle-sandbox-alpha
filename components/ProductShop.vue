@@ -43,7 +43,6 @@
 
 <script>
 import { mapState, mapMutations, mapGetters, mapActions } from 'vuex'
-import getProductVariant from '~/queryMixins/getProductVariant'
 export default {
   props: {
     product: {
@@ -67,7 +66,6 @@ export default {
       }
     }
   },
-  mixins: [getProductVariant],
   methods: {
     ...mapMutations('cart', ['showCart'])
   }

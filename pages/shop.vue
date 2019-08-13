@@ -12,7 +12,7 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex'
-import getShopPage from '~/queryMixins/getShopPage'
+import { getShopPage } from '@nacelle/nacelle-graphql-queries-mixins'
 
 export default {
   name: 'home',
