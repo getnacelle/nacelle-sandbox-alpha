@@ -1,8 +1,8 @@
-import getAllProducts from '@nacelle/nacelle-graphql-queries-mixins/src/queries/getAllProducts'
+import getAllProducts from '@nacelle/nacelle-graphql-queries-mixins/src/queries/getAllProducts.gql'
 import transformEdges from '~/plugins/utils/transformEdges'
-import getCollectionByHandle from '@nacelle/nacelle-graphql-queries-mixins/src/queries/getCollectionByHandle'
-import getPageContentWithoutCollectionByHandle from '@nacelle/nacelle-graphql-queries-mixins/src/queries/getPageContentWithoutCollectionByHandle'
-import getBlogByHandle from '@nacelle/nacelle-graphql-queries-mixins/src/queries/getBlogByHandle'
+import getCollectionByHandle from '@nacelle/nacelle-graphql-queries-mixins/src/queries/getCollectionByHandle.gql'
+import getPageContentWithoutCollectionByHandle from '@nacelle/nacelle-graphql-queries-mixins/src/queries/getPageContentWithoutCollectionByHandle.gql'
+import getBlogByHandle from '@nacelle/nacelle-graphql-queries-mixins/src/queries/getBlogByHandle.gql'
 import getSpace from '~/queries/getSpace.gql'
 import { mapState, mapMutations } from 'vuex'
 
