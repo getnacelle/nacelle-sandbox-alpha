@@ -278,9 +278,10 @@ body {
     letter-spacing: .016875rem;
   }
   
+  .main-nav a.is-active,
   .main-nav a:hover,
   .main-nav a:focus {
-    font-weight: 600;
+    font-weight: 600 !important;
   }
   
   .main-nav-cart {
