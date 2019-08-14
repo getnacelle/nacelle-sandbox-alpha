@@ -1,8 +1,8 @@
-import getAllProducts from '~/queries/getAllProducts.gql'
+import getAllProducts from '@nacelle/nacelle-graphql-queries-mixins/src/queries/getAllProducts'
 import transformEdges from '~/plugins/utils/transformEdges'
-import getCollectionByHandle from '~/queries/getCollectionByHandle.gql'
-import getPageContentWithoutCollectionByHandle from '~/queries/getPageContentWithoutCollectionByHandle.gql'
-import getBlogByHandle from '~/queries/getBlogByHandle.gql'
+import getCollectionByHandle from '@nacelle/nacelle-graphql-queries-mixins/src/queries/getCollectionByHandle'
+import getPageContentWithoutCollectionByHandle from '@nacelle/nacelle-graphql-queries-mixins/src/queries/getPageContentWithoutCollectionByHandle'
+import getBlogByHandle from '@nacelle/nacelle-graphql-queries-mixins/src/queries/getBlogByHandle'
 import getSpace from '~/queries/getSpace.gql'
 import { mapState, mapMutations } from 'vuex'
 
@@ -66,26 +66,26 @@ export default {
         return {}
       }
     }),
-    this.$apollo.addSmartQuery('page', {
-      query: getPageContentWithoutCollectionByHandle,
-      variables() {
-        return { handle: 'shop' }
-      },
-      update(data) {
-        const page = data.getBlogByHandle
+      this.$apollo.addSmartQuery('page', {
+        query: getPageContentWithoutCollectionByHandle,
+        variables() {
+          return { handle: 'shop' }
+        },
+        update(data) {
+          const page = data.getBlogByHandle
 
-        if (page) {
-          const { source, articles } = page
+          if (page) {
+            const { source, articles } = page
 
-          return {
-            source,
-            content: articles ? transformEdges(articles) : []
+            return {
+              source,
+              content: articles ? transformEdges(articles) : []
+            }
           }
-        }
 
-        return page
-      }
-    })
+          return page
+        }
+      })
     this.$apollo.addSmartQuery('products', {
       query: getAllProducts,
       variables() {
