@@ -1,7 +1,7 @@
 <template>
   <div class="featured-media">
     <figure
-      v-if="source && type === 'image'"
+      v-if="source && type.includes('image')"
     >
       <img :src="media.src">
     </figure>

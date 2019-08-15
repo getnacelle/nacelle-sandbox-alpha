@@ -2,9 +2,9 @@
   <div class="blog">
     <section v-if="featuredArticle" class="blog-feature">
       <article-preview
-        :title="featuredArticle.title"
-        :handle="featuredArticle.handle"
-        :excerpt="featuredArticle.excerpt"
+        :title="featuredArticle.title || ''"
+        :handle="featuredArticle.handle || ''"
+        :excerpt="featuredArticle.excerpt || ''"
         :tags="featuredArticle.tags"
         :featuredMedia="featuredArticle.featuredMedia"
         :isFeatured="true"
@@ -19,9 +19,9 @@
             class="column is-4-desktop is-6-tablet"
           >
             <article-preview
-              :title="article.title"
-              :handle="article.handle"
-              :excerpt="article.excerpt"
+              :title="article.title || ''"
+              :handle="article.handle || ''"
+              :excerpt="article.excerpt || ''"
               :tags="article.tags"
               :featuredMedia="article.featuredMedia"
             />
