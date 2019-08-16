@@ -79,7 +79,7 @@ export default {
   },
 
   build: {
-    analyze: true,
+    // analyze: true,
     postcss: {
       preset: {
         features: {
