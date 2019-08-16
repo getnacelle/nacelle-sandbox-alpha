@@ -1,5 +1,6 @@
 export const state = () => ({
-  linklists: []
+  linklists: [],
+  facebookCatalogID: '12345'
 })
 
 export const mutations = {

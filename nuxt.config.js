@@ -24,6 +24,15 @@ export default {
       }
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+
+    link: [
+      {
+        rel: 'stylesheet',
+        type: 'text/css',
+        href:
+          'https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css'
+      }
+    ],
     link: [
       {
         rel: 'stylesheet',
@@ -44,33 +53,18 @@ export default {
    ** Plugins to load before mounting the App
    */
 
-  /*
-   ** Nuxt.js modules
-   */
   env: {
     nacelleEndpoint: process.env.NACELLE_GRAPHQL_ENDPOINT,
     nacelleToken: process.env.NACELLE_GRAPHQL_TOKEN,
     buildMode: process.env.BUILD_MODE
   },
-  modules: [
-    // Doc:https://github.com/nuxt-community/modules/tree/master/packages/bulma
-    '@nuxtjs/bulma',
-    '@nuxtjs/pwa',
-    '@nuxtjs/apollo',
-    '@nacelle/nacelle-nuxt-module',
-    '@nuxtjs/dotenv'
-  ],
+  modules: ['@nuxtjs/pwa', '@nacelle/nacelle-nuxt-module', '@nuxtjs/dotenv'],
 
   nacelle: {
     endpoint: process.env.NACELLE_GRAPHQL_ENDPOINT,
-    token: process.env.NACELLE_GRAPHQL_TOKEN
-  },
-
-  apollo: {
-    includeNodeModules: true,
-    clientConfigs: {
-      default: '~/plugins/apollo-default-config.js'
-    }
+    token: process.env.NACELLE_GRAPHQL_TOKEN,
+    gaID: process.env.NACELLE_GA_ID,
+    fbID: process.env.NACELLE_FB_ID
   },
 
   generate: {
@@ -85,6 +79,7 @@ export default {
   },
 
   build: {
+    // analyze: true,
     postcss: {
       preset: {
         features: {
