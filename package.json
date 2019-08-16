@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@nacelle/nacelle-graphql-queries-mixins": "0.0.12",
-    "@nacelle/nacelle-nuxt-module": "0.0.105",
+    "@nacelle/nacelle-nuxt-module": "0.0.106",
     "@nuxtjs/apollo": "^4.0.0-rc8.2",
     "@nuxtjs/axios": "^5.3.6",
     "@nuxtjs/bulma": "^1.2.1",
