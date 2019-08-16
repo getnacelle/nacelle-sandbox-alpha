@@ -1,13 +1,13 @@
 <template>
   <div class="blog">
     <section v-if="featuredArticle" class="blog-feature">
-      <article-preview
-        :title="featuredArticle.title"
-        :handle="featuredArticle.handle"
-        :excerpt="featuredArticle.excerpt"
+      <blog-article-preview
+        :title="featuredArticle.title || ''"
+        :handle="featuredArticle.handle || ''"
+        :excerpt="featuredArticle.excerpt || ''"
         :tags="featuredArticle.tags"
-        :featuredMedia="featuredArticle.featuredMedia"
-        :isFeatured="true"
+        :featured-media="featuredArticle.featuredMedia"
+        :is-featured="true"
       />
     </section>
     <section class="section">
@@ -18,12 +18,12 @@
             :key="article.id"
             class="column is-4-desktop is-6-tablet"
           >
-            <article-preview
-              :title="article.title"
-              :handle="article.handle"
-              :excerpt="article.excerpt"
+            <blog-article-preview
+              :title="article.title || ''"
+              :handle="article.handle || ''"
+              :excerpt="article.excerpt || ''"
               :tags="article.tags"
-              :featuredMedia="article.featuredMedia"
+              :featured-media="article.featuredMedia"
             />
           </div>
         </div>
@@ -34,12 +34,8 @@
 
 <script>
 import { getBlog } from '@nacelle/nacelle-graphql-queries-mixins'
-import ArticlePreview from '~/components/ArticlePreview'
 
 export default {
-  components: {
-    ArticlePreview
-  },
   mixins: [getBlog],
   computed: {
     blogProducts() {
