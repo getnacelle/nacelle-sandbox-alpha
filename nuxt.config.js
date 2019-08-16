@@ -58,13 +58,23 @@ export default {
     nacelleToken: process.env.NACELLE_GRAPHQL_TOKEN,
     buildMode: process.env.BUILD_MODE
   },
-  modules: ['@nuxtjs/pwa', '@nacelle/nacelle-nuxt-module', '@nuxtjs/dotenv'],
+  modules: [
+    '@nuxtjs/pwa',
+    '@nacelle/nacelle-nuxt-module',
+    '@nuxtjs/dotenv',
+    '@nacelle/nacelle-klaviyo-nuxt-module'
+  ],
 
   nacelle: {
     endpoint: process.env.NACELLE_GRAPHQL_ENDPOINT,
     token: process.env.NACELLE_GRAPHQL_TOKEN,
     gaID: process.env.NACELLE_GA_ID,
-    fbID: process.env.NACELLE_FB_ID
+    fbID: process.env.NACELLE_FB_ID,
+    klaviyo: {
+      companyId: 'KPQ5Cy',
+      defaultListId: 'HCtW5s',
+      defaultEmbedCode: '<div class="klaviyo-form-JCCXJ5"></div>'
+    }
   },
 
   generate: {
