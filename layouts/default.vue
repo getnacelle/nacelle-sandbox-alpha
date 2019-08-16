@@ -23,16 +23,21 @@
     </site-header>
     <nuxt :style="{'margin-top': `${headerHeight}px`}" />
     <site-footer />
+    <event-dispatcher />
   </div>
 </template>
 
 <script>
 import { mapState, mapMutations, mapActions } from 'vuex'
+import localforage from 'localforage'
+import EventDispatcher from '~/components/EventDispatcher'
 import prefetchCollectionsAndContent from '~/queryMixins/prefetchCollectionsAndContent'
 import SiteFooter from '~/components/SiteFooter'
+
 export default {
   components: {
-    SiteFooter
+    SiteFooter,
+    EventDispatcher
   },
   methods: {
     ...mapMutations('menu', ['disableMenu']),
@@ -69,6 +74,10 @@ export default {
     this.updateLocalCart()
     this.setFreeShippingThreshold(100)
     this.hideCart()
+    if (process.env.DEV_MODE == 'true') {
+      console.log('dev mode active!')
+      localforage.clear()
+    }
   }
 }
 </script>
