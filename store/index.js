@@ -5,5 +5,7 @@ export const state = () => ({
 export const mutations = {}
 
 export const actions = {
-  nuxtServerInit({ commit, dispatch }) {}
+  async nuxtServerInit({ dispatch }) {
+    await dispatch('space/fetchSpaceDetails')
+  }
 }

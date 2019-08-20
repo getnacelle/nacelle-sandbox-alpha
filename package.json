@@ -13,7 +13,7 @@
     "heroku-postbuild": "npm run build"
   },
   "dependencies": {
-    "@nacelle/nacelle-graphql-queries-mixins": "0.0.12",
+    "@nacelle/nacelle-graphql-queries-mixins": "0.0.17",
     "@nacelle/nacelle-klaviyo-nuxt-module": "0.0.2",
     "@nacelle/nacelle-nuxt-module": "0.0.108",
     "@nuxtjs/apollo": "^4.0.0-rc8.2",

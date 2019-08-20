@@ -11,7 +11,6 @@ export default {
     ...mapState(['collectionLimit'])
   },
   methods: {
-    ...mapMutations('space', ['setLinklists']),
     prefetchCollection(collectionHandle) {
       let vm = this
       this.$apollo.addSmartQuery(collectionHandle, {
@@ -51,41 +50,27 @@ export default {
     }
   },
   mounted() {
-    this.$apollo.addSmartQuery('space', {
-      query: getSpace,
+    this.$apollo.addSmartQuery('page', {
+      query: getPageContentWithoutCollectionByHandle,
+      variables() {
+        return { handle: 'shop' }
+      },
       update(data) {
-        const space = data.getSpace
+        const page = data.getBlogByHandle
 
-        if (space) {
-          const { linklists } = space
-          this.setLinklists(linklists)
+        if (page) {
+          const { source, articles } = page
 
-          return space
-        }
-
-        return {}
-      }
-    }),
-      this.$apollo.addSmartQuery('page', {
-        query: getPageContentWithoutCollectionByHandle,
-        variables() {
-          return { handle: 'shop' }
-        },
-        update(data) {
-          const page = data.getBlogByHandle
-
-          if (page) {
-            const { source, articles } = page
-
-            return {
-              source,
-              content: articles ? transformEdges(articles) : []
-            }
+          return {
+            source,
+            content: articles ? transformEdges(articles) : []
           }
-
-          return page
         }
-      })
+
+        return page
+      }
+    })
+    
     this.$apollo.addSmartQuery('products', {
       query: getAllProducts,
       variables() {

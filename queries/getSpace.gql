@@ -1,10 +1,18 @@
 query GetSpace {
   getSpace {
+    id
+    name
+    domain
+    metafields {
+      namespace
+      key
+      value
+    }
     linklists {
-      handle,
+      handle
       links {
-        title,
-        to,
+        title
+        to
         type
       }
     }
