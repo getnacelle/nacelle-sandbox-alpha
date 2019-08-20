@@ -33,7 +33,8 @@ import localforage from 'localforage'
 import EventDispatcher from '~/components/EventDispatcher'
 import prefetchCollectionsAndContent from '~/queryMixins/prefetchCollectionsAndContent'
 import SiteFooter from '~/components/SiteFooter'
-
+import getUserData from '~/mixins/getUserData'
+import * as Cookies from 'es-cookie'
 export default {
   components: {
     SiteFooter,
@@ -44,7 +45,7 @@ export default {
     ...mapMutations('cart', ['hideCart', 'setFreeShippingThreshold']),
     ...mapActions('cart', ['updateLocalCart'])
   },
-  mixins: [prefetchCollectionsAndContent],
+  mixins: [prefetchCollectionsAndContent, getUserData],
   data() {
     return {
       headerHeight: null
@@ -73,7 +74,12 @@ export default {
     this.headerHeight = this.$refs.header.$el.clientHeight
     this.updateLocalCart()
     this.setFreeShippingThreshold(100)
+
+    Cookies.set('user-data', JSON.stringify({ test: 'hi' }), {
+      domain: 'localhost'
+    })
     this.hideCart()
+    this.getUserData()
     if (process.env.DEV_MODE == 'true') {
       console.log('dev mode active!')
       localforage.clear()

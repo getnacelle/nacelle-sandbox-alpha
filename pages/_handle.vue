@@ -1,11 +1,24 @@
 <template>
-  <div>{{this.$route.params.handle}}</div>
+  <div></div>
 </template>
 
 <script>
 import { getPage } from '@nacelle/nacelle-graphql-queries-mixins'
 export default {
-  mixins: [getPage]
+  data() {
+    return {
+      handle: this.$route.params.handle
+    }
+  },
+  mixins: [getPage],
+  mounted() {
+    if (this.page == null) {
+      this.$nuxt.error({
+        statusCode: 404,
+        message: 'That page could not be found'
+      })
+    }
+  }
 }
 </script>
 
