@@ -56,6 +56,14 @@ export default {
 
       return null
     }
+  },
+  mounted() {
+    if (this.collection.products == null) {
+      this.$nuxt.error({
+        statusCode: 404,
+        message: 'That collection could not be found'
+      })
+    }
   }
 }
 </script>

@@ -8,7 +8,15 @@
 import { getBlogArticle } from '@nacelle/nacelle-graphql-queries-mixins'
 
 export default {
-  mixins: [getBlogArticle]
+  mixins: [getBlogArticle],
+  mounted() {
+    if (JSON.stringify(this.article) == '{}') {
+      this.$nuxt.error({
+        statusCode: 404,
+        message: 'That article could not be found'
+      })
+    }
+  }
 }
 </script>
 

@@ -8,6 +8,11 @@
 <script>
 import { getPage } from '@nacelle/nacelle-graphql-queries-mixins'
 export default {
+  data() {
+    return {
+      handle: 'homepage'
+    }
+  },
   mixins: [getPage],
   computed: {
     sourceComponent() {

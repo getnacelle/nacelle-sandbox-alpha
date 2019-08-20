@@ -5,7 +5,7 @@
         <product-shop v-if="product" :product="product" />
       </div>
     </section>
-    <section class="section product-meta">
+    <section class="section product-meta" v-if="product">
       <div class="container">
         <div class="columns">
           <div class="column is-7">
@@ -38,6 +38,15 @@ export default {
   mixins: [getProduct],
   methods: {
     ...mapMutations('cart', ['showCart'])
+  },
+  beforeMount() {
+    if (this.product == null) {
+      console.log('nothing here')
+      this.$nuxt.error({
+        statusCode: 404,
+        message: 'That product could not be found'
+      })
+    }
   }
 }
 </script>
