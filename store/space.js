@@ -35,6 +35,14 @@ export const mutations = {
   }
 }
 
+export const getters = {
+  getMetatag: (state) => (tag) => {
+    return state.metafields.find(field => (
+      field.namespace === 'metatag' && field.key === tag
+    ))
+  }
+}
+
 export const actions = {
   fetchSpaceDetails({ commit }) {
     let client = this.app.apolloProvider.defaultClient

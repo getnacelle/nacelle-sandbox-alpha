@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapActions } from 'vuex'
+import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 import localforage from 'localforage'
 import EventDispatcher from '~/components/EventDispatcher'
 import prefetchCollectionsAndContent from '~/queryMixins/prefetchCollectionsAndContent'
@@ -52,6 +52,7 @@ export default {
   },
   computed: {
     ...mapState('space', ['linklists']),
+    ...mapGetters('space', ['getMetatag']),
     mainMenu() {
       if (this.linklists) {
         const linklist = this.linklists.find(
@@ -77,6 +78,53 @@ export default {
     if (process.env.DEV_MODE == 'true') {
       console.log('dev mode active!')
       localforage.clear()
+    }
+  },
+  head() {
+    const properties = {}
+    const meta = []
+    const title = this.getMetatag('title')
+    const description = this.getMetatag('description')
+    const image = this.getMetatag('og:image')
+
+    if (title) {
+      properties.title = title.value
+      meta.push({
+        hid: 'og:title',
+        property: 'og:title',
+        content: title.value
+      })
+      meta.push({
+        hid: 'og:site_name',
+        property: 'og:site_name',
+        content: title.value
+      })
+    }
+
+    if (description) {
+      meta.push({
+        hid: 'description',
+        name: 'description',
+        content: description.value
+      })
+      meta.push({
+        hid: 'og:description',
+        property: 'og:description',
+        content: description.value
+      })
+    }
+
+    if (image) {
+      meta.push({
+        hid: 'og:image',
+        property: 'og:image',
+        content: image.value
+      })
+    }
+
+    return {
+      ...properties,
+      meta
     }
   }
 }
