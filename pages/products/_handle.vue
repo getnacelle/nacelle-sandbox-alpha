@@ -2,7 +2,7 @@
   <div class="product">
     <section class="section">
       <div class="container">
-        <product-shop v-if="product" :product="product" />
+        <product-details v-if="product" :product="product" />
       </div>
     </section>
     <section class="section product-meta" v-if="product">
@@ -28,12 +28,12 @@
 
 <script>
 import { mapMutations } from 'vuex'
-import ProductShop from '~/components/ProductShop'
+import ProductDetails from '~/components/ProductDetails'
 import { getProduct } from '@nacelle/nacelle-graphql-queries-mixins'
 
 export default {
   components: {
-    ProductShop
+    ProductDetails
   },
   mixins: [getProduct],
   methods: {

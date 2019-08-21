@@ -30,22 +30,18 @@
 <script>
 import { mapState, mapMutations, mapActions } from 'vuex'
 import localforage from 'localforage'
-import EventDispatcher from '~/components/EventDispatcher'
 import prefetchCollectionsAndContent from '~/queryMixins/prefetchCollectionsAndContent'
 import SiteFooter from '~/components/SiteFooter'
-import getUserData from '~/mixins/getUserData'
-import * as Cookies from 'es-cookie'
 export default {
   components: {
-    SiteFooter,
-    EventDispatcher
+    SiteFooter
   },
   methods: {
     ...mapMutations('menu', ['disableMenu']),
     ...mapMutations('cart', ['hideCart', 'setFreeShippingThreshold']),
     ...mapActions('cart', ['updateLocalCart'])
   },
-  mixins: [prefetchCollectionsAndContent, getUserData],
+  mixins: [prefetchCollectionsAndContent],
   data() {
     return {
       headerHeight: null
@@ -75,11 +71,8 @@ export default {
     this.updateLocalCart()
     this.setFreeShippingThreshold(100)
 
-    Cookies.set('user-data', JSON.stringify({ test: 'hi' }), {
-      domain: 'localhost'
-    })
     this.hideCart()
-    this.getUserData()
+
     if (process.env.DEV_MODE == 'true') {
       console.log('dev mode active!')
       localforage.clear()

@@ -11,39 +11,19 @@
       </p>
       <product-description :description="product.description" />
       <product-variant-select :product="product" :variant="currentVariant" />
-      <!-- <product-options
-        v-if="product.options[0].values.length > 1"
-        :options="product.options"
-        v-on:selectedOptions="captureOptions"
-      />
-      <div class="columns">
-        <div class="column is-half">
-          <product-quantity-update
-            :image="product.featuredMedia"
-            :title="product.title"
-            :productId="product.id"
-            :handle="product.handle"
-            :variant="variant || {}"
-          />
-        </div>
-        <div class="column is-half">
-          <product-add-to-cart-button
-            :image="product.featuredMedia"
-            :title="product.title"
-            :productId="product.id"
-            :handle="product.handle"
-            :variant="variant || {}"
-            @click.native="showCart"
-          />
-        </div>
-      </div>-->
     </div>
   </div>
 </template>
 
 <script>
 import { mapState, mapMutations, mapGetters, mapActions } from 'vuex'
+//import your own components here
+//import ProductSpecial from '~/components/ComponentName'
 export default {
+  components:{
+    //export your components by name here:
+    // ComponentName
+  },
   props: {
     product: {
       type: Object,
