@@ -1,26 +1,6 @@
 <template>
   <div>
-    <site-header :logoSrc="'/starship_logo.png'" logoAlt="Starship" ref="header">
-      <template v-slot:menu>
-        <nuxt-link
-          v-for="(link, index) in mainMenu"
-          :key="index"
-          :to="link.to"
-          active-class="is-active"
-          class="main-nav-item"
-          @click.native="disableMenu"
-        >{{ link.title }}</nuxt-link>
-      </template>
-      <template v-slot:flyout-menu>
-        <nuxt-link
-          v-for="(link, index) in mainMenu"
-          :key="index"
-          :to="link.to"
-          class="main-nav-item"
-          @click.native="disableMenu"
-        >{{ link.title }}</nuxt-link>
-      </template>
-    </site-header>
+    <global-header ref="header"/>
     <nuxt :style="{'margin-top': `${headerHeight}px`}" />
     <site-footer />
     <event-dispatcher />
@@ -32,15 +12,16 @@ import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 import localforage from 'localforage'
 import EventDispatcher from '~/components/EventDispatcher'
 import prefetchCollectionsAndContent from '~/queryMixins/prefetchCollectionsAndContent'
+import GlobalHeader from '~/components/GlobalHeader'
 import SiteFooter from '~/components/SiteFooter'
 
 export default {
   components: {
+    GlobalHeader,
     SiteFooter,
     EventDispatcher
   },
   methods: {
-    ...mapMutations('menu', ['disableMenu']),
     ...mapMutations('cart', ['hideCart', 'setFreeShippingThreshold']),
     ...mapActions('cart', ['updateLocalCart'])
   },
@@ -51,23 +32,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('space', ['linklists']),
     ...mapGetters('space', ['getMetatag']),
-    mainMenu() {
-      if (this.linklists) {
-        const linklist = this.linklists.find(
-          linklist => linklist.handle === 'main-menu'
-        )
-
-        if (linklist) {
-          return linklist.links
-        }
-
-        return []
-      }
-
-      return []
-    }
   },
   created() {},
   mounted() {
