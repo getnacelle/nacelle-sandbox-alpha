@@ -107,14 +107,14 @@ export default {
       }
     }
   },
-  mounted() {
-    if (this.collection && this.collection.products == null) {
-      this.$nuxt.error({
-        statusCode: 404,
-        message: 'That collection could not be found'
-      })
-    }
-  }
+  // mounted() {
+  //   if (this.collection && this.collection.products == null) {
+  //     this.$nuxt.error({
+  //       statusCode: 404,
+  //       message: 'That collection could not be found'
+  //     })
+  //   }
+  // }
 }
 </script>
 <style lang="scss" scoped>

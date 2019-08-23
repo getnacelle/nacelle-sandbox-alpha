@@ -131,7 +131,7 @@ export default {
 
     this.prefetchCollection('beds')
     this.prefetchCollection('blankets')
-    this.prefetchCollection('Sheets')
+    this.prefetchCollection('sheets')
     this.prefetchCollection('consoles')
   }
 }
