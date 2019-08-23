@@ -1,26 +1,38 @@
 <template>
   <div class="article-preview nacelle" :class="{ 'is-featured': isFeatured }">
-    <nuxt-link :to="link">
-      <interface-featured-media :media="featuredMedia" />
-    </nuxt-link>
-    <div class="article-preview-content">
-      <div class="article-preview-inner content">
-        <h5 v-if="tags && tags.length > 0">{{ tags.join(', ') }}</h5>
-        <nuxt-link :to="link">
-          <h3 class="title is-4">
-            {{ title }}
-          </h3>
-        </nuxt-link>
-        <p>
-          {{ excerpt }}
-        </p>
-        <p>
+    <slot name="media" :featuredMedia="featuredMedia">
+      <nuxt-link :to="link">
+        <interface-featured-media :media="featuredMedia" />
+      </nuxt-link>
+    </slot>
+    <slot
+      name="details"
+      :title="title"
+      :excerpt="excerpt"
+      :handle="handle"
+      :readMoreText="readMoreText"
+      :link="link"
+      :tags="tags"
+    >
+      <div class="article-preview-content">
+        <div class="article-preview-inner content">
+          <h5 v-if="tags && tags.length > 0">{{ tags.join(', ') }}</h5>
           <nuxt-link :to="link">
-            {{ readMoreText }}
+            <h3 class="title is-4">
+              {{ title }}
+            </h3>
           </nuxt-link>
-        </p>
+          <p>
+            {{ excerpt }}
+          </p>
+          <p>
+            <nuxt-link :to="link">
+              {{ readMoreText }}
+            </nuxt-link>
+          </p>
+        </div>
       </div>
-    </div>
+    </slot>
   </div>
 </template>
 
