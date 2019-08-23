@@ -1,11 +1,10 @@
 require('dotenv').config()
 
-import fetchProductRoutes from './plugins/utils/fetchProductRoutes.js'
-import fetchCollectionRoutes from './plugins/utils/fetchCollectionRoutes.js'
-import fetchBlogRoutes from './plugins/utils/fetchBlogRoutes.js'
+import fetchAllRoutes from './plugins/utils/fetchAllRoutes'
 
-// Name of the localStorage item
-const AUTH_TOKEN = 'apollo-token'
+const fetchRoutes = async () => {
+  return await fetchAllRoutes()
+}
 
 export default {
   mode: process.env.BUILD_MODE,
@@ -49,21 +48,29 @@ export default {
    ** Global CSS
    */
   css: ['@nacelle/nacelle-vue-components/dist/base-styles.css'],
-  /*
-   ** Plugins to load before mounting the App
-   */
 
   env: {
     nacelleEndpoint: process.env.NACELLE_GRAPHQL_ENDPOINT,
     nacelleToken: process.env.NACELLE_GRAPHQL_TOKEN,
     buildMode: process.env.BUILD_MODE
   },
+
   modules: [
     '@nuxtjs/pwa',
-    '@nacelle/nacelle-nuxt-module',
     '@nuxtjs/dotenv',
-    '@nacelle/nacelle-klaviyo-nuxt-module'
+    '@nacelle/nacelle-nuxt-module',
+    '@nacelle/nacelle-klaviyo-nuxt-module',
+    '@nuxtjs/sitemap'
   ],
+
+  sitemap: {
+    gzip: true,
+    routes() {
+      return fetchRoutes().then(routes => {
+        return routes
+      })
+    }
+  },
 
   nacelle: {
     endpoint: process.env.NACELLE_GRAPHQL_ENDPOINT,
@@ -80,11 +87,7 @@ export default {
   generate: {
     interval: 100,
     routes: async () => {
-      const products = await fetchProductRoutes()
-      const collections = await fetchCollectionRoutes()
-      const articles = await fetchBlogRoutes()
-
-      return [...products, ...collections, ...articles]
+      return await fetchAllRoutes()
     }
   },
 
@@ -98,8 +101,5 @@ export default {
       }
     },
     transpile: ['@nacelle/nacelle-vue-components']
-    /*
-     ** You can extend webpack config here
-     */
   }
 }

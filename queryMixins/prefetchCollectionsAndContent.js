@@ -3,7 +3,7 @@ import transformEdges from '~/plugins/utils/transformEdges'
 import getCollectionByHandle from '@nacelle/nacelle-graphql-queries-mixins/src/queries/getCollectionByHandle.gql'
 import getPageContentWithoutCollectionByHandle from '@nacelle/nacelle-graphql-queries-mixins/src/queries/getPageContentWithoutCollectionByHandle.gql'
 import getBlogByHandle from '@nacelle/nacelle-graphql-queries-mixins/src/queries/getBlogByHandle.gql'
-import getSpace from '~/queries/getSpace.gql'
+import getSpace from '@nacelle/nacelle-graphql-queries-mixins/src/queries/getSpace.gql'
 import { mapState, mapMutations } from 'vuex'
 
 export default {
@@ -70,7 +70,7 @@ export default {
         return page
       }
     })
-    
+
     this.$apollo.addSmartQuery('products', {
       query: getAllProducts,
       variables() {

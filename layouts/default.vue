@@ -1,69 +1,36 @@
 <template>
   <div>
-    <site-header :logoSrc="'/starship_logo.png'" logoAlt="Starship" ref="header">
-      <template v-slot:menu>
-        <nuxt-link
-          v-for="(link, index) in mainMenu"
-          :key="index"
-          :to="link.to"
-          active-class="is-active"
-          class="main-nav-item"
-          @click.native="disableMenu"
-        >{{ link.title }}</nuxt-link>
-      </template>
-      <template v-slot:flyout-menu>
-        <nuxt-link
-          v-for="(link, index) in mainMenu"
-          :key="index"
-          :to="link.to"
-          class="main-nav-item"
-          @click.native="disableMenu"
-        >{{ link.title }}</nuxt-link>
-      </template>
-    </site-header>
+    <global-header ref="header" />
     <nuxt :style="{'margin-top': `${headerHeight}px`}" />
     <site-footer />
-    <event-dispatcher />
+    <!-- <event-dispatcher /> -->
   </div>
 </template>
 
 <script>
-import { mapState, mapMutations, mapActions } from 'vuex'
+import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 import localforage from 'localforage'
 import prefetchCollectionsAndContent from '~/queryMixins/prefetchCollectionsAndContent'
+import GlobalHeader from '~/components/GlobalHeader'
 import SiteFooter from '~/components/SiteFooter'
 export default {
   components: {
+    GlobalHeader,
     SiteFooter
   },
   methods: {
-    ...mapMutations('menu', ['disableMenu']),
     ...mapMutations('cart', ['hideCart', 'setFreeShippingThreshold']),
-    ...mapActions('cart', ['updateLocalCart'])
+    ...mapActions('cart', ['updateLocalCart']),
+    ...mapActions('user', ['readSession'])
   },
-  mixins: [prefetchCollectionsAndContent],
+  // mixins: [prefetchCollectionsAndContent],
   data() {
     return {
       headerHeight: null
     }
   },
   computed: {
-    ...mapState('space', ['linklists']),
-    mainMenu() {
-      if (this.linklists) {
-        const linklist = this.linklists.find(
-          linklist => linklist.handle === 'main-menu'
-        )
-
-        if (linklist) {
-          return linklist.links
-        }
-
-        return []
-      }
-
-      return []
-    }
+    ...mapGetters('space', ['getMetatag'])
   },
   created() {},
   mounted() {
@@ -76,6 +43,54 @@ export default {
     if (process.env.DEV_MODE == 'true') {
       console.log('dev mode active!')
       localforage.clear()
+    }
+    this.readSession()
+  },
+  head() {
+    const properties = {}
+    const meta = []
+    const title = this.getMetatag('title')
+    const description = this.getMetatag('description')
+    const image = this.getMetatag('og:image')
+
+    if (title) {
+      properties.title = title.value
+      meta.push({
+        hid: 'og:title',
+        property: 'og:title',
+        content: title.value
+      })
+      meta.push({
+        hid: 'og:site_name',
+        property: 'og:site_name',
+        content: title.value
+      })
+    }
+
+    if (description) {
+      meta.push({
+        hid: 'description',
+        name: 'description',
+        content: description.value
+      })
+      meta.push({
+        hid: 'og:description',
+        property: 'og:description',
+        content: description.value
+      })
+    }
+
+    if (image) {
+      meta.push({
+        hid: 'og:image',
+        property: 'og:image',
+        content: image.value
+      })
+    }
+
+    return {
+      ...properties,
+      meta
     }
   }
 }
