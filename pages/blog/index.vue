@@ -1,7 +1,7 @@
 <template>
   <div class="blog">
     <section v-if="featuredArticle" class="blog-feature">
-      <blog-article-preview
+      <article-preview
         :title="featuredArticle.title || ''"
         :handle="featuredArticle.handle || ''"
         :excerpt="featuredArticle.excerpt || ''"
@@ -18,7 +18,7 @@
             :key="article.id"
             class="column is-4-desktop is-6-tablet"
           >
-            <blog-article-preview
+            <article-preview
               :title="article.title || ''"
               :handle="article.handle || ''"
               :excerpt="article.excerpt || ''"
@@ -35,8 +35,12 @@
 <script>
 import { mapGetters } from 'vuex'
 import { getBlog } from '@nacelle/nacelle-graphql-queries-mixins'
+import ArticlePreview from '~/components/ArticlePreview'
 
 export default {
+  components: {
+    ArticlePreview
+  },
   mixins: [getBlog],
   computed: {
     ...mapGetters('space', ['getMetatag']),
