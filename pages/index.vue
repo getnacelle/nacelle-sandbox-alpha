@@ -1,6 +1,39 @@
 <template>
   <div class="page">
     <div v-if="$apollo.loading">Loading...</div>
+    <!-- Begin editing your homepage here -->
+    <div v-if="!page || page.sections.length === 0">
+      <content-hero-banner
+        id="hero-banner"
+        backgroundImgUrl="https://nacelle-assets.s3-us-west-2.amazonaws.com/hero-banner.jpg"
+        backgroundAltTag="Update your new Nacelle Store"
+        :title="name"
+        ctaText="Shop Now"
+        ctaUrl="/shop"
+        :ctaHandler="() => { this.$router.push('/shop') }"
+      />
+      <content-side-by-side
+        imageUrl="https://nacelle-assets.s3-us-west-2.amazonaws.com/starship1.jpg"
+        title="Image With Text"
+        copy="Connect Nacelle to your CMS to update content"
+        ctaText="Shop Now"
+        ctaUrl="/shop"
+        backgroundColor="#f2eee8"
+        :ctaHandler="() => { this.$router.push('/shop') }"
+      />
+      <content-side-by-side
+        imageUrl="https://nacelle-assets.s3-us-west-2.amazonaws.com/starship2.jpg"
+        title="Image With Text"
+        copy="Connect Nacelle to your CMS to update content"
+        ctaText="Shop Now"
+        ctaUrl="/shop"
+        backgroundColor="#f2eee8"
+        :reverseDesktop="true"
+        :ctaHandler="() => { this.$router.push('/shop') }"
+      />
+    </div>
+    <!-- End of default content -->
+
     <page-content :page="page" :products="products">
       <!-- 
         /****
@@ -66,6 +99,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import { getPage } from '@nacelle/nacelle-graphql-queries-mixins'
 
 export default {
@@ -76,6 +110,7 @@ export default {
   },
   mixins: [getPage],
   computed: {
+    ...mapState('space', ['name']),
     handle() {
       return 'homepage'
     }
