@@ -2,10 +2,6 @@ require('dotenv').config()
 
 import fetchAllRoutes from './plugins/utils/fetchAllRoutes'
 
-const fetchRoutes = async () => {
-  return await fetchAllRoutes()
-}
-
 export default {
   mode: process.env.BUILD_MODE,
   /*
@@ -44,6 +40,7 @@ export default {
    ** Customize the progress-bar color
    */
   loading: { color: '#fff' },
+
   /*
    ** Global CSS
    */
@@ -66,9 +63,7 @@ export default {
   sitemap: {
     gzip: true,
     routes() {
-      return fetchRoutes().then(routes => {
-        return routes
-      })
+      return fetchAllRoutes()
     }
   },
 
