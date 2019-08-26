@@ -41,9 +41,9 @@
         /****
       -->
 
-        <!-- <template v-slot:section="{ section }"> -->
-          
-          <!-- 
+      <!-- <template v-slot:section="{ section }"> -->
+
+      <!-- 
             * Edit Hero Banner *
                 Available slots:
                 name: "background", data: "backgroundImgUrl", "mobileBackgroundImgUrl", "backgroundAltTag"
@@ -58,9 +58,9 @@
               <h1 class="special-title">{{ title }}</h4>
             </template>
           </content-hero-banner>
-          -->
+      -->
 
-          <!--
+      <!--
             * Edit Side-by-Side Section *
                 Available slots:
                 name: "body", data: "title", "copy"
@@ -70,9 +70,9 @@
             v-if="section.props.contentType === 'ContentSideBySide'"
             v-bind="section.props"
           />
-          -->
+      -->
 
-          <!--
+      <!--
             * Edit Product Grid *
                 Available slots:
                 name: "header", data: "title"
@@ -82,18 +82,18 @@
             v-if="section.props.contentType === 'ContentProductGrid'"
             v-bind="section.props"
           />
-          -->
+      -->
 
-          <!-- 
+      <!-- 
             * Edit Testimonials *
 
           <content-testimonials
             v-if="section.props.contentType === 'ContentTestimonials'"
             v-bind="section.props"
           />
-          -->
+      -->
 
-        <!-- </template> -->
+      <!-- </template> -->
     </page-content>
   </div>
 </template>
@@ -110,10 +110,7 @@ export default {
   },
   mixins: [getPage],
   computed: {
-    ...mapState('space', ['name']),
-    handle() {
-      return 'homepage'
-    }
+    ...mapState('space', ['name'])
   }
 }
 </script>
