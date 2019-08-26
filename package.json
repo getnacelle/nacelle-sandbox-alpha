@@ -1,5 +1,5 @@
 {
-  "name": "@nacelle/nacelle-pwa-demo",
+  "name": "@nacelle/nacelle-starter",
   "version": "1.0.0",
   "author": "Nacelle",
   "scripts": {
@@ -10,9 +10,9 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
-    "@nacelle/nacelle-graphql-queries-mixins": "0.0.22",
-    "@nacelle/nacelle-klaviyo-nuxt-module": "0.0.2",
-    "@nacelle/nacelle-nuxt-module": "0.0.116",
+    "@nacelle/nacelle-graphql-queries-mixins": "0.0.25",
+    "@nacelle/nacelle-klaviyo-nuxt-module": "0.0.3",
+    "@nacelle/nacelle-nuxt-module": "0.0.118",
     "@nuxtjs/apollo": "^4.0.0-rc8.2",
     "@nuxtjs/axios": "^5.3.6",
     "@nuxtjs/bulma": "^1.2.1",
