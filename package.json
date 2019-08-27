@@ -10,7 +10,7 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
-    "@nacelle/nacelle-graphql-queries-mixins": "0.0.33",
+    "@nacelle/nacelle-graphql-queries-mixins": "0.0.34",
     "@nacelle/nacelle-klaviyo-nuxt-module": "0.0.3",
     "@nacelle/nacelle-nuxt-module": "0.0.118",
     "@nuxtjs/apollo": "^4.0.0-rc8.2",
