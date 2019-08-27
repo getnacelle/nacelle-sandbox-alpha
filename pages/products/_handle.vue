@@ -42,6 +42,9 @@ export default {
   methods: {
     ...mapMutations('cart', ['showCart'])
   },
+  async asyncData({ params, error, payload }) {
+    if (payload) return { product: payload }
+  },
   head() {
     if (this.product) {
       const properties = {}

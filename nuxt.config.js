@@ -80,7 +80,7 @@ export default {
   },
 
   generate: {
-    interval: 1000,
+    concurrency: 1,
     routes: async () => {
       return await fetchAllRoutes()
     }
