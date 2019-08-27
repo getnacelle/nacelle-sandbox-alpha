@@ -3,16 +3,14 @@
     <div class="container">
       <div class="columns is-multiline is-marginless">
         <div class="column is-3 logo has-text-centered">
-          <img src="/starship_logo.png" alt="Starship" />
+          <img :src="logoSrc" :alt="name" />
         </div>
 
         <div class="column is-3 has-text-centered-mobile">
           <h4 class="title is-5">Shop</h4>
           <ul>
             <li v-for="(link, index) in shopMenu" :key="index">
-              <nuxt-link :to="link.to">
-                {{ link.title }}
-              </nuxt-link>
+              <nuxt-link :to="link.to">{{ link.title }}</nuxt-link>
             </li>
           </ul>
         </div>
@@ -21,9 +19,7 @@
           <h4 class="title is-5">About</h4>
           <ul>
             <li v-for="(link, index) in aboutMenu" :key="index">
-              <nuxt-link :to="link.to">
-                {{ link.title }}
-              </nuxt-link>
+              <nuxt-link :to="link.to">{{ link.title }}</nuxt-link>
             </li>
           </ul>
         </div>
@@ -32,9 +28,7 @@
           <h4 class="title is-5">Account</h4>
           <ul>
             <li v-for="(link, index) in accountMenu" :key="index">
-              <nuxt-link :to="link.to">
-                {{ link.title }}
-              </nuxt-link>
+              <nuxt-link :to="link.to">{{ link.title }}</nuxt-link>
             </li>
           </ul>
         </div>
@@ -50,11 +44,19 @@ import { mapState } from 'vuex'
 
 export default {
   computed: {
-    ...mapState('space', ['linklists']),
+    ...mapState('space', ['id', 'name', 'linklists']),
+    logoSrc() {
+      if (this.id) {
+        return `https://nacelle-assets.s3-us-west-2.amazonaws.com/space/${this.id}/logo.png`
+      }
+
+      return ''
+    },
     aboutMenu() {
       if (this.linklists) {
-        const linklist = this.linklists.find(linklist => linklist.handle === 'about')
-
+        const linklist = this.linklists.find(
+          linklist => linklist.handle === 'about'
+        )
 
         if (linklist) {
           return linklist.links
@@ -67,7 +69,9 @@ export default {
     },
     shopMenu() {
       if (this.linklists) {
-        const linklist = this.linklists.find(linklist => linklist.handle === 'shop')
+        const linklist = this.linklists.find(
+          linklist => linklist.handle === 'shop'
+        )
 
         if (linklist) {
           return linklist.links
@@ -80,7 +84,9 @@ export default {
     },
     accountMenu() {
       if (this.linklists) {
-        const linklist = this.linklists.find(linklist => linklist.handle === 'account')
+        const linklist = this.linklists.find(
+          linklist => linklist.handle === 'account'
+        )
 
         if (linklist) {
           return linklist.links
@@ -120,6 +126,6 @@ img {
 
 a {
   color: #3b3b3b;
-  letter-spacing: .016875rem;
+  letter-spacing: 0.016875rem;
 }
 </style>
