@@ -52,10 +52,10 @@ const getArticles = async handle => {
 const getBlogHandles = async () => {
   return await axios({
     method: 'post',
-    url: 'https://hailfrequency.com/graphql/v1/space/6789',
+    url: process.env.NACELLE_GRAPHQL_ENDPOINT,
     headers: {
       'Content-Type': 'application/json',
-      'x-nacelle-token': 'tokenForStarshipFurniture'
+      'x-nacelle-token': process.env.NACELLE_GRAPHQL_TOKEN
     },
     data: {
       query: `query {
