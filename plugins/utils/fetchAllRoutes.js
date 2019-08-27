@@ -1,5 +1,19 @@
-import transformEdges from './transformEdges.js'
-const axios = require('axios')
+import axios from 'axios'
+const transformEdges = (object, field) => {
+  if (field == null) {
+    return object.edges.map(edge => {
+      if (edge.cursor) {
+        edge.node.cursor = edge.cursor
+      }
+
+      return edge.node
+    })
+  } else {
+    return object.edges.map(edge => {
+      return edge.node[field]
+    })
+  }
+}
 
 const getArticles = async handle => {
   return axios({
@@ -11,17 +25,17 @@ const getArticles = async handle => {
     },
     data: {
       query: `query {
-                  getBlogByHandle(handle: "${handle}") {
-                    articles {
-                      edges {
-                        node {
-                          id
-                          handle
+                      getBlogByHandle(handle: "${handle}") {
+                        articles {
+                          edges {
+                            node {
+                              id
+                              handle
+                            }
+                          }
                         }
                       }
-                    }
-                  }
-                }`
+                    }`
     }
   })
     .then(res => {
@@ -59,15 +73,15 @@ const getBlogHandles = async () => {
     },
     data: {
       query: `query {
-                getSpace {
-                  linklists {
-                    links {
-                      type
-                      to
+                    getSpace {
+                      linklists {
+                        links {
+                          type
+                          to
+                        }
+                      }
                     }
-                  }
-                }
-              }`
+                  }`
     }
   })
     .then(res => {
@@ -76,7 +90,8 @@ const getBlogHandles = async () => {
         res.data &&
         res.data.data &&
         res.data.data.getSpace &&
-        res.data.data.getSpace.linklists
+        res.data.data.getSpace.linklists &&
+        res.data.data.getSpace.linklists.length > 0
       ) {
         let linklists = res.data.data.getSpace.linklists.map(list => {
           return list.links
@@ -113,8 +128,88 @@ const getBlogArticles = async () => {
   }
 }
 
-export default async () => {
-  let productsAndPages = await axios({
+//// GET PRODUCTS ////////////////////////////////////////
+
+const getProducts = async () => {
+  let currentCursor = null
+  let hasNextPage = true
+  let productPages = []
+  do {
+    let productPage = await getProductsAtCursor(currentCursor)
+    productPages.push(productPage)
+    currentCursor = productPage.cursor
+    console.log(`fetching products at cursor: ${currentCursor}`)
+    hasNextPage = productPage.hasNextPage
+  } while (hasNextPage == true)
+
+  return productPages
+    .map(page => {
+      return page.routes
+    })
+    .reduce((allProductRoutes, page) => {
+      return allProductRoutes.concat(page)
+    })
+}
+
+const getProductsAtCursor = async cursor => {
+  let query = `{
+      getAllProducts {
+        edges {
+          node {
+            handle
+          }
+          cursor
+        }
+        pageInfo {
+          hasNextPage
+        }
+      }
+    }`
+  if (cursor) {
+    query = `{
+          getAllProducts(cursor: "${cursor}") {
+            edges {
+              node {
+                handle
+              }
+              cursor
+            }
+            pageInfo {
+              hasNextPage
+            }
+          }
+        }`
+  }
+  return await axios({
+    method: 'post',
+    url: process.env.NACELLE_GRAPHQL_ENDPOINT,
+    headers: {
+      'Content-Type': 'application/json',
+      'x-nacelle-token': process.env.NACELLE_GRAPHQL_TOKEN
+    },
+    data: {
+      query: query
+    }
+  }).then(res => {
+    if (res.data && res.data.data && res.data.data.getAllProducts) {
+      let routes = transformEdges(res.data.data.getAllProducts).map(product => {
+        return `/products/${product.handle}`
+      })
+      let cursor = res.data.data.getAllProducts.edges.pop().cursor
+      let hasNextPage = res.data.data.getAllProducts.pageInfo.hasNextPage
+
+      return {
+        routes,
+        cursor,
+        hasNextPage
+      }
+    }
+  })
+}
+
+//// GET PAGES /////////////////////
+const getPages = async () => {
+  return await axios({
     method: 'post',
     url: process.env.NACELLE_GRAPHQL_ENDPOINT,
     headers: {
@@ -123,44 +218,25 @@ export default async () => {
     },
     data: {
       query: `query {
-        getAllProducts {
-          edges {
-            node {
-              handle
+            getSpace {
+              linklists {
+                links {
+                  type
+                  to
+                }
+              }
             }
-          }
-        }
-        getSpace {
-          linklists {
-            links {
-              type
-              to
-            }
-          }
-        }
-      }`
+          }`
     }
   })
     .then(res => {
-      let productRoutes
-      if (res.data && res.data.data && res.data.data.getAllProducts) {
-        const products = transformEdges(res.data.data.getAllProducts).map(
-          product => {
-            return `/products/${product.handle}`
-          }
-        )
-
-        productRoutes = products
-      } else {
-        productRoutes = []
-      }
-
       let siteLinks
       if (
         res.data &&
         res.data.data &&
         res.data.data.getSpace &&
-        res.data.data.getSpace.linklists
+        res.data.data.getSpace.linklists &&
+        res.data.data.getSpace.linklists.length > 0
       ) {
         let linklists = res.data.data.getSpace.linklists.map(list => {
           return list.links
@@ -178,21 +254,22 @@ export default async () => {
         siteLinks = []
       }
 
-      let allRoutes = [productRoutes, siteLinks]
-
-      return allRoutes.reduce((all, set) => {
-        return all.concat(set)
-      })
+      return siteLinks
     })
     .catch(error => {
       throw Error(error)
     })
+}
+
+export default async () => {
+  let products = await getProducts()
+  let pages = await getPages()
   let blogArticles = await getBlogArticles()
 
-  let routesArray = [productsAndPages, blogArticles]
+  let routesArray = [products, pages, blogArticles]
 
-  return routesArray.reduce((allRoutes, array) => {
+  let routes = routesArray.reduce((allRoutes, array) => {
     return allRoutes.concat(array)
   })
-  // return blogArticles
+  return routes
 }

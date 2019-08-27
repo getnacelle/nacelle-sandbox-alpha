@@ -62,8 +62,8 @@ export default {
 
   sitemap: {
     gzip: true,
-    routes() {
-      return fetchAllRoutes()
+    async routes() {
+      return await fetchAllRoutes()
     }
   },
 
@@ -80,7 +80,7 @@ export default {
   },
 
   generate: {
-    interval: 100,
+    interval: 1000,
     routes: async () => {
       return await fetchAllRoutes()
     }
