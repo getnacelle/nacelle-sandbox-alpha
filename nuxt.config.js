@@ -32,7 +32,7 @@ export default {
       {
         rel: 'stylesheet',
         type: 'text/css',
-        href: '//space-styles.s3.amazonaws.com/6789.styles.css'
+        href: '//space-styles.s3.amazonaws.com/6789/styles.css'
       }
     ]
   },

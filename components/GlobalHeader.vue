@@ -149,12 +149,32 @@ export default {
 
 .main-nav-right {
   justify-content: flex-end;
+  flex-grow: 1;
+
+  @media screen and (max-width: 786px) {
+    flex-grow: unset;
+  }
+}
+
+.main-nav-brand {
+  @media screen and (max-width: 786px) {
+    margin-left: -1rem;
+  }
 }
 
 .main-nav-menu {
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+
   @media only screen and (max-width: 768px) {
     display: none;
   }
+}
+
+button.main-nav-cart {
+  // width: 112px;
+  text-align: right;
 }
 
 .main-nav-item {
@@ -182,7 +202,7 @@ export default {
   z-index: 999;
 
   @media screen and (max-width: 768px) {
-    width: 100%;
+    width: 100%
   }
 }
 
@@ -220,4 +240,3 @@ export default {
   overflow: scroll;
 }
 </style>
-
