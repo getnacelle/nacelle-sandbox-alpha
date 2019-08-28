@@ -228,10 +228,10 @@ const getProductsAtCursor = async cursor => {
   }
   return await axios({
     method: 'post',
-    url: 'https://hailfrequency.com/graphql/v1/space/12345',
+    url: process.env.NACELLE_GRAPHQL_ENDPOINT,
     headers: {
       'Content-Type': 'application/json',
-      'x-nacelle-token': 'defAValidToken'
+      'x-nacelle-token': process.env.NACELLE_GRAPHQL_TOKEN
     },
     data: {
       query: query
