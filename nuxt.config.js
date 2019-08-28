@@ -56,16 +56,16 @@ export default {
     '@nuxtjs/pwa',
     '@nuxtjs/dotenv',
     '@nacelle/nacelle-nuxt-module',
-    '@nacelle/nacelle-klaviyo-nuxt-module',
-    '@nuxtjs/sitemap'
+    '@nacelle/nacelle-klaviyo-nuxt-module'
+    // '@nuxtjs/sitemap'
   ],
 
-  sitemap: {
-    gzip: true,
-    async routes() {
-      return await fetchAllRoutes()
-    }
-  },
+  // sitemap: {
+  //   gzip: true,
+  //   async routes() {
+  //     return await fetchAllRoutes()
+  //   }
+  // },
 
   nacelle: {
     endpoint: process.env.NACELLE_GRAPHQL_ENDPOINT,
@@ -80,9 +80,23 @@ export default {
   },
 
   generate: {
-    concurrency: 1,
+    // concurrency: 1,
     routes: async () => {
       return await fetchAllRoutes()
+    }
+  },
+
+  generate: {
+    workers: 4,
+    workerConcurrency: 8,
+    concurrency: 8,
+    async routes() {
+      return await fetchAllRoutes()
+    },
+    done({ duration, errors, workerInfo }) {
+      if (errors.length) {
+        console.log(errors)
+      }
     }
   },
 

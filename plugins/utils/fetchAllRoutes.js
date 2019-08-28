@@ -156,7 +156,53 @@ const getProductsAtCursor = async cursor => {
       getAllProducts {
         edges {
           node {
+            id
+            title
             handle
+            description
+            productType
+            tags
+            vendor
+            priceRange {
+              min
+              max
+            }
+            options {
+              name
+              values
+            }
+            featuredMedia {
+              src
+              thumbnailSrc
+              id
+              src
+              type
+            }
+            media {
+              edges {
+                node {
+                  thumbnailSrc
+                  id
+                  src
+                  type
+                }
+              }
+            }
+            variants {
+              edges {
+                node {
+                  id
+                  title
+                  price
+                  availableForSale
+                  selectedOptions {
+                    name
+                    value
+                  }
+                  swatchSrc
+                }
+              }
+            }
           }
           cursor
         }
@@ -182,10 +228,10 @@ const getProductsAtCursor = async cursor => {
   }
   return await axios({
     method: 'post',
-    url: process.env.NACELLE_GRAPHQL_ENDPOINT,
+    url: 'https://hailfrequency.com/graphql/v1/space/12345',
     headers: {
       'Content-Type': 'application/json',
-      'x-nacelle-token': process.env.NACELLE_GRAPHQL_TOKEN
+      'x-nacelle-token': 'defAValidToken'
     },
     data: {
       query: query
@@ -195,11 +241,17 @@ const getProductsAtCursor = async cursor => {
       let routes = transformEdges(res.data.data.getAllProducts).map(product => {
         return `/products/${product.handle}`
       })
+      let productData = transformEdges(res.data.data.getAllProducts).map(
+        product => {
+          return product
+        }
+      )
       let cursor = res.data.data.getAllProducts.edges.pop().cursor
       let hasNextPage = res.data.data.getAllProducts.pageInfo.hasNextPage
 
       return {
         routes,
+        productData,
         cursor,
         hasNextPage
       }
@@ -260,6 +312,11 @@ const getPages = async () => {
       throw Error(error)
     })
 }
+
+// let products = await getProducts()
+
+// products
+// console.log(products.length)
 
 export default async () => {
   let products = await getProducts()
