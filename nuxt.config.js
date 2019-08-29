@@ -56,7 +56,6 @@ export default {
     '@nuxtjs/pwa',
     '@nuxtjs/dotenv',
     '@nacelle/nacelle-nuxt-module',
-    '@nacelle/nacelle-klaviyo-nuxt-module'
     // '@nuxtjs/sitemap'
   ],
 
@@ -71,12 +70,7 @@ export default {
     endpoint: process.env.NACELLE_GRAPHQL_ENDPOINT,
     token: process.env.NACELLE_GRAPHQL_TOKEN,
     gaID: process.env.NACELLE_GA_ID,
-    fbID: process.env.NACELLE_FB_ID,
-    klaviyo: {
-      companyId: 'KPQ5Cy',
-      defaultListId: 'HCtW5s',
-      defaultEmbedCode: '<div class="klaviyo-form-JCCXJ5"></div>'
-    }
+    fbID: process.env.NACELLE_FB_ID
   },
 
   generate: {
