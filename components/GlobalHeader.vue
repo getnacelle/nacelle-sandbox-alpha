@@ -54,7 +54,7 @@
         <div class="nav-flyout-body">
           <slot name="flyout-menu">
             <nuxt-link
-              v-for="(link, index) in mainMenu"
+              v-for="(link, index) in mobileMenu"
               :key="index"
               :to="link.to"
               active-class="is-active"
@@ -96,6 +96,21 @@ export default {
       if (this.linklists) {
         const linklist = this.linklists.find(
           linklist => linklist.handle === 'main-menu'
+        )
+
+        if (linklist) {
+          return linklist.links
+        }
+
+        return []
+      }
+
+      return []
+    },
+    mobileMenu() {
+      if (this.linklists) {
+        const linklist = this.linklists.find(
+          linklist => linklist.handle === 'mobile-menu'
         )
 
         if (linklist) {
