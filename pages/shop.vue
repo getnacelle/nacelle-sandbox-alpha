@@ -1,6 +1,6 @@
 <template>
   <div class="page page-shop">
-    <component :is="sourceComponent" :content="pageContent" />
+    <page-content :page="page" :products="products" />
     <section class="section">
       <div class="container">
         <product-grid :products="products" :showAddToCart="true" :showQuantityUpdate="true" />
@@ -21,25 +21,7 @@ export default {
       products: null
     }
   },
-  mixins: [getShopPage],
-  computed: {
-    sourceComponent() {
-      if (this.page && this.page.source) {
-        if (this.page.source === 'shopify') {
-          return 'ShopifyPageContent'
-        }
-      }
-
-      return 'div'
-    },
-    pageContent() {
-      if (this.page && this.page.content && this.page.content.length > 0) {
-        return this.page.content
-      }
-
-      return null
-    }
-  }
+  mixins: [getShopPage]
 }
 </script>
 <style lang="scss" scoped>
