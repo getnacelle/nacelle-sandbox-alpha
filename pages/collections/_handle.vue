@@ -5,6 +5,7 @@
       :title="collection.title"
       :backgroundImgUrl="featuredImage"
     />
+    <page-content :page="page" :products="products" />
     <section class="section">
       <div class="container">
         <div class="columns is-multiline">
