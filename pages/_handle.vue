@@ -73,14 +73,6 @@ export default {
       handle: this.$route.params.handle
     }
   },
-  mixins: [getPage],
-  mounted() {
-    if (this.page == null) {
-      this.$nuxt.error({
-        statusCode: 404,
-        message: 'That page could not be found'
-      })
-    }
-  }
+  mixins: [getPage]
 }
 </script>
