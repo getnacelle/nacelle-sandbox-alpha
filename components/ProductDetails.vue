@@ -1,5 +1,5 @@
 <template>
-  <div class="product columns is-vcentered">
+  <div class="product columns">
     <div class="column is-6">
       <product-media-select-view :featuredMedia="product.featuredMedia" :media="product.media" />
     </div>
@@ -20,7 +20,7 @@ import { mapState, mapMutations, mapGetters, mapActions } from 'vuex'
 //import your own components here
 //import ProductSpecial from '~/components/ComponentName'
 export default {
-  components:{
+  components: {
     //export your components by name here:
     // ComponentName
   },
