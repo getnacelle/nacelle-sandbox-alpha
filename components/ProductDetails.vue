@@ -7,10 +7,10 @@
       <product-title :title="product.title" />
       <product-category :category="product.productType" v-if="product.productType" />
       <p class="price">
-        <product-price :price="currentVariant.price" />
+        <product-price :price="currentVariant.price" v-if="currentVariant" />
       </p>
       <product-description :description="product.description" />
-      <product-variant-select :product="product" :variant="currentVariant" />
+      <product-variant-select :product="product" :variant="currentVariant" v-if="currentVariant" />
     </div>
   </div>
 </template>
@@ -20,7 +20,7 @@ import { mapState, mapMutations, mapGetters, mapActions } from 'vuex'
 //import your own components here
 //import ProductSpecial from '~/components/ComponentName'
 export default {
-  components:{
+  components: {
     //export your components by name here:
     // ComponentName
   },

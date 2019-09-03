@@ -23,7 +23,7 @@ export default {
     ...mapActions('cart', ['updateLocalCart']),
     ...mapActions('user', ['readSession'])
   },
-  mixins: [prefetchCollectionsAndContent],
+  // mixins: [prefetchCollectionsAndContent],
   data() {
     return {
       headerHeight: null

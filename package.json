@@ -10,8 +10,8 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
-    "@nacelle/nacelle-graphql-queries-mixins": "0.0.36",
-    "@nacelle/nacelle-klaviyo-nuxt-module": "0.0.2",
+    "@nacelle/nacelle-graphql-queries-mixins": "0.0.38",
+    "@nacelle/nacelle-klaviyo-nuxt-module": "0.0.3",
     "@nacelle/nacelle-nuxt-module": "0.0.119",
     "@nuxtjs/apollo": "^4.0.0-rc8.2",
     "@nuxtjs/axios": "^5.3.6",
@@ -25,6 +25,7 @@
     "dotenv": "^8.0.0",
     "es-cookie": "^1.2.0",
     "fs": "0.0.1-security",
+    "fsevents": "^2.0.7",
     "graphql-tag": "^2.10.1",
     "localforage": "^1.7.3",
     "node-sass": "^4.12.0",

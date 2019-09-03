@@ -49,7 +49,7 @@ const getArticles = async handle => {
         const articles = transformEdges(
           res.data.data.getBlogByHandle.articles
         ).map(article => {
-          return `/${handle}/${article.handle}`
+          return { route: `/${handle}/${article.handle}` }
         })
 
         articleRoutes = articles
@@ -99,7 +99,7 @@ const getBlogHandles = async () => {
               return link.type == 'Blog'
             })
             .map(link => {
-              return link.to.split('/')[1]
+              return { route: link.to.split('/')[1] }
             })
         })
         handles = linklists.reduce((fullList, list) => {
@@ -239,7 +239,7 @@ const getProductsAtCursor = async cursor => {
   }).then(res => {
     if (res.data && res.data.data && res.data.data.getAllProducts) {
       let routes = transformEdges(res.data.data.getAllProducts).map(product => {
-        return `/products/${product.handle}`
+        return { route: `/products/${product.handle}`, payload: product }
       })
       let productData = transformEdges(res.data.data.getAllProducts).map(
         product => {
@@ -296,7 +296,7 @@ const getPages = async () => {
               return link.type != 'External'
             })
             .map(link => {
-              return link.to
+              return { route: link.to }
             })
         })
         siteLinks = linklists.reduce((fullList, list) => {
