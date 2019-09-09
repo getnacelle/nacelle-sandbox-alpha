@@ -2,7 +2,7 @@
   <div class="page">
     <div v-if="$apollo.loading">Loading...</div>
     <!-- Begin editing your homepage here -->
-    <div v-if="!page || page.sections.length === 0">
+    <div v-if="!hasPageData">
       <content-hero-banner
         id="hero-banner"
         backgroundImgUrl="https://nacelle-assets.s3-us-west-2.amazonaws.com/hero-banner.jpg"
@@ -110,7 +110,26 @@ export default {
   },
   mixins: [getPage],
   computed: {
-    ...mapState('space', ['name'])
+    ...mapState('space', ['name']),
+    hasPageData() {
+      if (this.page) {
+        if (
+          this.page.sections &&
+          this.page.sections.length > 0
+        ) {
+          return true
+        }
+
+        if (
+          this.page.fields &&
+          this.page.fields.body
+        ) {
+          return true
+        }
+
+        return false
+      }
+    }
   }
 }
 </script>
