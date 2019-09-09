@@ -18,7 +18,7 @@
             v-for="(link, index) in mainMenu"
             :key="index"
             :to="link.to"
-            active-class="is-active"
+            exact-active-class="is-active"
             class="main-nav-item"
             @click.native="disableMenu"
           >{{ link.title }}</nuxt-link>
@@ -217,7 +217,7 @@ button.main-nav-cart {
   z-index: 999;
 
   @media screen and (max-width: 768px) {
-    width: 100%
+    width: 100%;
   }
 }
 

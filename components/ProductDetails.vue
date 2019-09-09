@@ -5,10 +5,18 @@
     </div>
     <div class="column is-5 is-offset-1">
       <product-title :title="product.title" />
+      <!-- <product-add-to-cart-button
+        :product="product"
+        :variant="currentVariant"
+        :allOptionsSelected="true"
+        :onlyOneOption="true"
+        :metafields="[{key:'test', value:'hi'}]"
+      />-->
       <product-category :category="product.productType" v-if="product.productType" />
       <p class="price">
         <product-price :price="currentVariant.price" />
       </p>
+
       <product-description :description="product.description" />
       <product-variant-select :product="product" :variant="currentVariant" />
     </div>
