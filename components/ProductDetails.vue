@@ -1,14 +1,22 @@
 <template>
-  <div class="product columns is-vcentered">
+  <div class="product columns">
     <div class="column is-6">
       <product-media-select-view :featuredMedia="product.featuredMedia" :media="product.media" />
     </div>
     <div class="column is-5 is-offset-1">
       <product-title :title="product.title" />
+      <!-- <product-add-to-cart-button
+        :product="product"
+        :variant="currentVariant"
+        :allOptionsSelected="true"
+        :onlyOneOption="true"
+        :metafields="[{key:'test', value:'hi'}]"
+      />-->
       <product-category :category="product.productType" v-if="product.productType" />
       <p class="price">
         <product-price :price="currentVariant.price" v-if="currentVariant" />
       </p>
+
       <product-description :description="product.description" />
       <product-variant-select :product="product" :variant="currentVariant" v-if="currentVariant" />
     </div>

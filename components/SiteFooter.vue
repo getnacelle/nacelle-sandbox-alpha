@@ -1,7 +1,14 @@
 <template>
   <div class="site-footer">
     <div class="container">
-      <div class="columns is-multiline is-marginless">
+      <!-- TEMPORARY FOOTER START -->
+      <div class="column is-6 is-offset-3 logo has-text-centered">
+        <img :src="logoSrc" :alt="name" />
+      </div>
+      <div class="column is-12 has-text-centered">© NACELLE 2019</div>
+      <!-- TEMPORARY FOOTER END -->
+
+      <!-- <div class="columns is-multiline is-marginless">
         <div class="column is-3 logo has-text-centered">
           <img :src="logoSrc" :alt="name" />
         </div>
@@ -34,7 +41,7 @@
         </div>
 
         <div class="column is-12 has-text-centered">© NACELLE 2019</div>
-      </div>
+      </div>-->
     </div>
   </div>
 </template>

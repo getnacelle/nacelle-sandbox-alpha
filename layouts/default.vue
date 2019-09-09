@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="app nacelle">
     <global-header ref="header" />
     <nuxt :style="{'margin-top': `${headerHeight}px`}" />
     <site-footer />
@@ -158,29 +158,5 @@ html {
 .page-enter,
 .page-leave-active {
   opacity: 0;
-}
-
-// Custom site header styles
-.main-nav-right {
-  flex-grow: 1;
-  @media screen and (max-width: 786px) {
-    flex-grow: unset;
-  }
-}
-.main-nav-brand {
-  @media screen and (max-width: 786px) {
-    margin-left: -1rem;
-  }
-}
-
-.main-nav-menu {
-  display: flex;
-  flex-grow: 1;
-  justify-content: center;
-}
-
-button.main-nav-cart {
-  // width: 112px;
-  text-align: right;
 }
 </style>

@@ -18,7 +18,7 @@
             v-for="(link, index) in mainMenu"
             :key="index"
             :to="link.to"
-            active-class="is-active"
+            exact-active-class="is-active"
             class="main-nav-item"
             @click.native="disableMenu"
           >{{ link.title }}</nuxt-link>
@@ -54,7 +54,7 @@
         <div class="nav-flyout-body">
           <slot name="flyout-menu">
             <nuxt-link
-              v-for="(link, index) in mainMenu"
+              v-for="(link, index) in mobileMenu"
               :key="index"
               :to="link.to"
               active-class="is-active"
@@ -96,6 +96,21 @@ export default {
       if (this.linklists) {
         const linklist = this.linklists.find(
           linklist => linklist.handle === 'main-menu'
+        )
+
+        if (linklist) {
+          return linklist.links
+        }
+
+        return []
+      }
+
+      return []
+    },
+    mobileMenu() {
+      if (this.linklists) {
+        const linklist = this.linklists.find(
+          linklist => linklist.handle === 'mobile-menu'
         )
 
         if (linklist) {
@@ -149,12 +164,32 @@ export default {
 
 .main-nav-right {
   justify-content: flex-end;
+  flex-grow: 1;
+
+  @media screen and (max-width: 786px) {
+    flex-grow: unset;
+  }
+}
+
+.main-nav-brand {
+  @media screen and (max-width: 786px) {
+    margin-left: -1rem;
+  }
 }
 
 .main-nav-menu {
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+
   @media only screen and (max-width: 768px) {
     display: none;
   }
+}
+
+button.main-nav-cart {
+  // width: 112px;
+  text-align: right;
 }
 
 .main-nav-item {
@@ -220,4 +255,3 @@ export default {
   overflow: scroll;
 }
 </style>
-
