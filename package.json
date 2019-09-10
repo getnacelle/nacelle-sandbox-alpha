@@ -24,7 +24,6 @@
     "dotenv": "^8.0.0",
     "es-cookie": "^1.2.0",
     "fs": "0.0.1-security",
-    "fsevents": "^2.0.7",
     "graphql-tag": "^2.10.1",
     "localforage": "^1.7.3",
     "node-sass": "^4.12.0",
