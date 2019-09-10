@@ -31,6 +31,18 @@ const getArticles = async handle => {
                             node {
                               id
                               handle
+                              source
+                              title
+                              description
+                              tags
+                              publishDate
+                              excerpt
+                              featuredMedia {
+                                id
+                                type
+                                src
+                              }
+                              fields
                             }
                           }
                         }
@@ -40,6 +52,7 @@ const getArticles = async handle => {
   })
     .then(res => {
       let articleRoutes
+
       if (
         res.data &&
         res.data.data &&
@@ -49,7 +62,7 @@ const getArticles = async handle => {
         const articles = transformEdges(
           res.data.data.getBlogByHandle.articles
         ).map(article => {
-          return { route: `/${handle}/${article.handle}` }
+          return { route: `/${handle}/${article.handle}`, payload: article }
         })
 
         articleRoutes = articles
@@ -99,7 +112,7 @@ const getBlogHandles = async () => {
               return link.type == 'Blog'
             })
             .map(link => {
-              return { route: link.to.split('/')[1] }
+              return link.to.split('/')[1]
             })
         })
         handles = linklists.reduce((fullList, list) => {
@@ -118,7 +131,7 @@ const getBlogHandles = async () => {
 const getBlogArticles = async () => {
   let handles = await getBlogHandles()
   if (handles.length > 0) {
-    let allArticles = handles.map(async handle => getArticles(handle))
+    let allArticles = handles.map(async handle => await getArticles(handle))
     let resolvedArticles = await Promise.all(allArticles)
     return resolvedArticles.reduce((all, set) => {
       return all.concat(set)
@@ -313,15 +326,12 @@ const getPages = async () => {
     })
 }
 
-// let products = await getProducts()
-
-// products
-// console.log(products.length)
-
 export default async () => {
-  let products = await getProducts()
-  let pages = await getPages()
-  let blogArticles = await getBlogArticles()
+  let [products, pages, blogArticles] = await Promise.all([
+    getProducts(),
+    getPages(),
+    getBlogArticles()
+  ])
 
   let routesArray = [products, pages, blogArticles]
 
