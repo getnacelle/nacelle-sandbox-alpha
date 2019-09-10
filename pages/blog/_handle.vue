@@ -124,6 +124,12 @@ export default {
         })
       }
 
+      meta.push({
+        hid: 'og:type',
+        property: 'og:type',
+        content: 'article'
+      })
+
       return {
         ...properties,
         meta
