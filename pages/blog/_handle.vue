@@ -51,9 +51,27 @@ import { mapGetters } from 'vuex'
 import { getBlogArticle } from '@nacelle/nacelle-graphql-queries-mixins'
 
 export default {
-  mixins: [getBlogArticle],
+  data() {
+    return {
+      article: null,
+      collection: null
+    }
+  },
   computed: {
     ...mapGetters('space', ['getMetatag'])
+  },
+  async asyncData({ params, app, payload }) {
+    if (payload) {
+      return { article: payload }
+    }
+  },
+  created() {
+    if (process.browser) {
+      getBlogArticle({
+        apollo: this.$apollo,
+        params: this.$route.params
+      })
+    }
   },
   mounted() {
     if (JSON.stringify(this.article) == '{}') {

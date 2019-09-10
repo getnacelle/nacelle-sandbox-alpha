@@ -14,11 +14,11 @@
       />-->
       <product-category :category="product.productType" v-if="product.productType" />
       <p class="price">
-        <product-price :price="currentVariant.price" />
+        <product-price :price="currentVariant.price" v-if="currentVariant" />
       </p>
 
       <product-description :description="product.description" />
-      <product-variant-select :product="product" :variant="currentVariant" />
+      <product-variant-select :product="product" :variant="currentVariant" v-if="currentVariant" />
     </div>
   </div>
 </template>

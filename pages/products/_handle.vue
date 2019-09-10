@@ -28,19 +28,38 @@
 
 <script>
 import { mapMutations, mapGetters } from 'vuex'
+import transformEdges from '~/plugins/utils/transformEdges.js'
 import ProductDetails from '~/components/ProductDetails'
 import { getProduct } from '@nacelle/nacelle-graphql-queries-mixins'
+
+import gql from 'graphql-tag'
 
 export default {
   components: {
     ProductDetails
   },
-  mixins: [getProduct],
+  data() {
+    return {
+      product: null
+    }
+  },
   computed: {
     ...mapGetters('space', ['getMetatag'])
   },
   methods: {
     ...mapMutations('cart', ['showCart'])
+  },
+
+  async asyncData({ params, app, payload }) {
+    if (payload) {
+      const { variants, media, ...rest } = payload
+      const transformedProduct = {
+        variants: variants ? transformEdges(variants) : [],
+        media: media ? transformEdges(media) : [],
+        ...rest
+      }
+      return { product: transformedProduct }
+    }
   },
   head() {
     if (this.product) {
@@ -90,18 +109,21 @@ export default {
       }
     }
   },
-  beforeMount() {
-    if (this.product == null) {
-      console.log('nothing here')
-      this.$nuxt.error({
-        statusCode: 404,
-        message: 'That product could not be found'
+  created() {
+    if (process.browser) {
+      getProduct({
+        apollo: this.$apollo,
+        params: this.$route.params,
+        store: this.$store,
+        nuxt: this.$nuxt,
+        context: 'component'
       })
     }
   },
   mounted() {
-    this.$apollo.queries.product.refetch()
-    this.$apollo.queries.product.startPolling(5000)
+    if (process.browser) {
+      this.$apollo.queries.product.startPolling(5000)
+    }
   }
 }
 </script>

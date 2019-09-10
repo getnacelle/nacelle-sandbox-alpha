@@ -73,17 +73,16 @@ export default {
     fbID: process.env.NACELLE_FB_ID
   },
 
-  generate: {
-    // concurrency: 1,
-    routes: async () => {
-      return await fetchAllRoutes()
-    }
-  },
+  // generate: {
+  //   concurrency: 1,
+  //   routes: async () => {
+  //     return await fetchAllRoutes()
+  //   }
+  // },
 
   generate: {
     workers: 4,
-    workerConcurrency: 8,
-    concurrency: 8,
+    concurrency: 4,
     async routes() {
       return await fetchAllRoutes()
     },
@@ -91,6 +90,7 @@ export default {
       if (errors.length) {
         console.log(errors)
       }
+      console.log(workerInfo)
     }
   },
 
