@@ -56,15 +56,18 @@ export default {
     '@nuxtjs/pwa',
     '@nuxtjs/dotenv',
     '@nacelle/nacelle-nuxt-module',
-    // '@nuxtjs/sitemap'
+    '@nuxtjs/sitemap'
   ],
 
-  // sitemap: {
-  //   gzip: true,
-  //   async routes() {
-  //     return await fetchAllRoutes()
-  //   }
-  // },
+  sitemap: {
+    gzip: true,
+    async routes() {
+      let routes = await fetchAllRoutes()
+      return routes.map(routePayload => {
+        return routePayload.route
+      })
+    }
+  },
 
   nacelle: {
     endpoint: process.env.NACELLE_GRAPHQL_ENDPOINT,
@@ -72,13 +75,6 @@ export default {
     gaID: process.env.NACELLE_GA_ID,
     fbID: process.env.NACELLE_FB_ID
   },
-
-  // generate: {
-  //   concurrency: 1,
-  //   routes: async () => {
-  //     return await fetchAllRoutes()
-  //   }
-  // },
 
   generate: {
     workers: 4,

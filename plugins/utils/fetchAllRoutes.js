@@ -326,7 +326,7 @@ const getPages = async () => {
     })
 }
 
-export default async () => {
+const fetchAllRoutes = async () => {
   let [products, pages, blogArticles] = await Promise.all([
     getProducts(),
     getPages(),
@@ -340,3 +340,5 @@ export default async () => {
   })
   return routes
 }
+
+export default fetchAllRoutes
