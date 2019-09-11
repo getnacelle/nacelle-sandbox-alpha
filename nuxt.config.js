@@ -47,7 +47,7 @@ export default {
   css: ['@nacelle/nacelle-vue-components/dist/base-styles.css'],
 
   env: {
-    nacelleEndpoint: process.env.NACELLE_GRAPHQL_ENDPOINT,
+    nacelleSpaceID: process.env.NACELLE_SPACE_ID,
     nacelleToken: process.env.NACELLE_GRAPHQL_TOKEN,
     buildMode: process.env.BUILD_MODE
   },
@@ -70,7 +70,7 @@ export default {
   },
 
   nacelle: {
-    endpoint: process.env.NACELLE_GRAPHQL_ENDPOINT,
+    spaceID: process.env.NACELLE_SPACE_ID,
     token: process.env.NACELLE_GRAPHQL_TOKEN,
     gaID: process.env.NACELLE_GA_ID,
     fbID: process.env.NACELLE_FB_ID
