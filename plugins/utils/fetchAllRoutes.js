@@ -1,4 +1,5 @@
 import axios from 'axios'
+import endpoint from '@nacelle/nacelle-nuxt-module/lib/write-endpoint'
 const transformEdges = (object, field) => {
   if (field == null) {
     return object.edges.map(edge => {
@@ -18,7 +19,7 @@ const transformEdges = (object, field) => {
 const getArticles = async handle => {
   return axios({
     method: 'post',
-    url: process.env.NACELLE_GRAPHQL_ENDPOINT,
+    url: endpoint(process.env.NACELLE_SPACE_ID),
     headers: {
       'Content-Type': 'application/json',
       'x-nacelle-token': process.env.NACELLE_GRAPHQL_TOKEN
@@ -79,7 +80,7 @@ const getArticles = async handle => {
 const getBlogHandles = async () => {
   return await axios({
     method: 'post',
-    url: process.env.NACELLE_GRAPHQL_ENDPOINT,
+    url: endpoint(process.env.NACELLE_SPACE_ID),
     headers: {
       'Content-Type': 'application/json',
       'x-nacelle-token': process.env.NACELLE_GRAPHQL_TOKEN
@@ -241,7 +242,7 @@ const getProductsAtCursor = async cursor => {
   }
   return await axios({
     method: 'post',
-    url: process.env.NACELLE_GRAPHQL_ENDPOINT,
+    url: endpoint(process.env.NACELLE_SPACE_ID),
     headers: {
       'Content-Type': 'application/json',
       'x-nacelle-token': process.env.NACELLE_GRAPHQL_TOKEN
@@ -276,7 +277,7 @@ const getProductsAtCursor = async cursor => {
 const getPages = async () => {
   return await axios({
     method: 'post',
-    url: process.env.NACELLE_GRAPHQL_ENDPOINT,
+    url: endpoint(process.env.NACELLE_SPACE_ID),
     headers: {
       'Content-Type': 'application/json',
       'x-nacelle-token': process.env.NACELLE_GRAPHQL_TOKEN
