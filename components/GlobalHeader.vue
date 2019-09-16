@@ -72,7 +72,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations, mapGetters } from 'vuex'
 import Cart from '~/components/Cart'
 export default {
   components: { Cart },
@@ -85,6 +85,7 @@ export default {
   computed: {
     ...mapState('space', ['id', 'name', 'linklists']),
     ...mapState('menu', ['menuVisible']),
+    ...mapGetters('space', ['getLinks']),
     logoSrc() {
       if (this.id) {
         return `https://nacelle-assets.s3-us-west-2.amazonaws.com/space/${this.id}/logo.png`
@@ -93,34 +94,10 @@ export default {
       return ''
     },
     mainMenu() {
-      if (this.linklists) {
-        const linklist = this.linklists.find(
-          linklist => linklist.handle === 'main-menu'
-        )
-
-        if (linklist) {
-          return linklist.links
-        }
-
-        return []
-      }
-
-      return []
+      return this.getLinks('main-menu')
     },
     mobileMenu() {
-      if (this.linklists) {
-        const linklist = this.linklists.find(
-          linklist => linklist.handle === 'mobile-menu'
-        )
-
-        if (linklist) {
-          return linklist.links
-        }
-
-        return []
-      }
-
-      return []
+      return this.getLinks('mobile-menu')
     }
   },
   methods: {

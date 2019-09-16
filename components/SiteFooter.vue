@@ -47,11 +47,12 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 
 export default {
   computed: {
     ...mapState('space', ['id', 'name', 'linklists']),
+    ...mapGetters('space', ['getLinks']),
     logoSrc() {
       if (this.id) {
         return `https://nacelle-assets.s3-us-west-2.amazonaws.com/space/${this.id}/logo.png`
@@ -60,49 +61,13 @@ export default {
       return ''
     },
     aboutMenu() {
-      if (this.linklists) {
-        const linklist = this.linklists.find(
-          linklist => linklist.handle === 'about'
-        )
-
-        if (linklist) {
-          return linklist.links
-        }
-
-        return []
-      }
-
-      return []
+      return this.getLinks('about')
     },
     shopMenu() {
-      if (this.linklists) {
-        const linklist = this.linklists.find(
-          linklist => linklist.handle === 'shop'
-        )
-
-        if (linklist) {
-          return linklist.links
-        }
-
-        return []
-      }
-
-      return []
+      return this.getLinks('shop')
     },
     accountMenu() {
-      if (this.linklists) {
-        const linklist = this.linklists.find(
-          linklist => linklist.handle === 'account'
-        )
-
-        if (linklist) {
-          return linklist.links
-        }
-
-        return []
-      }
-
-      return []
+      return this.getLinks('account')
     }
   }
 }
