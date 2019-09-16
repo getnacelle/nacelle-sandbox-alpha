@@ -10,7 +10,7 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
-    "@nacelle/nacelle-nuxt-module": "0.0.128",
+    "@nacelle/nacelle-nuxt-module": "0.0.130",
     "@nuxtjs/apollo": "^4.0.0-rc8.2",
     "@nuxtjs/axios": "^5.3.6",
     "@nuxtjs/bulma": "^1.2.1",
@@ -22,7 +22,9 @@
     "core-js": "^2.6.9",
     "dotenv": "^8.0.0",
     "es-cookie": "^1.2.0",
+    "flexsearch": "^0.6.30",
     "fs": "0.0.1-security",
+    "fuse.js": "^3.4.5",
     "graphql-tag": "^2.10.1",
     "localforage": "^1.7.3",
     "node-sass": "^4.12.0",

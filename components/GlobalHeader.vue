@@ -23,6 +23,7 @@
             @click.native="disableMenu"
           >{{ link.title }}</nuxt-link>
         </div>
+        <search-box />
         <main-nav-cart />
       </div>
     </div>
@@ -74,8 +75,9 @@
 <script>
 import { mapState, mapMutations } from 'vuex'
 import Cart from '~/components/Cart'
+import SearchBox from '~/components/SearchBox'
 export default {
-  components: { Cart },
+  components: { Cart, SearchBox },
   props: {
     isSticky: {
       type: Boolean,

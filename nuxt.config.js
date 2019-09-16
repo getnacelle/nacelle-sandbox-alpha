@@ -56,7 +56,9 @@ export default {
     '@nuxtjs/pwa',
     '@nuxtjs/dotenv',
     '@nacelle/nacelle-nuxt-module',
-    '@nuxtjs/sitemap'
+    '@nuxtjs/sitemap',
+    '@nuxtjs/axios',
+    '~/plugins/getRoutesJSON'
   ],
 
   sitemap: {
