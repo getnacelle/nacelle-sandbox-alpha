@@ -51,8 +51,8 @@
                 name: "cta", data: "ctaUrl", "ctaText", "ctaHandler"
 
           <content-hero-banner
-            v-if="section.props.contentType === 'ContentHeroBanner'"
-            v-bind="section.props"
+            v-if="section.contentType === 'ContentHeroBanner'"
+            v-bind="section.data"
           >
             <template v-slot:body="{ title }">
               <h1 class="special-title">{{ title }}</h4>
@@ -67,8 +67,8 @@
                 name: "cta", data: "ctaUrl", "ctaText", "ctaHandler"
 
           <content-side-by-side
-            v-if="section.props.contentType === 'ContentSideBySide'"
-            v-bind="section.props"
+            v-if="section.contentType === 'ContentSideBySide'"
+            v-bind="section.data"
           />
       -->
 
@@ -79,8 +79,8 @@
                 name: "products", data: "products", "columns"
 
           <content-product-grid
-            v-if="section.props.contentType === 'ContentProductGrid'"
-            v-bind="section.props"
+            v-if="section.contentType === 'ContentProductGrid'"
+            v-bind="section.data"
           />
       -->
 
@@ -88,8 +88,8 @@
             * Edit Testimonials *
 
           <content-testimonials
-            v-if="section.props.contentType === 'ContentTestimonials'"
-            v-bind="section.props"
+            v-if="section.contentType === 'ContentTestimonials'"
+            v-bind="section.data"
           />
       -->
 
