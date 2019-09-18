@@ -18,17 +18,14 @@ export default {
         content: process.env.npm_package_description || ''
       }
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
-
     link: [
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       {
         rel: 'stylesheet',
         type: 'text/css',
         href:
-          'https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css'
-      }
-    ],
-    link: [
+          '//cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css'
+      },
       {
         rel: 'stylesheet',
         type: 'text/css',
@@ -44,7 +41,10 @@ export default {
   /*
    ** Global CSS
    */
-  css: ['@nacelle/nacelle-vue-components/dist/base-styles.css'],
+  css: [
+    '@nacelle/nacelle-vue-components/dist/base-styles.css',
+    '@/assets/global.css'
+  ],
 
   env: {
     nacelleSpaceID: process.env.NACELLE_SPACE_ID,
