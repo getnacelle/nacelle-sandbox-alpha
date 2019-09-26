@@ -10,67 +10,63 @@
       </div>
     </section>
     <section class="section">
-      <search-results
-        :searchData="productData"
-        :searchQuery="query"
-        slotMode="multiple"
-        v-if="productData"
-      >
-        <template v-slot:result="{ result }">
-          <product-grid :products="result" />
-        </template>
-      </search-results>
+      <div class="columns">
+        <div class="column is-2">
+          <search-filters
+            :filterProperties="[{field:'productType', label:'Product Type'}, {field: `category`, label:'Category'}]"
+            :passingConditions="[ {property: 'productType', conditional:'!=', value:'Blankets'}]"
+            :inputData="productData"
+            v-if="productData"
+            v-on:updated="updateFilteredData"
+          />
+        </div>
+        <div class="column is-10">
+          <search-results :searchData="filteredData" :searchQuery="query" v-if="filteredData">
+            <template v-slot:result="{ result }">
+              <product-grid :products="result" :columns="3" />
+            </template>
+            <template v-slot:no-results>
+              <search-no-results />
+            </template>
+          </search-results>
+        </div>
+      </div>
     </section>
   </div>
 </template>
 
 <script>
-import routesData from '~/static/data/products.json'
-import transformEdges from '~/plugins/utils/transformEdges'
-import SearchBox from '~/components/SearchBox'
-import SearchResults from '~/components/SearchResults'
-import { mapState } from 'vuex'
+import { allProductsJSON } from '@nacelle/nacelle-graphql-queries-mixins'
 export default {
-  components: {
-    SearchBox,
-    SearchResults
-  },
-  async asyncData({ params, $axios }) {
-    let productData = await $axios(
-      'http://localhost:3000/data/products.json'
-    ).then(res => res.data)
-    if (productData) {
-      return {
-        productData: productData
-          .filter(route => {
-            return (
-              route.payload && route.payload.title && route.payload.variants
-            )
-          })
-          .map(route => {
-            route.payload.variants = transformEdges(route.payload.variants)
-            return route.payload
-          })
-      }
+  // components: {
+  //   SearchBox,
+  //   SearchFilters,
+  //   SearchResults,
+  //   SearchNoResults
+  // },
+  data() {
+    return {
+      filteredData: null
     }
   },
-  computed: {
-    ...mapState('search', ['query']),
-    searchResults() {
-      if (this.productData && this.query) {
-        let options = {
-          keys: ['title'],
-          threshold: 0.5
-        }
-        return new Fuse(this.productData, options).search(this.query)
-      }
+  methods: {
+    updateFilteredData(data) {
+      this.filteredData = data
     }
-  }
+  },
+  mixins: [allProductsJSON]
 }
 </script>
 
 <style>
 .search-section {
   background: whitesmoke;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.1s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 </style>

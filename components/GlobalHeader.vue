@@ -23,7 +23,7 @@
             @click.native="disableMenu"
           >{{ link.title }}</nuxt-link>
         </div>
-        <search-box />
+        <search-box class="is-hidden-mobile" />
         <main-nav-cart />
       </div>
     </div>
@@ -54,6 +54,7 @@
         </div>
         <div class="nav-flyout-body">
           <slot name="flyout-menu">
+            <search-box class="is-hidden-tablet" />
             <nuxt-link
               v-for="(link, index) in mobileMenu"
               :key="index"
@@ -73,11 +74,10 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations, mapGetters } from 'vuex'
 import Cart from '~/components/Cart'
-import SearchBox from '~/components/SearchBox'
 export default {
-  components: { Cart, SearchBox },
+  components: { Cart },
   props: {
     isSticky: {
       type: Boolean,
@@ -87,6 +87,7 @@ export default {
   computed: {
     ...mapState('space', ['id', 'name', 'linklists']),
     ...mapState('menu', ['menuVisible']),
+    ...mapGetters('space', ['getLinks']),
     logoSrc() {
       if (this.id) {
         return `https://nacelle-assets.s3-us-west-2.amazonaws.com/space/${this.id}/logo.png`
@@ -95,34 +96,10 @@ export default {
       return ''
     },
     mainMenu() {
-      if (this.linklists) {
-        const linklist = this.linklists.find(
-          linklist => linklist.handle === 'main-menu'
-        )
-
-        if (linklist) {
-          return linklist.links
-        }
-
-        return []
-      }
-
-      return []
+      return this.getLinks('main-menu')
     },
     mobileMenu() {
-      if (this.linklists) {
-        const linklist = this.linklists.find(
-          linklist => linklist.handle === 'mobile-menu'
-        )
-
-        if (linklist) {
-          return linklist.links
-        }
-
-        return []
-      }
-
-      return []
+      return this.getLinks('mobile-menu')
     }
   },
   methods: {

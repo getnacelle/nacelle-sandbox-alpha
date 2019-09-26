@@ -152,7 +152,7 @@ const getProducts = async () => {
     let productPage = await getProductsAtCursor(currentCursor)
     productPages.push(productPage)
     currentCursor = productPage.cursor
-    console.log(`fetching products at cursor:${currentCursor}`)
+    console.log(`Fetching products at cursor: ${currentCursor}`)
     hasNextPage = productPage.hasNextPage
   } while (hasNextPage == true)
 
