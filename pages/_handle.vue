@@ -9,56 +9,56 @@
       -->
 
         <!-- <template v-slot:section="{ section }"> -->
-          
-          <!-- 
-            * Edit Hero Banner *
-                Available slots:
-                name: "background", data: "backgroundImgUrl", "mobileBackgroundImgUrl", "backgroundAltTag"
-                name: "body", data: "title", "subtitle", "textColor"
-                name: "cta", data: "ctaUrl", "ctaText", "ctaHandler"
 
-          <content-hero-banner
-            v-if="section.props.contentType === 'ContentHeroBanner'"
-            v-bind="section.props"
-          >
-            <template v-slot:body="{ title }">
-              <h1 class="special-title">{{ title }}</h4>
-            </template>
-          </content-hero-banner>
-          -->
+        <!-- 
+              * Edit Hero Banner *
+                  Available slots:
+                  name: "background", data: "backgroundImgUrl", "mobileBackgroundImgUrl", "backgroundAltTag"
+                  name: "body", data: "title", "subtitle", "textColor"
+                  name: "cta", data: "ctaUrl", "ctaText", "ctaHandler"
 
-          <!--
-            * Edit Side-by-Side Section *
-                Available slots:
-                name: "body", data: "title", "copy"
-                name: "cta", data: "ctaUrl", "ctaText", "ctaHandler"
+            <content-hero-banner
+              v-if="section.contentType === 'ContentHeroBanner'"
+              v-bind="section.data"
+            >
+              <template v-slot:body="{ title }">
+                <h1 class="special-title">{{ title }}</h4>
+              </template>
+            </content-hero-banner>
+        -->
 
-          <content-side-by-side
-            v-if="section.props.contentType === 'ContentSideBySide'"
-            v-bind="section.props"
-          />
-          -->
+        <!--
+              * Edit Side-by-Side Section *
+                  Available slots:
+                  name: "body", data: "title", "copy"
+                  name: "cta", data: "ctaUrl", "ctaText", "ctaHandler"
 
-          <!--
-            * Edit Product Grid *
-                Available slots:
-                name: "header", data: "title"
-                name: "products", data: "products", "columns"
+            <content-side-by-side
+              v-if="section.contentType === 'ContentSideBySide'"
+              v-bind="section.data"
+            />
+        -->
 
-          <content-product-grid
-            v-if="section.props.contentType === 'ContentProductGrid'"
-            v-bind="section.props"
-          />
-          -->
+        <!--
+              * Edit Product Grid *
+                  Available slots:
+                  name: "header", data: "title"
+                  name: "products", data: "products", "columns"
 
-          <!-- 
-            * Edit Testimonials *
+            <content-product-grid
+              v-if="section.contentType === 'ContentProductGrid'"
+              v-bind="section.data"
+            />
+        -->
 
-          <content-testimonials
-            v-if="section.props.contentType === 'ContentTestimonials'"
-            v-bind="section.props"
-          />
-          -->
+        <!-- 
+              * Edit Testimonials *
+
+            <content-testimonials
+              v-if="section.contentType === 'ContentTestimonials'"
+              v-bind="section.data"
+            />
+        -->
 
         <!-- </template> -->
     </page-content>

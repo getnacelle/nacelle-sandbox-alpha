@@ -31,10 +31,12 @@ import { mapMutations, mapGetters } from 'vuex'
 import transformEdges from '~/plugins/utils/transformEdges.js'
 import ProductDetails from '~/components/ProductDetails'
 import { getProduct } from '@nacelle/nacelle-graphql-queries-mixins'
+import productMetafields from '@nacelle/nacelle-vue-components/dist/mixins/productMetafields'
 
 import gql from 'graphql-tag'
 
 export default {
+  mixins: [productMetafields],
   components: {
     ProductDetails
   },
