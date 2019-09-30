@@ -23,12 +23,6 @@ export default {
       {
         rel: 'stylesheet',
         type: 'text/css',
-        href:
-          '//cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css'
-      },
-      {
-        rel: 'stylesheet',
-        type: 'text/css',
         href: `//space-styles.s3.amazonaws.com/${process.env.NACELLE_SPACE_ID}/styles.css`
       }
     ]
