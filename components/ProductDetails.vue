@@ -1,7 +1,11 @@
 <template>
   <div class="product columns">
     <div class="column is-6">
-      <product-media-select-view :featuredMedia="product.featuredMedia" :media="product.media" />
+      <product-media-select-view
+        v-if="product && product.featuredMedia && product.media"
+        :featuredMedia="product.featuredMedia"
+        :media="product.media"
+      />
     </div>
     <div class="column is-5 is-offset-1">
       <product-title :title="product.title" />
@@ -12,13 +16,20 @@
         :onlyOneOption="true"
         :metafields="[{key:'test', value:'hi'}]"
       />-->
-      <product-category :category="product.productType" v-if="product.productType" />
+      <product-category
+        v-if="product.productType"
+        :category="product.productType"
+      />
       <p class="price">
-        <product-price :price="currentVariant.price" v-if="currentVariant" />
+        <product-price v-if="currentVariant" :price="currentVariant.price"  />
       </p>
 
       <product-description :description="product.description" />
-      <product-variant-select :product="product" :variant="currentVariant" v-if="currentVariant" />
+      <product-variant-select
+        v-if="currentVariant"
+        :product="product"
+        :variant="currentVariant"
+      />
     </div>
   </div>
 </template>
