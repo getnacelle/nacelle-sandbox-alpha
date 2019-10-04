@@ -148,8 +148,9 @@ const getProducts = async () => {
   let currentCursor = null
   let hasNextPage = true
   let productPages = []
+
   do {
-    let productPage = await getProductsAtCursor(currentCursor)
+    const productPage = await getProductsAtCursor(currentCursor)
     productPages.push(productPage)
     currentCursor = productPage.cursor
     console.log(`Fetching products at cursor: ${currentCursor}`)
@@ -225,6 +226,7 @@ const getProductsAtCursor = async cursor => {
         }
       }
     }`
+
   if (cursor) {
     query = `{
           getAllProducts(cursor: "${cursor}") {
@@ -240,6 +242,7 @@ const getProductsAtCursor = async cursor => {
           }
         }`
   }
+
   return await axios({
     method: 'post',
     url: endpoint(process.env.NACELLE_SPACE_ID),
@@ -252,16 +255,18 @@ const getProductsAtCursor = async cursor => {
     }
   }).then(res => {
     if (res.data && res.data.data && res.data.data.getAllProducts) {
-      let routes = transformEdges(res.data.data.getAllProducts).map(product => {
+      const getAllProducts = res.data.data.getAllProducts
+      const { edges, pageInfo } = getAllProducts
+      const { hasNextPage } = pageInfo
+      const routes = transformEdges(getAllProducts).map(product => {
         return { route: `/products/${product.handle}`, payload: product }
       })
-      let productData = transformEdges(res.data.data.getAllProducts).map(
+      const productData = transformEdges(getAllProducts).map(
         product => {
           return product
         }
       )
-      let cursor = res.data.data.getAllProducts.edges.pop().cursor
-      let hasNextPage = res.data.data.getAllProducts.pageInfo.hasNextPage
+      const cursor = edges && edges.length > 0 ? edges.pop().cursor : ''
 
       return {
         routes,
