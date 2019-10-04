@@ -29,6 +29,7 @@
         v-if="currentVariant"
         :product="product"
         :variant="currentVariant"
+        v-on:options-selected="onOptionsSelected"
       />
     </div>
   </div>
@@ -43,30 +44,37 @@ export default {
     //export your components by name here:
     // ComponentName
   },
+  data () {
+    return {
+      selectedVariant: undefined
+    }
+  },
   props: {
     product: {
       type: Object,
       default: () => {}
     }
   },
-  watch: {
-    variant(val) {
-      if (val != null) {
-        this.setVariant(this.variant)
-      }
-    }
-  },
   computed: {
     currentVariant() {
-      if (this.variant != null) {
-        return this.variant
-      } else {
+      if (this.selectedVariant) {
+        return this.selectedVariant
+      } else if (
+        this.product &&
+        this.product.variants &&
+        this.product.variants.length
+      ) {
         return this.product.variants[0]
       }
+
+      return undefined
     }
   },
   methods: {
-    ...mapMutations('cart', ['showCart'])
+    ...mapMutations('cart', ['showCart']),
+    onOptionsSelected ({ selectedVariant }) {
+      this.selectedVariant = selectedVariant
+    }
   }
 }
 </script>
