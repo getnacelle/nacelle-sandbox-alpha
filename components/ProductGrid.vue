@@ -1,5 +1,5 @@
 <template>
-  <div class="columns is-multiline is-paddingless" v-if="products">
+  <div v-if="products" class="columns is-multiline is-paddingless">
     <div v-for="product in products" :key="product.id" :class="columnClasses">
       <product-card
         v-if="product"

@@ -13,9 +13,13 @@
 <script>
 import { mapState, mapMutations } from 'vuex'
 import { getShopPage } from '@nacelle/nacelle-graphql-queries-mixins'
+import ProductGrid from '~/components/ProductGrid'
 
 export default {
   name: 'home',
+  components: {
+    ProductGrid
+  },
   data() {
     return {
       products: null
