@@ -66,13 +66,66 @@
 </template>
 
 <script>
-import { getPage } from '@nacelle/nacelle-graphql-queries-mixins'
+import { staticPageData, staticCollectionData } from '~/plugins/NacelleFetchStatic'
+
 export default {
   data() {
     return {
-      handle: this.$route.params.handle
+      handle: this.$route.params.handle,
+      page: null,
+      collection: null
     }
   },
-  mixins: [getPage]
+  async asyncData({ params, app, payload }) {
+    const { handle } = params
+    const pageData = staticPageData(handle, app)
+    const collectionData = staticCollectionData(handle, app)
+      
+    return {
+      ...pageData,
+      ...collectionData
+    }
+  },
+  computed: {
+    products () {
+      if (
+        this.collection &&
+        this.collection.products &&
+        Array.isArray(this.collection.products)
+      ) {
+        return this.collection.products
+      }
+
+      return []
+    }
+  },
+  created () {
+    if (!this.collection && !this.noCollectionData) {
+      this.$nacelleApollo.getCollection(
+        this.handle,
+        this.$apollo,
+        {
+          error: () => {
+            this.$nacelleHelpers.debugLog('No collection data.')
+          }
+        }
+      )
+    }
+
+    if (!this.page && !this.noPageData) {
+      this.$nacelleApollo.getPage(
+        this.handle,
+        this.$apollo,
+        {
+          error: this.pageError
+        }
+      )
+    }
+  },
+  methods: {
+    pageError () {
+      this.$nuxt.error({ statusCode: 404, message: 'does not exist' })
+    }
+  }
 }
 </script>

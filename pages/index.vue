@@ -100,15 +100,25 @@
 
 <script>
 import { mapState } from 'vuex'
-import { getPage } from '@nacelle/nacelle-graphql-queries-mixins'
+import { staticPageData, staticCollectionData } from '~/plugins/NacelleFetchStatic'
 
 export default {
   data() {
     return {
-      handle: 'homepage'
+      handle: 'homepage',
+      page: null,
+      collection: null
     }
   },
-  mixins: [getPage],
+  async asyncData({ params, app, payload }) {
+    const pageData = staticPageData('homepage', app)
+    const collectionData = staticCollectionData('homepage', app)
+      
+    return {
+      ...pageData,
+      ...collectionData
+    }
+  },
   computed: {
     ...mapState('space', ['name']),
     hasPageData() {
@@ -129,6 +139,45 @@ export default {
 
         return false
       }
+    },
+    products () {
+      if (
+        this.collection &&
+        this.collection.products &&
+        Array.isArray(this.collection.products)
+      ) {
+        return this.collection.products
+      }
+
+      return []
+    }
+  },
+  created () {
+    if (!this.collection && !this.noCollectionData) {
+      this.$nacelleApollo.getCollection(
+        this.handle,
+        this.$apollo,
+        {
+          error: () => {
+            this.$nacelleHelpers.debugLog('No collection data.')
+          }
+        }
+      )
+    }
+
+    if (!this.page && !this.noPageData) {
+      this.$nacelleApollo.getPage(
+        this.handle,
+        this.$apollo,
+        {
+          error: this.pageError
+        }
+      )
+    }
+  },
+  methods: {
+    pageError () {
+      this.$nuxt.error({ statusCode: 404, message: 'does not exist' })
     }
   }
 }

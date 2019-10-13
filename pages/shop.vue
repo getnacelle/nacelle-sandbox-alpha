@@ -12,7 +12,7 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex'
-import { getShopPage } from '@nacelle/nacelle-graphql-queries-mixins'
+import { staticPageData, staticShopPageData } from '~/plugins/NacelleFetchStatic'
 import ProductGrid from '~/components/ProductGrid'
 
 export default {
@@ -22,10 +22,45 @@ export default {
   },
   data() {
     return {
-      products: null
+      handle: 'shop',
+      products: null,
+      page: null
     }
   },
-  mixins: [getShopPage]
+  async asyncData({ params, app, payload }) {
+    const pageData = staticPageData('shop', app)
+    const shopPageData = staticShopPageData(app)
+      
+    return {
+      ...pageData,
+      ...shopPageData
+    }
+  },
+  created () {
+    if (!this.products && !this.noShopData) {
+      this.$nacelleApollo.getShopPage(
+        this.$apollo,
+        {
+          error: this.pageError
+        }
+      )
+    }
+
+    if (!this.page && !this.noPageData) {
+      this.$nacelleApollo.getPage(
+        this.handle,
+        this.$apollo,
+        {
+          error: this.pageError
+        }
+      )
+    }
+  },
+  methods: {
+    pageError () {
+      this.$nuxt.error({ statusCode: 404, message: 'does not exist' })
+    }
+  },
 }
 </script>
 <style lang="scss" scoped>

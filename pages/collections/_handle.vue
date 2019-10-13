@@ -24,18 +24,29 @@
 
 <script>
 import { mapState, mapGetters, mapMutations } from 'vuex'
-import { getCollection } from '@nacelle/nacelle-graphql-queries-mixins'
 import ProductGrid from '~/components/ProductGrid'
+import { staticPageData, staticCollectionData } from '~/plugins/NacelleFetchStatic'
 
 export default {
   name: 'home',
   components: { ProductGrid },
   data() {
     return {
-      collection: null
+      handle: this.$route.params.handle,
+      collection: null,
+      page: null
     }
   },
-  mixins: [getCollection],
+  async asyncData({ params, app, payload }) {
+    const { handle } = params
+    const pageData = staticPageData(handle, app)
+    const collectionData = staticCollectionData(handle, app)
+      
+    return {
+      ...pageData,
+      ...collectionData
+    }
+  },
   computed: {
     ...mapGetters('space', ['getMetatag']),
     products() {
@@ -59,6 +70,34 @@ export default {
       }
 
       return null
+    }
+  },
+  created () {
+    if (!this.collection && !this.noCollectionData) {
+      this.$nacelleApollo.getCollection(
+        this.handle,
+        this.$apollo,
+        {
+          error: this.pageError
+        }
+      )
+    }
+
+    if (!this.page && !this.noPageData) {
+      this.$nacelleApollo.getPage(
+        this.handle,
+        this.$apollo,
+        {
+          error: () => {
+            this.$nacelleHelpers.debugLog('No page data.')
+          }
+        }
+      )
+    }
+  },
+  methods: {
+    pageError () {
+      this.$nuxt.error({ statusCode: 404, message: 'does not exist' })
     }
   },
   head() {

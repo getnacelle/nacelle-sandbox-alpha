@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import { allProductsJSON } from '@nacelle/nacelle-graphql-queries-mixins'
+// import { allProductsJSON } from '@nacelle/nacelle-graphql-queries-mixins'
 export default {
   // components: {
   //   SearchBox,
@@ -54,7 +54,7 @@ export default {
       this.filteredData = data
     }
   },
-  mixins: [allProductsJSON]
+  // mixins: [allProductsJSON]
 }
 </script>
 

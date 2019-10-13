@@ -28,12 +28,9 @@
 
 <script>
 import { mapMutations, mapGetters } from 'vuex'
-import transformEdges from '~/plugins/utils/transformEdges.js'
-import ProductDetails from '~/components/ProductDetails'
-import { getProduct } from '@nacelle/nacelle-graphql-queries-mixins'
 import productMetafields from '@nacelle/nacelle-vue-components/dist/mixins/productMetafields'
-
-import gql from 'graphql-tag'
+import { staticProductData } from '~/plugins/NacelleFetchStatic'
+import ProductDetails from '~/components/ProductDetails'
 
 export default {
   mixins: [productMetafields],
@@ -42,25 +39,35 @@ export default {
   },
   data() {
     return {
+      handle: this.$route.params.handle,
       product: null
+    }
+  },
+  async asyncData({ params, app, payload }) {
+    const productData = staticProductData(params.handle, app)
+      
+    return {
+      ...productData
     }
   },
   computed: {
     ...mapGetters('space', ['getMetatag'])
   },
-  methods: {
-    ...mapMutations('cart', ['showCart'])
+  created() {
+    if (!this.product && !this.noProductData) {
+      this.$nacelleApollo.getProduct(
+        this.handle,
+        this.$apollo,
+        {
+          error: this.pageError
+        }
+      )
+    }
   },
-
-  async asyncData({ params, app, payload }) {
-    if (payload) {
-      const { variants, media, ...rest } = payload
-      const transformedProduct = {
-        variants: variants ? transformEdges(variants) : [],
-        media: media ? transformEdges(media) : [],
-        ...rest
-      }
-      return { product: transformedProduct }
+  methods: {
+    ...mapMutations('cart', ['showCart']),
+    pageError () {
+      this.$nuxt.error({ statusCode: 404, message: 'does not exist' })
     }
   },
   head() {
@@ -109,22 +116,6 @@ export default {
         ...properties,
         meta
       }
-    }
-  },
-  created() {
-    if (process.browser) {
-      getProduct({
-        apollo: this.$apollo,
-        params: this.$route.params,
-        store: this.$store,
-        nuxt: this.$nuxt,
-        context: 'component'
-      })
-    }
-  },
-  mounted() {
-    if (process.browser) {
-      this.$apollo.queries.product.startPolling(5000)
     }
   }
 }

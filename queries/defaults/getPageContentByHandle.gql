@@ -1,0 +1,13 @@
+query GetPageContentByHandle($handle: String!, $type: String!) {
+  getContentByHandle(handle: $handle, type: $type) {
+    id
+    source
+    type
+    title
+    description
+    sections
+    tags
+    fields
+    __typename
+  }
+}

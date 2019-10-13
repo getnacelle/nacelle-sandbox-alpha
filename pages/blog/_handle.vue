@@ -48,40 +48,57 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { getBlogArticle } from '@nacelle/nacelle-graphql-queries-mixins'
+import { staticArticleData, staticCollectionData } from '~/plugins/NacelleFetchStatic'
 
 export default {
   data() {
     return {
+      handle: this.$route.params.handle,
       article: null,
       collection: null
+    }
+  },
+  async asyncData({ params, app, payload }) {
+    const articleData = staticArticleData(params.handle, app)
+    const collectionData = staticCollectionData(params.handle, app)
+      
+    return {
+      ...articleData,
+      ...collectionData
     }
   },
   computed: {
     ...mapGetters('space', ['getMetatag'])
   },
-  async asyncData({ params, app, payload }) {
-    if (payload) {
-      return { article: payload }
+  created () {
+    if (!this.collection && !this.noCollectionData) {
+      this.$nacelleApollo.getCollection(
+        this.handle,
+        this.$apollo,
+        {
+          error: () => {
+            this.$nacelleHelpers.debugLog('No collection data.')
+          }
+        }
+      )
     }
-  },
-  created() {
-    if (process.browser) {
-      getBlogArticle({
-        apollo: this.$apollo,
-        params: this.$route.params
-      })
-    }
-  },
-  mounted() {
-    if (JSON.stringify(this.article) == '{}') {
-      this.$nuxt.error({
-        statusCode: 404,
-        message: 'That article could not be found'
-      })
-    }
-  },
 
+    if (!this.article && !this.noArticleData) {
+      this.$nacelleApollo.getArticle(
+        this.handle,
+        'blog',
+        this.$apollo,
+        {
+          error: this.pageError
+        }
+      )
+    }
+  },
+  methods: {
+    pageError () {
+      this.$nuxt.error({ statusCode: 404, message: 'does not exist' })
+    }
+  },
   head() {
     if (this.article) {
       const properties = {}
