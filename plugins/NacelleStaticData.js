@@ -172,7 +172,7 @@ const generateRouteData = async () => {
       routeItems.collections.push({
         handle: 'homepage',
         payload: {},
-        route: '/collections/homepage',
+        route: undefined,
         writePath: '/collections/homepage'
       })
     }
@@ -205,7 +205,7 @@ const generateRouteData = async () => {
                 routeItems.collections.push({
                   handle: article.node.handle,
                   payload: {},
-                  route: `/collections/${article.node.handle}`,
+                  route: undefined,
                   writePath: `/collections/${article.node.handle}`
                 })
               }
@@ -249,8 +249,6 @@ const generateRouteData = async () => {
         products: shopProducts
       }
     }
-
-    console.log(shopRoute)
     
     // Get all collections
     console.log('\x1b[36m', '҈', '\x1b[0m', 'Prefetching collection data...')

@@ -1,6 +1,5 @@
 export const staticPageData = (handle, app) => {
   try {
-    const path = `~/static/data/pages/${handle}/static.json`
     const pageData = require(`~/static/data/pages/${handle}/static.json`)
       
     if (pageData) {
@@ -15,7 +14,6 @@ export const staticPageData = (handle, app) => {
       const cache = {}
       cache[query] = pageData
       app.$nacelleHelpers.cacheData({ data: cache })
-      app.$nacelleHelpers.debugLog(`Loaded static file - ${path}`)
 
       return {
         staticPageData: pageData,
@@ -23,7 +21,9 @@ export const staticPageData = (handle, app) => {
       }
     }
   } catch (err) {
-    app.$nacelleHelpers.debugLog('Static file does not exist. Fallback to API query.')
+    const path = `~/static/data/pages/${handle}/static.json`
+    app.$nacelleHelpers.debugLog('Static page file does not exist. Fallback to API query.')
+    app.$nacelleHelpers.debugLog(`path: ${path}`)
     console.log(err)
   }
 
@@ -32,7 +32,6 @@ export const staticPageData = (handle, app) => {
 
 export const staticCollectionData = (handle, app) => {
   try {
-    const path = `~/static/data/collections/${handle}/static.json`
     const collectionData = require(`~/static/data/collections/${handle}/static.json`)
 
     if (collectionData) {
@@ -47,7 +46,6 @@ export const staticCollectionData = (handle, app) => {
       const cache = {}
       cache[query] = collectionData
       app.$nacelleHelpers.cacheData({ data: cache })
-      app.$nacelleHelpers.debugLog(`Loaded static file - ${path}`)
 
       return {
         staticCollectionData: collectionData,
@@ -55,7 +53,9 @@ export const staticCollectionData = (handle, app) => {
       }
     }
   } catch (err) {
-    app.$nacelleHelpers.debugLog('Static file does not exist. Fallback to API query.')
+    const path = `~/static/data/collections/${handle}/static.json`
+    app.$nacelleHelpers.debugLog('Static Collection file does not exist. Fallback to API query.')
+    app.$nacelleHelpers.debugLog(`path: ${path}`)
     console.log(err)
   }
 
@@ -64,7 +64,6 @@ export const staticCollectionData = (handle, app) => {
 
 export const staticShopPageData = (app) => {
   try {
-    const path = `~/static/data/shop/static.json`
     const shopData = require(`~/static/data/shop/static.json`)
 
     if (shopData) {
@@ -91,8 +90,6 @@ export const staticShopPageData = (app) => {
           }
         })
 
-        app.$nacelleHelpers.debugLog(`Loaded static file - ${path}`)
-
         return {
           staticShopData: shopData,
           products: transformedProducts
@@ -100,7 +97,9 @@ export const staticShopPageData = (app) => {
       }
     }
   } catch (err) {
-    app.$nacelleHelpers.debugLog('Static file does not exist. Fallback to API query.')
+    const path = `~/static/data/shop/static.json`
+    app.$nacelleHelpers.debugLog('Static shop file does not exist. Fallback to API query.')
+    app.$nacelleHelpers.debugLog(`path: ${path}`)
     console.log(err)
   }
 
@@ -109,7 +108,6 @@ export const staticShopPageData = (app) => {
 
 export const staticProductData = (handle, app) => {
   try {
-    const path = `~/static/data/products/${handle}/static.json`
     const productData = require(`~/static/data/products/${handle}/static.json`)
     
     if (productData) {
@@ -124,7 +122,6 @@ export const staticProductData = (handle, app) => {
       const cache = {}
       cache[query] = productData
       app.$nacelleHelpers.cacheData({ data: cache })
-      app.$nacelleHelpers.debugLog(`Loaded static file - ${path}`)
 
       return {
         staticProductData: productData,
@@ -132,7 +129,9 @@ export const staticProductData = (handle, app) => {
       }
     }
   } catch (err) {
-    app.$nacelleHelpers.debugLog('Static file does not exist. Fallback to API query.')
+    const path = `~/static/data/products/${handle}/static.json`
+    app.$nacelleHelpers.debugLog('Static product file does not exist. Fallback to API query.')
+    app.$nacelleHelpers.debugLog(`path: ${path}`)
     console.log(err)
   }
 
@@ -141,7 +140,6 @@ export const staticProductData = (handle, app) => {
 
 export const staticBlogData = (handle, app) => {
   try {
-    const path = `~/static/data/blogs/${handle}/static.json`
     const blogData = require(`~/static/data/blogs/${handle}/static.json`)
     
     if (blogData) {
@@ -156,7 +154,6 @@ export const staticBlogData = (handle, app) => {
       const cache = {}
       cache[query] = blogData
       app.$nacelleHelpers.cacheData({ data: cache })
-      app.$nacelleHelpers.debugLog(`Loaded static file - ${path}`)
 
       return {
         staticBlogData: blogData,
@@ -164,7 +161,9 @@ export const staticBlogData = (handle, app) => {
       }
     }
   } catch (err) {
-    app.$nacelleHelpers.debugLog('Static file does not exist. Fallback to API query.')
+    const path = `~/static/data/blogs/${handle}/static.json`
+    app.$nacelleHelpers.debugLog('Static blog file does not exist. Fallback to API query.')
+    app.$nacelleHelpers.debugLog(`path: ${path}`)
     console.log(err)
   }
 
@@ -173,7 +172,6 @@ export const staticBlogData = (handle, app) => {
 
 export const staticArticleData = (handle, app) => {
   try {
-    const path = `~/static/data/articles/${handle}/static.json`
     const articleData = require(`~/static/data/articles/${handle}/static.json`)
     
     if (articleData) {
@@ -188,7 +186,6 @@ export const staticArticleData = (handle, app) => {
       const cache = {}
       cache[query] = articleData.node
       app.$nacelleHelpers.cacheData({ data: cache })
-      app.$nacelleHelpers.debugLog(`Loaded static file - ${path}`)
 
       return {
         staticArticleData: articleData,
@@ -196,7 +193,9 @@ export const staticArticleData = (handle, app) => {
       }
     }
   } catch (err) {
-    app.$nacelleHelpers.debugLog('Static file does not exist. Fallback to API query.')
+    const path = `~/static/data/articles/${handle}/static.json`
+    app.$nacelleHelpers.debugLog('Static article file does not exist. Fallback to API query.')
+    app.$nacelleHelpers.debugLog(`path: ${path}`)
     console.log(err)
   }
 
