@@ -1,6 +1,5 @@
 import fs from 'fs-extra'
 import NacelleConnector from './NacelleConnector'
-import fetchAllRoutes from './utils/fetchAllRoutes'
 
 const staticDir = 'static/data'
 
