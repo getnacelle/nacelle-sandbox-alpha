@@ -1,7 +1,5 @@
 require('dotenv').config()
 
-import fetchAllRoutes from './plugins/utils/fetchAllRoutes'
-
 export default {
   mode: process.env.BUILD_MODE,
   /*
@@ -55,11 +53,6 @@ export default {
     '~/plugins/NacelleStaticData'
   ],
 
-  plugins: [
-    { src: '~/plugins/NacelleHelpers', mode: 'all' },
-    { src: '~/plugins/NacelleApollo', mode: 'all' }
-  ],
-
   sitemap: {
     gzip: true,
     async routes() {
@@ -72,7 +65,7 @@ export default {
     token: process.env.NACELLE_GRAPHQL_TOKEN,
     gaID: process.env.NACELLE_GA_ID,
     fbID: process.env.NACELLE_FB_ID,
-    skipPrefetch: false
+    skipPrefetch: (process.env.SKIP_PREFETCH === 'true')
   },
 
   generate: {

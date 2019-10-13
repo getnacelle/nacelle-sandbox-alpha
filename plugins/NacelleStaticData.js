@@ -1,7 +1,11 @@
 import fs from 'fs-extra'
-import NacelleConnector from './NacelleConnector'
+import { unique, nacelleConnector } from '@nacelle/nacelle-tools'
 
 const staticDir = 'static/data'
+const connector = nacelleConnector(
+  process.env.NACELLE_SPACE_ID,
+  process.env.NACELLE_GRAPHQL_TOKEN
+)
 
 const writeData = (path, data) => {
   return new Promise((resolve, reject) => {
@@ -59,12 +63,6 @@ const getHandle = (path) => {
   const parts = path.split('/')
 
   return parts.pop()
-}
-
-const unique = (myArr, prop) => {
-  return myArr.filter((obj, pos, arr) => {
-      return arr.map(mapObj => mapObj[prop]).indexOf(obj[prop]) === pos;
-  });
 }
 
 const getLinklistRouteItems = (links) => {
@@ -142,7 +140,7 @@ const generateRouteData = async () => {
 
   try {
     // Get linklist
-    const linklists = await NacelleConnector.getLinkLists()
+    const linklists = await connector.getLinkLists()
     
     // Search link list for pages
     if (linklists) {
@@ -153,12 +151,12 @@ const generateRouteData = async () => {
     console.log('\x1b[36m', '҈', '\x1b[0m', 'Prefetching page data...')
     if (routeItems.pages && routeItems.pages.length > 0) {
       for (const page of routeItems.pages) {
-        page.payload = await NacelleConnector.getContentByHandle(page.handle)
+        page.payload = await connector.getContentByHandle(page.handle)
       }
     }
 
     // Get Homepage
-    const homepage = await NacelleConnector.getContentByHandle('homepage')
+    const homepage = await connector.getContentByHandle('homepage')
 
     if (homepage) {
       routeItems.pages.push({
@@ -182,7 +180,7 @@ const generateRouteData = async () => {
       routeItems.articles = []
 
       for (const blog of routeItems.blogs) {
-        blog.payload = await NacelleConnector.getBlog(blog.handle)
+        blog.payload = await connector.getBlog(blog.handle)
 
         // Get all articles
         if (
@@ -219,7 +217,7 @@ const generateRouteData = async () => {
     
     // Get all products
     console.log('\x1b[36m', '҈', '\x1b[0m', 'Prefetching product data...')
-    const products = await NacelleConnector.getAllProducts()
+    const products = await connector.getAllProducts()
     
     routeItems.products = products.reduce((routes, product) => {
       if (product && product.node && product.node.handle) {
@@ -253,7 +251,7 @@ const generateRouteData = async () => {
     console.log('\x1b[36m', '҈', '\x1b[0m', 'Prefetching collection data...')
     if (routeItems.collections && routeItems.collections.length > 0) {
       for (const collection of routeItems.collections) {
-        const collectionData = await NacelleConnector.getCollection(collection.handle)
+        const collectionData = await connector.getCollection(collection.handle)
 
         // fill product data with previously retrieved product data
         if (
