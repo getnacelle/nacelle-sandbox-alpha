@@ -137,6 +137,7 @@ const getLinklistRouteItems = (links) => {
 
 const generateRouteData = async () => {
   let routeItems = {}
+  routeItems.articles = []
 
   try {
     // Get linklist
@@ -145,6 +146,7 @@ const generateRouteData = async () => {
     // Search link list for pages
     if (linklists) {
       routeItems = getLinklistRouteItems(linklists)
+      routeItems.articles = []
     }
     
     // Get page data
@@ -177,7 +179,6 @@ const generateRouteData = async () => {
     // Get blog
     console.log('\x1b[36m', '҈','\x1b[0m', 'Prefetching blog data...')
     if (routeItems.blogs && routeItems.blogs.length > 0) {
-      routeItems.articles = []
 
       for (const blog of routeItems.blogs) {
         blog.payload = await connector.getBlog(blog.handle)

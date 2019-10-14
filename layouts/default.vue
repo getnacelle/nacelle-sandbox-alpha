@@ -10,7 +10,6 @@
 <script>
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 import localforage from 'localforage'
-// import { prefetchCollectionsAndContent } from '@nacelle/nacelle-graphql-queries-mixins'
 import GlobalHeader from '~/components/GlobalHeader'
 import SiteFooter from '~/components/SiteFooter'
 export default {
