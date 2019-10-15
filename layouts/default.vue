@@ -3,7 +3,7 @@
     <global-header ref="header" />
     <nuxt :style="{'margin-top': `${headerHeight}px`}" />
     <site-footer />
-    <!-- <event-dispatcher /> -->
+    <event-dispatcher />
   </div>
 </template>
 
