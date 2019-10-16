@@ -41,7 +41,9 @@ export default {
       this.$nacelleApollo.getShopPage(
         this.$apollo,
         {
-          error: this.pageError
+          error: () => {
+            this.$nacelleHelpers.debugLog('No product data.')
+          }
         }
       )
     }
@@ -51,14 +53,16 @@ export default {
         this.handle,
         this.$apollo,
         {
-          error: this.pageError
+          error: () => {
+            this.$nacelleHelpers.debugLog('No page data.')
+          }
         }
       )
     }
   },
   methods: {
     pageError () {
-      this.$nuxt.error({ statusCode: 404, message: 'does not exist' })
+      this.$nuxt.error({ statusCode: 404, message: 'Shop page does not exist' })
     }
   },
 }

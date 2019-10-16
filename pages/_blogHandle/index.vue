@@ -43,12 +43,12 @@ export default {
   },
   data () {
     return {
-      handle: 'blog',
+      handle: this.$route.params.blogHandle,
       blog: null
     }
   },
   async asyncData({ params, app, payload }) {
-    const blogData = staticBlogData('blog', app)
+    const blogData = staticBlogData(params.blogHandle, app)
       
     return {
       ...blogData
@@ -88,14 +88,16 @@ export default {
         this.handle,
         this.$apollo,
         {
-          error: this.pageError
+          error: () => {
+            this.$nacelleHelpers.debugLog('No blog data.')
+          }
         }
       )
     }
   },
   methods: {
     pageError () {
-      this.$nuxt.error({ statusCode: 404, message: 'does not exist' })
+      this.$nuxt.error({ statusCode: 404, message: 'Blog page does not exist' })
     }
   },
   head() {

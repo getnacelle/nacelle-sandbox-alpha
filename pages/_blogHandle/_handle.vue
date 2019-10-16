@@ -89,14 +89,16 @@ export default {
         'blog',
         this.$apollo,
         {
-          error: this.pageError
+          error: () => {
+            this.$nacelleHelpers.debugLog('No article data.')
+          }
         }
       )
     }
   },
   methods: {
     pageError () {
-      this.$nuxt.error({ statusCode: 404, message: 'does not exist' })
+      this.$nuxt.error({ statusCode: 404, message: 'Article page does not exist' })
     }
   },
   head() {

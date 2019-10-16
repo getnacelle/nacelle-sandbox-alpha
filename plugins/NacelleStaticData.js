@@ -25,6 +25,12 @@ const buildStaticFiles = async (data) => {
   try {
     fs.emptyDirSync(staticDir)
 
+    fs.mkdirSync(`${staticDir}/collections`)
+    fs.mkdirSync(`${staticDir}/pages`)
+    fs.mkdirSync(`${staticDir}/products`)
+    fs.mkdirSync(`${staticDir}/blogs`)
+    fs.mkdirSync(`${staticDir}/articles`)
+
     if (data && data.length > 0) {
       // Save routes
       const routesOnly = data.reduce((allRoutes, route) => {
@@ -74,7 +80,7 @@ const getLinklistRouteItems = (links) => {
   links.forEach(link => {
     const { to, type } = link
 
-    if (to && type) {
+    if (to && type && to !== '/') {
       const handle = getHandle(to)
 
       switch (type) {
@@ -96,7 +102,7 @@ const getLinklistRouteItems = (links) => {
           collections.push({
             handle,
             payload: {},
-            route: `/collections/${handle}`,
+            route: to,
             writePath: `/collections/${handle}`
           })
           pages.push({
@@ -153,35 +159,36 @@ const generateRouteData = async () => {
     console.log('\x1b[36m', '҈', '\x1b[0m', 'Prefetching page data...')
     if (routeItems.pages && routeItems.pages.length > 0) {
       for (const page of routeItems.pages) {
-        page.payload = await connector.getContentByHandle(page.handle)
+        const pagePayload = await connector.getContentByHandle(page.handle)
+        page.payload = pagePayload ? pagePayload : { noData: true }
       }
     }
 
     // Get Homepage
     const homepage = await connector.getContentByHandle('homepage')
+    const homepagePayload = homepage ? homepage : { noData: true }
 
-    if (homepage) {
-      routeItems.pages.push({
-        handle: 'homepage',
-        payload: homepage,
-        route: '/',
-        writePath: '/pages/homepage'
-      })
+    routeItems.pages.push({
+      handle: 'homepage',
+      payload: homepagePayload,
+      route: '/',
+      writePath: '/pages/homepage'
+    })
 
-      routeItems.collections.push({
-        handle: 'homepage',
-        payload: {},
-        route: undefined,
-        writePath: '/collections/homepage'
-      })
-    }
+    routeItems.collections.push({
+      handle: 'homepage',
+      payload: {},
+      route: undefined,
+      writePath: '/collections/homepage'
+    })
 
     // Get blog
     console.log('\x1b[36m', '҈','\x1b[0m', 'Prefetching blog data...')
     if (routeItems.blogs && routeItems.blogs.length > 0) {
 
       for (const blog of routeItems.blogs) {
-        blog.payload = await connector.getBlog(blog.handle)
+        const blogPayload = await connector.getBlog(blog.handle)
+        blog.payload = blogPayload ? blogPayload : { noData: true }
 
         // Get all articles
         if (
@@ -218,7 +225,7 @@ const generateRouteData = async () => {
     
     // Get all products
     console.log('\x1b[36m', '҈', '\x1b[0m', 'Prefetching product data...')
-    const products = await connector.getAllProducts()
+    const products = await connector.getAllProducts(100)
     
     routeItems.products = products.reduce((routes, product) => {
       if (product && product.node && product.node.handle) {
@@ -252,25 +259,28 @@ const generateRouteData = async () => {
     console.log('\x1b[36m', '҈', '\x1b[0m', 'Prefetching collection data...')
     if (routeItems.collections && routeItems.collections.length > 0) {
       for (const collection of routeItems.collections) {
-        const collectionData = await connector.getCollection(collection.handle)
+        const collectionData = await connector.getCompleteCollection(collection.handle, 10)
 
         // fill product data with previously retrieved product data
-        if (
-          collectionData &&
-          collectionData.products &&
-          collectionData.products.edges &&
-          collectionData.products.edges.length > 0
-        ) {
-          const filledProducts = collectionData.products.edges.map(product => {
-            return products.find(({ node }) => {
-              return node.id === product.node.id
+        if (collectionData) {
+          if (
+            collectionData.products &&
+            collectionData.products.edges &&
+            collectionData.products.edges.length > 0
+          ) {
+            const filledProducts = collectionData.products.edges.map(product => {
+              return products.find(({ node }) => {
+                return node.id === product.node.id
+              })
             })
-          })
 
-          collectionData.products.edges = filledProducts
+            collectionData.products.edges = filledProducts
+          }
+
+          collection.payload = collectionData
+        } else {
+          collection.payload = { noData: true }
         }
-
-        collection.payload = collectionData
       }
     }
 
@@ -300,4 +310,18 @@ export default function NacelleStaticData (moduleOptions) {
       return buildStaticFiles(routeData)
     })
   }
+
+  this.nuxt.hook('generate:routeCreated', ({route, path, errors}) => {
+    if (errors && errors.length > 0) {
+      console.log(route)
+      console.log(path)
+      console.log(errors)
+    }
+  })
+
+  this.nuxt.hook('generate:done', ({nuxt, errors}) => {
+    if (errors && errors.length > 0) {
+      console.log(errors)
+    }
+  })
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="page page-shop">
+  <div class="page page-shop" v-if="collection">
     <content-hero-banner
       v-if="collection"
       :title="collection.title"
@@ -78,7 +78,9 @@ export default {
         this.handle,
         this.$apollo,
         {
-          error: this.pageError
+          error: () => {
+            this.$nacelleHelpers.debugLog('No collection data.')
+          }
         }
       )
     }
@@ -97,7 +99,7 @@ export default {
   },
   methods: {
     pageError () {
-      this.$nuxt.error({ statusCode: 404, message: 'does not exist' })
+      this.$nuxt.error({ statusCode: 404, message: 'Page does not exist' })
     }
   },
   head() {
@@ -147,15 +149,7 @@ export default {
         meta
       }
     }
-  },
-  // mounted() {
-  //   if (this.collection && this.collection.products == null) {
-  //     this.$nuxt.error({
-  //       statusCode: 404,
-  //       message: 'That collection could not be found'
-  //     })
-  //   }
-  // }
+  }
 }
 </script>
 <style lang="scss" scoped>

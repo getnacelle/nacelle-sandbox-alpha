@@ -21,10 +21,10 @@ export const staticPageData = (handle, app) => {
       }
     }
   } catch (err) {
-    const path = `~/static/data/pages/${handle}/static.json`
-    app.$nacelleHelpers.debugLog('Static page file does not exist. Fallback to API query.')
-    app.$nacelleHelpers.debugLog(`path: ${path}`)
-    console.log(err)
+    // const path = `~/static/data/pages/${handle}/static.json`
+    // app.$nacelleHelpers.debugLog('Static page file does not exist. Fallback to API query.')
+    // app.$nacelleHelpers.debugLog(`path: ${path}`)
+    // console.log(err)
   }
 
   return undefined
@@ -97,10 +97,10 @@ export const staticShopPageData = (app) => {
       }
     }
   } catch (err) {
-    const path = `~/static/data/shop/static.json`
-    app.$nacelleHelpers.debugLog('Static shop file does not exist. Fallback to API query.')
-    app.$nacelleHelpers.debugLog(`path: ${path}`)
-    console.log(err)
+    // const path = `~/static/data/shop/static.json`
+    // app.$nacelleHelpers.debugLog('Static shop file does not exist. Fallback to API query.')
+    // app.$nacelleHelpers.debugLog(`path: ${path}`)
+    // console.log(err)
   }
 
   return undefined
@@ -129,10 +129,10 @@ export const staticProductData = (handle, app) => {
       }
     }
   } catch (err) {
-    const path = `~/static/data/products/${handle}/static.json`
-    app.$nacelleHelpers.debugLog('Static product file does not exist. Fallback to API query.')
-    app.$nacelleHelpers.debugLog(`path: ${path}`)
-    console.log(err)
+    // const path = `~/static/data/products/${handle}/static.json`
+    // app.$nacelleHelpers.debugLog('Static product file does not exist. Fallback to API query.')
+    // app.$nacelleHelpers.debugLog(`path: ${path}`)
+    // console.log(err)
   }
 
   return undefined
@@ -161,10 +161,10 @@ export const staticBlogData = (handle, app) => {
       }
     }
   } catch (err) {
-    const path = `~/static/data/blogs/${handle}/static.json`
-    app.$nacelleHelpers.debugLog('Static blog file does not exist. Fallback to API query.')
-    app.$nacelleHelpers.debugLog(`path: ${path}`)
-    console.log(err)
+    // const path = `~/static/data/blogs/${handle}/static.json`
+    // app.$nacelleHelpers.debugLog('Static blog file does not exist. Fallback to API query.')
+    // app.$nacelleHelpers.debugLog(`path: ${path}`)
+    // console.log(err)
   }
 
   return undefined
@@ -193,10 +193,10 @@ export const staticArticleData = (handle, app) => {
       }
     }
   } catch (err) {
-    const path = `~/static/data/articles/${handle}/static.json`
-    app.$nacelleHelpers.debugLog('Static article file does not exist. Fallback to API query.')
-    app.$nacelleHelpers.debugLog(`path: ${path}`)
-    console.log(err)
+    // const path = `~/static/data/articles/${handle}/static.json`
+    // app.$nacelleHelpers.debugLog('Static article file does not exist. Fallback to API query.')
+    // app.$nacelleHelpers.debugLog(`path: ${path}`)
+    // console.log(err)
   }
 
   return undefined

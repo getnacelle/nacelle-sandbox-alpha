@@ -59,7 +59,9 @@ export default {
         this.handle,
         this.$apollo,
         {
-          error: this.pageError
+          error: () => {
+            this.$nacelleHelpers.debugLog('No product data.')
+          }
         }
       )
     }
@@ -67,7 +69,7 @@ export default {
   methods: {
     ...mapMutations('cart', ['showCart']),
     pageError () {
-      this.$nuxt.error({ statusCode: 404, message: 'does not exist' })
+      this.$nuxt.error({ statusCode: 404, message: 'Product page does not exist' })
     }
   },
   head() {
