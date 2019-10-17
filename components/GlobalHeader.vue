@@ -23,7 +23,7 @@
             @click.native="disableMenu"
           >{{ link.title }}</nuxt-link>
         </div>
-        <!-- <search-box class="is-hidden-mobile" /> -->
+        <search-box class="is-hidden-mobile" />
         <main-nav-cart />
       </div>
     </div>
