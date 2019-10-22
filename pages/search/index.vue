@@ -36,6 +36,7 @@
           >
             <template v-slot:result="{ result }">
               <product-grid :products="result" :columns="3" />
+              <!-- <pre>{{ result.length }}</pre> -->
             </template>
             <template v-slot:no-results>
               <search-no-results />
@@ -48,22 +49,39 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions } from 'vuex'
+import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
+import ProductGrid from '~/components/ProductGrid'
 
 export default {
+  components: {
+    ProductGrid
+  },
   data() {
     return {
       filteredData: null
     }
   },
   computed: {
-    ...mapState('search', ['query']),
+    ...mapState('search', ['query', 'loadedData']),
     ...mapGetters('search', ['productData']),
+  },
+  watch: {
+    loadedData(newVal) {
+      if (newVal) {
+        if (this.$route.query && this.$route.query.q) {
+          this.setQuery({
+            origin: 'in-page',
+            value: this.$route.query.q
+          })
+        }
+      }
+    }
   },
   created () {
     this.getProductData()
   },
   methods: {
+    ...mapMutations('search', ['setQuery']),
     ...mapActions('search', ['getProductData']),
     updateFilteredData(data) {
       this.filteredData = data

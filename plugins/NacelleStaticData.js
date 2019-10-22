@@ -240,7 +240,21 @@ const generateRouteData = async () => {
       return routes
     }, [])
 
+    if (routeItems.products.length === 0) {
+      console.log('No products found.')
+    }
+
     // Get Shop Page
+    const shopPage = await connector.getContentByHandle('shop')
+    const shopPagePayload = shopPage ? shopPage : { noData: true }
+
+    routeItems.pages.push({
+      handle: 'shop',
+      payload: shopPagePayload,
+      route: undefined,
+      writePath: '/pages/shop'
+    })
+
     const shopRoute = {
       handle: 'shop',
       payload: {},
@@ -313,15 +327,16 @@ export default function NacelleStaticData (moduleOptions) {
 
   this.nuxt.hook('generate:routeCreated', ({route, path, errors}) => {
     if (errors && errors.length > 0) {
+      console.log('routeCreated Error')
       console.log(route)
       console.log(path)
       console.log(errors)
     }
   })
 
-  this.nuxt.hook('generate:done', ({nuxt, errors}) => {
-    if (errors && errors.length > 0) {
-      console.log(errors)
-    }
-  })
+  // this.nuxt.hook('generate:done', ({nuxt, errors}) => {
+  //   if (errors && errors.length > 0) {
+  //     console.log(errors)
+  //   }
+  // })
 }
