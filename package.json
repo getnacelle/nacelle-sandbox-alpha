@@ -7,7 +7,7 @@
     "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
-    "generate": "nuxt generate"
+    "generate": "nuxt generate --fail-on-error"
   },
   "dependencies": {
     "@nacelle/nacelle-nuxt-module": "0.0.206",
