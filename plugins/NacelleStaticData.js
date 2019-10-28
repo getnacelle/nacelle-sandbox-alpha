@@ -1,4 +1,5 @@
 import fs from 'fs-extra'
+import axios from 'axios'
 import { unique, nacelleConnector } from '@nacelle/nacelle-tools'
 
 const staticDir = 'static/data'
@@ -6,6 +7,24 @@ const connector = nacelleConnector(
   process.env.NACELLE_SPACE_ID,
   process.env.NACELLE_GRAPHQL_TOKEN
 )
+
+const handleError = async (message, error) => {
+  console.log(message)
+  console.log(error)
+  
+  const errorStr = Array.isArray(error) ? JSON.stringify(error) : error
+  const text = `Build failed for space ${process.env.NACELLE_SPACE_ID}. ${errorStr}`
+
+  await axios.post(
+    'https://b3mfz9hvcl.execute-api.us-east-1.amazonaws.com/dev/message',
+    { 
+      text,
+      hookUrl: "https://hooks.slack.com/services/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"
+    }
+  )
+
+  process.exit(1)
+}
 
 const writeData = (path, data) => {
   return new Promise((resolve, reject) => {
@@ -23,8 +42,10 @@ const buildStaticFiles = async (data) => {
   console.log('\x1b[36m', '҈', '\x1b[0m', 'Writing space data...')
 
   try {
+    // Clear out the old files
     fs.emptyDirSync(staticDir)
 
+    // Make directories for each type of data
     fs.mkdirSync(`${staticDir}/collections`)
     fs.mkdirSync(`${staticDir}/pages`)
     fs.mkdirSync(`${staticDir}/products`)
@@ -60,8 +81,7 @@ const buildStaticFiles = async (data) => {
       })
     }
   } catch (err) {
-    console.log('Write failed')
-    console.log(err)
+    handleError('Write failed. Aborting build.', err)
   }
 }
 
@@ -69,6 +89,32 @@ const getHandle = (path) => {
   const parts = path.split('/')
 
   return parts.pop()
+}
+
+const validateProductEdge = (productEdge) => {
+  const { node } = productEdge
+
+  if (!node) {
+    console.log('Product failed validation:')
+    console.log(productEdge)
+    return false
+  }
+
+  const { id, handle, variants } = node
+
+  if (!id || !handle) {
+    console.log('Product failed validation:')
+    console.log(productEdge)
+    return false
+  }
+
+  if (!variants || !variants.edges || variants.edges.length === 0) {
+    console.log('Product failed validation:')
+    console.log(productEdge)
+    return false
+  }
+
+  return true
 }
 
 const getLinklistRouteItems = (links) => {
@@ -163,6 +209,7 @@ const generateRouteData = async () => {
         page.payload = pagePayload ? pagePayload : { noData: true }
       }
     }
+    // ------------------------
 
     // Get Homepage
     const homepage = await connector.getContentByHandle('homepage')
@@ -181,6 +228,7 @@ const generateRouteData = async () => {
       route: undefined,
       writePath: '/collections/homepage'
     })
+    // ------------------------
 
     // Get blog
     console.log('\x1b[36m', '҈','\x1b[0m', 'Prefetching blog data...')
@@ -222,6 +270,7 @@ const generateRouteData = async () => {
         }
       }
     }
+    // ------------------------
     
     // Get all products
     console.log('\x1b[36m', '҈', '\x1b[0m', 'Prefetching product data...')
@@ -240,7 +289,29 @@ const generateRouteData = async () => {
       return routes
     }, [])
 
+    // Validate products
+    if (routeItems.products.length === 0) {
+      throw new Error('No products found.')
+    }
+
+    const productsValid = products.every(validateProductEdge)
+
+    if (!productsValid) {
+      throw new Error('Products failed validation.')
+    }
+    // ------------------------
+
     // Get Shop Page
+    const shopPage = await connector.getContentByHandle('shop')
+    const shopPagePayload = shopPage ? shopPage : { noData: true }
+
+    routeItems.pages.push({
+      handle: 'shop',
+      payload: shopPagePayload,
+      route: undefined,
+      writePath: '/pages/shop'
+    })
+
     const shopRoute = {
       handle: 'shop',
       payload: {},
@@ -254,6 +325,7 @@ const generateRouteData = async () => {
         products: shopProducts
       }
     }
+    // ------------------------
     
     // Get all collections
     console.log('\x1b[36m', '҈', '\x1b[0m', 'Prefetching collection data...')
@@ -283,6 +355,7 @@ const generateRouteData = async () => {
         }
       }
     }
+    // ------------------------
 
     // Flatten data
     return [
@@ -294,8 +367,7 @@ const generateRouteData = async () => {
       shopRoute
     ]
   } catch (err) {
-    console.log(err)
-    return false
+    handleError('Error generating static data files. Aborting build.', err)
   }
 }
 
@@ -313,15 +385,13 @@ export default function NacelleStaticData (moduleOptions) {
 
   this.nuxt.hook('generate:routeCreated', ({route, path, errors}) => {
     if (errors && errors.length > 0) {
-      console.log(route)
-      console.log(path)
-      console.log(errors)
+      handleError('generate:routeCreated Error. Aborting build', errors)
     }
   })
 
   this.nuxt.hook('generate:done', ({nuxt, errors}) => {
     if (errors && errors.length > 0) {
-      console.log(errors)
+      handleError('generate:done Error. Aborting build', errors)
     }
   })
 }
