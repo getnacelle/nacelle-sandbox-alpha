@@ -23,6 +23,12 @@ export default {
         type: 'text/css',
         href: `//space-styles.s3.amazonaws.com/${process.env.NACELLE_SPACE_ID}/styles.css`
       }
+    ],
+    script: [
+      {
+        src:
+          'https://polyfill.io/v3/polyfill.min.js?features=IntersectionObserver'
+      }
     ]
   },
   /*
@@ -65,7 +71,7 @@ export default {
     token: process.env.NACELLE_GRAPHQL_TOKEN,
     gaID: process.env.NACELLE_GA_ID,
     fbID: process.env.NACELLE_FB_ID,
-    skipPrefetch: (process.env.SKIP_PREFETCH === 'true')
+    skipPrefetch: process.env.SKIP_PREFETCH === 'true'
   },
 
   generate: {
@@ -83,7 +89,7 @@ export default {
   },
 
   build: {
-    analyze: true,
+    // analyze: true,
     postcss: {
       preset: {
         features: {
