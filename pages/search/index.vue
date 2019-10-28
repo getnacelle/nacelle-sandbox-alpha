@@ -78,7 +78,9 @@ export default {
     }
   },
   created () {
-    this.getProductData()
+    if (process.browser) {
+      this.getProductData()
+    }
   },
   methods: {
     ...mapMutations('search', ['setQuery']),
