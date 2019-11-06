@@ -29,7 +29,7 @@
 <script>
 import { mapMutations, mapGetters } from 'vuex'
 import productMetafields from '@nacelle/nacelle-vue-components/dist/mixins/productMetafields'
-import { staticProductData } from '~/plugins/NacelleFetchStatic'
+import { fetchStatic } from '@nacelle/nacelle-tools'
 import ProductDetails from '~/components/ProductDetails'
 
 export default {
@@ -43,8 +43,10 @@ export default {
       product: null
     }
   },
-  async asyncData({ params, app, payload }) {
-    const productData = staticProductData(params.handle, app)
+  async asyncData(context) {
+    const { params } = context
+    const { handle } = params
+    const productData = await fetchStatic.productData(handle, context)
       
     return {
       ...productData

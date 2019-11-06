@@ -1,5 +1,8 @@
 require('dotenv').config()
 
+import path from 'path'
+import fs from 'fs-extra'
+
 export default {
   mode: process.env.BUILD_MODE,
   /*
@@ -55,14 +58,17 @@ export default {
     '@nuxtjs/dotenv',
     '@nacelle/nacelle-nuxt-module',
     '@nuxtjs/sitemap',
-    '@nuxtjs/axios',
-    '~/plugins/NacelleStaticData'
+    '@nuxtjs/axios'
   ],
 
   sitemap: {
     gzip: true,
     async routes() {
-      return require('./static/data/routes.json')
+      const staticDir = path.resolve(__dirname, './static/data')
+      const routes = fs.readJsonSync(`${staticDir}/routes.json`)
+      const routesOnly = routes.map(route => route.route)
+      
+      return routesOnly
     }
   },
 
@@ -76,25 +82,28 @@ export default {
 
   generate: {
     workers: 4,
-    concurrency: 4,
-    async routes() {
-      return require('./static/data/routes.json')
-    },
-    done({ duration, errors, workerInfo }) {
-      if (errors.length) {
-        console.log(errors)
-      }
-      console.log(workerInfo)
-    }
+    concurrency: 4
   },
 
   build: {
-    // analyze: true,
     postcss: {
       preset: {
         features: {
           customProperties: false
         }
+      }
+    },
+    html: {
+      minify: {
+        collapseBooleanAttributes: true,
+        decodeEntities: true,
+        minifyCSS: false,
+        minifyJS: false,
+        processConditionalComments: true,
+        removeEmptyAttributes: true,
+        removeRedundantAttributes: true,
+        trimCustomFragments: true,
+        useShortDoctype: true
       }
     },
     transpile: ['@nacelle/nacelle-vue-components']

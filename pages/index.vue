@@ -1,6 +1,5 @@
 <template>
   <div class="page">
-    <div v-if="$apollo.loading">Loading...</div>
     <!-- Begin editing your homepage here -->
     <div v-if="!hasPageData">
       <content-hero-banner
@@ -100,7 +99,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import { staticPageData, staticCollectionData } from '~/plugins/NacelleFetchStatic'
+import { fetchStatic } from '@nacelle/nacelle-tools'
 
 export default {
   data() {
@@ -110,9 +109,9 @@ export default {
       collection: null
     }
   },
-  async asyncData({ params, app, payload }) {
-    const pageData = staticPageData('homepage', app)
-    const collectionData = staticCollectionData('homepage', app)
+  async asyncData(context) {
+    const pageData = await fetchStatic.pageData('homepage', context)
+    const collectionData = await fetchStatic.collectionData('homepage', context)
       
     return {
       ...pageData,

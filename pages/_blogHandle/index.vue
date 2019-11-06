@@ -34,7 +34,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { staticBlogData } from '~/plugins/NacelleFetchStatic'
+import { fetchStatic } from '@nacelle/nacelle-tools'
 import ArticlePreview from '~/components/ArticlePreview'
 
 export default {
@@ -47,8 +47,10 @@ export default {
       blog: null
     }
   },
-  async asyncData({ params, app, payload }) {
-    const blogData = staticBlogData(params.blogHandle, app)
+  async asyncData(context) {
+    const { params } = context
+    const { blogHandle } = params
+    const blogData = await fetchStatic.blogData(blogHandle, context)
       
     return {
       ...blogData
