@@ -10,7 +10,7 @@
     "generate": "nuxt generate --fail-on-error"
   },
   "dependencies": {
-    "@nacelle/nacelle-nuxt-module": "0.0.221",
+    "@nacelle/nacelle-nuxt-module": "0.0.215",
     "@nacelle/nacelle-vue-components": "0.0.185",
     "@nuxtjs/apollo": "^4.0.0-rc8.2",
     "@nuxtjs/axios": "^5.3.6",
