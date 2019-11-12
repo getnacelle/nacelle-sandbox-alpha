@@ -77,7 +77,8 @@ export default {
     token: process.env.NACELLE_GRAPHQL_TOKEN,
     gaID: process.env.NACELLE_GA_ID,
     fbID: process.env.NACELLE_FB_ID,
-    skipPrefetch: process.env.SKIP_PREFETCH === 'true'
+    skipPrefetch: process.env.SKIP_PREFETCH === 'true',
+    productsPerPage: 4
   },
 
   generate: {

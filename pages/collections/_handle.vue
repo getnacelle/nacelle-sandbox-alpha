@@ -9,55 +9,29 @@
       <div class="container">
         <div class="columns is-multiline">
           <product-grid
-            v-if="products"
+            v-if="products && products.length > 0"
             :products="products"
             :showAddToCart="true"
             :showQuantityUpdate="true"
           />
         </div>
       </div>
-      <div ref="fetchMore" class="fetch-more-component"></div>
+      <div ref="fetchMore" class="fetch-more-component" @click="fetchMore" />
     </section>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
 import { mapState, mapGetters, mapMutations } from 'vuex'
 import ProductGrid from '~/components/ProductGrid'
-import { fetchStatic } from '@nacelle/nacelle-tools'
+import { getCollection } from '@nacelle/nacelle-graphql-queries-mixins'
 
 export default {
   name: 'home',
   components: { ProductGrid },
-  data() {
-    return {
-      handle: this.$route.params.handle,
-      collection: null
-    }
-  },
-  async asyncData(context) {
-    const { params } = context
-    const { handle } = params
-    const collectionData = await fetchStatic.collectionData(handle, context)
-      
-    return {
-      ...collectionData
-    }
-  },
+  mixins: [ getCollection ],
   computed: {
     ...mapGetters('space', ['getMetatag']),
-    products() {
-      if (
-        this.collection &&
-        this.collection.products &&
-        this.collection.products.length
-      ) {
-        return this.collection.products
-      }
-
-      return null
-    },
     featuredImage() {
       if (
         this.collection &&
@@ -68,19 +42,6 @@ export default {
       }
 
       return null
-    }
-  },
-  created () {
-    if (!this.collection && !this.noCollectionData) {
-      this.$nacelleApollo.getCollection(
-        this.handle,
-        this.$apollo,
-        {
-          error: () => {
-            this.$nacelleHelpers.debugLog('No collection data.')
-          }
-        }
-      )
     }
   },
   methods: {
