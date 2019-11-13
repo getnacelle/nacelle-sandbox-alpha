@@ -5,7 +5,6 @@
       :title="collection.title"
       :backgroundImgUrl="featuredImage"
     />
-    <page-content :page="page" :products="products" />
     <section class="section">
       <div class="container">
         <div class="columns is-multiline">
@@ -23,9 +22,10 @@
 </template>
 
 <script>
+import axios from 'axios'
 import { mapState, mapGetters, mapMutations } from 'vuex'
 import ProductGrid from '~/components/ProductGrid'
-import { staticPageData, staticCollectionData } from '~/plugins/NacelleFetchStatic'
+import { fetchStatic } from '@nacelle/nacelle-tools'
 
 export default {
   name: 'home',
@@ -33,17 +33,15 @@ export default {
   data() {
     return {
       handle: this.$route.params.handle,
-      collection: null,
-      page: null
+      collection: null
     }
   },
-  async asyncData({ params, app, payload }) {
+  async asyncData(context) {
+    const { params } = context
     const { handle } = params
-    const pageData = staticPageData(handle, app)
-    const collectionData = staticCollectionData(handle, app)
+    const collectionData = await fetchStatic.collectionData(handle, context)
       
     return {
-      ...pageData,
       ...collectionData
     }
   },
@@ -80,18 +78,6 @@ export default {
         {
           error: () => {
             this.$nacelleHelpers.debugLog('No collection data.')
-          }
-        }
-      )
-    }
-
-    if (!this.page && !this.noPageData) {
-      this.$nacelleApollo.getPage(
-        this.handle,
-        this.$apollo,
-        {
-          error: () => {
-            this.$nacelleHelpers.debugLog('No page data.')
           }
         }
       )

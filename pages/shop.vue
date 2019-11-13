@@ -12,7 +12,7 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex'
-import { staticPageData, staticShopPageData } from '~/plugins/NacelleFetchStatic'
+import { fetchStatic } from '@nacelle/nacelle-tools'
 import ProductGrid from '~/components/ProductGrid'
 
 export default {
@@ -27,9 +27,9 @@ export default {
       page: null
     }
   },
-  async asyncData({ params, app, payload }) {
-    const pageData = staticPageData('shop', app)
-    const shopPageData = staticShopPageData(app)
+  async asyncData(context) {
+    const pageData = await fetchStatic.pageData('shop', context)
+    const shopPageData = await fetchStatic.shopPageData(context)
       
     return {
       ...pageData,

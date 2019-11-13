@@ -1,6 +1,5 @@
 <template>
   <div class="page">
-    <div v-if="$apollo.loading">Loading...</div>
     <page-content :page="page" :products="products">
       <!-- 
         /****
@@ -66,7 +65,7 @@
 </template>
 
 <script>
-import { staticPageData, staticCollectionData } from '~/plugins/NacelleFetchStatic'
+import { fetchStatic } from '@nacelle/nacelle-tools'
 
 export default {
   data() {
@@ -76,10 +75,11 @@ export default {
       collection: null
     }
   },
-  async asyncData({ params, app, payload }) {
+  async asyncData(context) {
+    const { params } = context
     const { handle } = params
-    const pageData = staticPageData(handle, app)
-    const collectionData = staticCollectionData(handle, app)
+    const pageData = await fetchStatic.pageData(handle, context)
+    const collectionData = await fetchStatic.collectionData(handle, context)
       
     return {
       ...pageData,

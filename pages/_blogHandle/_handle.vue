@@ -48,7 +48,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { staticArticleData, staticCollectionData } from '~/plugins/NacelleFetchStatic'
+import { fetchStatic } from '@nacelle/nacelle-tools'
 
 export default {
   data() {
@@ -58,9 +58,11 @@ export default {
       collection: null
     }
   },
-  async asyncData({ params, app, payload }) {
-    const articleData = staticArticleData(params.handle, app)
-    const collectionData = staticCollectionData(params.handle, app)
+  async asyncData(context) {
+    const { params } = context
+    const { handle } = params
+    const articleData = await fetchStatic.articleData(handle, context)
+    const collectionData = await fetchStatic.collectionData(handle, context)
       
     return {
       ...articleData,
