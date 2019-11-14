@@ -7,7 +7,7 @@
     "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
-    "generate": "CI=1 nuxt-generate --fail-on-page-error -b"
+    "generate": "nuxt-generate --fail-on-page-error -b"
   },
   "dependencies": {
     "@nacelle/nacelle-nuxt-module": "0.0.223",
