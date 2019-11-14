@@ -29,6 +29,7 @@
     "node-sass": "^4.12.0",
     "nuxt": "^2.8.1",
     "nuxt-generate-cluster": "^2.6.0",
+    "nuxt-merge-asyncdata": "^0.1.1",
     "query-string": "^6.8.3",
     "sass-loader": "^7.1.0",
     "search-params": "^2.1.3"

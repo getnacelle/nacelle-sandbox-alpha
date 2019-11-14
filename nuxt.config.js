@@ -86,6 +86,12 @@ export default {
     concurrency: 4
   },
 
+  vue: {
+    config: {
+      devtools: true
+    }
+  },
+
   build: {
     postcss: {
       preset: {

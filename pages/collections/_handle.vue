@@ -29,7 +29,7 @@ import { getCollection } from '@nacelle/nacelle-graphql-queries-mixins'
 export default {
   name: 'home',
   components: { ProductGrid },
-  mixins: [ getCollection ],
+  mixins: [ getCollection() ],
   computed: {
     ...mapGetters('space', ['getMetatag']),
     featuredImage() {

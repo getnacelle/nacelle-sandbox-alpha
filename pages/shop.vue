@@ -11,18 +11,17 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
-import { fetchStatic } from '@nacelle/nacelle-tools'
-import { getShopPage } from '@nacelle/nacelle-graphql-queries-mixins'
+import nmerge from 'nuxt-merge-asyncdata'
+import { getShopPage, getPage } from '@nacelle/nacelle-graphql-queries-mixins'
 import ProductGrid from '~/components/ProductGrid'
 
-export default {
+export default nmerge({
   name: 'shop',
   components: {
     ProductGrid
   },
-  mixins: [ getShopPage ],
-}
+  mixins: [ getShopPage(), getPage({ pageHandle: 'shop' }) ]
+})
 </script>
 <style lang="scss" scoped>
 // .products {
