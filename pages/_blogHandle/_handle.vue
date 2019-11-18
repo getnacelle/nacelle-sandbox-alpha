@@ -33,7 +33,7 @@
             <div class="column is-9 content">
               <blog-article-content
                 :article="article"
-                :products="collection ? collection.products : []"
+                :products="products"
               >
                 <!-- Extra HTML added after content -->
                 <nuxt-link :to="'/blog'" class="breadcrumb">Back to Blog</nuxt-link>
@@ -48,60 +48,13 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { fetchStatic } from '@nacelle/nacelle-tools'
+import nmerge from 'nuxt-merge-asyncdata'
+import { getBlogArticle, getCollection } from '@nacelle/nacelle-graphql-queries-mixins'
 
-export default {
-  data() {
-    return {
-      handle: this.$route.params.handle,
-      article: null,
-      collection: null
-    }
-  },
-  async asyncData(context) {
-    const { params } = context
-    const { handle } = params
-    const articleData = await fetchStatic.articleData(handle, context)
-    const collectionData = await fetchStatic.collectionData(handle, context)
-      
-    return {
-      ...articleData,
-      ...collectionData
-    }
-  },
+export default nmerge({
+  mixins: [ getCollection(), getBlogArticle({}) ],
   computed: {
     ...mapGetters('space', ['getMetatag'])
-  },
-  created () {
-    if (!this.collection && !this.noCollectionData) {
-      this.$nacelleApollo.getCollection(
-        this.handle,
-        this.$apollo,
-        {
-          error: () => {
-            this.$nacelleHelpers.debugLog('No collection data.')
-          }
-        }
-      )
-    }
-
-    if (!this.article && !this.noArticleData) {
-      this.$nacelleApollo.getArticle(
-        this.handle,
-        'blog',
-        this.$apollo,
-        {
-          error: () => {
-            this.$nacelleHelpers.debugLog('No article data.')
-          }
-        }
-      )
-    }
-  },
-  methods: {
-    pageError () {
-      this.$nuxt.error({ statusCode: 404, message: 'Article page does not exist' })
-    }
   },
   head() {
     if (this.article) {
@@ -157,7 +110,7 @@ export default {
       }
     }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>

@@ -11,61 +11,17 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
-import { fetchStatic } from '@nacelle/nacelle-tools'
+import nmerge from 'nuxt-merge-asyncdata'
+import { getShopPage, getPage } from '@nacelle/nacelle-graphql-queries-mixins'
 import ProductGrid from '~/components/ProductGrid'
 
-export default {
-  name: 'home',
+export default nmerge({
+  name: 'shop',
   components: {
     ProductGrid
   },
-  data() {
-    return {
-      handle: 'shop',
-      products: null,
-      page: null
-    }
-  },
-  async asyncData(context) {
-    const pageData = await fetchStatic.pageData('shop', context)
-    const shopPageData = await fetchStatic.shopPageData(context)
-      
-    return {
-      ...pageData,
-      ...shopPageData
-    }
-  },
-  created () {
-    if (!this.products && !this.noShopData) {
-      this.$nacelleApollo.getShopPage(
-        this.$apollo,
-        {
-          error: () => {
-            this.$nacelleHelpers.debugLog('No product data.')
-          }
-        }
-      )
-    }
-
-    if (!this.page && !this.noPageData) {
-      this.$nacelleApollo.getPage(
-        this.handle,
-        this.$apollo,
-        {
-          error: () => {
-            this.$nacelleHelpers.debugLog('No page data.')
-          }
-        }
-      )
-    }
-  },
-  methods: {
-    pageError () {
-      this.$nuxt.error({ statusCode: 404, message: 'Shop page does not exist' })
-    }
-  },
-}
+  mixins: [ getShopPage(), getPage({ pageHandle: 'shop' }) ]
+})
 </script>
 <style lang="scss" scoped>
 // .products {

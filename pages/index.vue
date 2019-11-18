@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <!-- Begin editing your homepage here -->
-    <div v-if="!hasPageData">
+    <div v-if="this.noPageData">
       <content-hero-banner
         id="hero-banner"
         backgroundImgUrl="https://nacelle-assets.s3-us-west-2.amazonaws.com/hero-banner.jpg"
@@ -98,88 +98,17 @@
 </template>
 
 <script>
+import nmerge from 'nuxt-merge-asyncdata'
 import { mapState } from 'vuex'
-import { fetchStatic } from '@nacelle/nacelle-tools'
+import { getPage, getCollection } from '@nacelle/nacelle-graphql-queries-mixins'
 
-export default {
-  data() {
-    return {
-      handle: 'homepage',
-      page: null,
-      collection: null
-    }
-  },
-  async asyncData(context) {
-    const pageData = await fetchStatic.pageData('homepage', context)
-    const collectionData = await fetchStatic.collectionData('homepage', context)
-      
-    return {
-      ...pageData,
-      ...collectionData
-    }
-  },
+export default nmerge({
+  mixins: [
+    getPage({ pageHandle: 'homepage' }),
+    getCollection({ pageHandle: 'homepage' })
+  ],
   computed: {
-    ...mapState('space', ['name']),
-    hasPageData() {
-      if (this.page) {
-        if (
-          this.page.sections &&
-          this.page.sections.length > 0
-        ) {
-          return true
-        }
-
-        if (
-          this.page.fields &&
-          this.page.fields.body
-        ) {
-          return true
-        }
-
-        return false
-      }
-    },
-    products () {
-      if (
-        this.collection &&
-        this.collection.products &&
-        Array.isArray(this.collection.products)
-      ) {
-        return this.collection.products
-      }
-
-      return []
-    }
-  },
-  created () {
-    if (!this.collection && !this.noCollectionData) {
-      this.$nacelleApollo.getCollection(
-        this.handle,
-        this.$apollo,
-        {
-          error: () => {
-            this.$nacelleHelpers.debugLog('No collection data.')
-          }
-        }
-      )
-    }
-
-    if (!this.page && !this.noPageData) {
-      this.$nacelleApollo.getPage(
-        this.handle,
-        this.$apollo,
-        {
-          error: () => {
-            this.$nacelleHelpers.debugLog('No page data.')
-          }
-        }
-      )
-    }
-  },
-  methods: {
-    pageError () {
-      this.$nuxt.error({ statusCode: 404, message: 'Homepage does not exist' })
-    }
+    ...mapState('space', ['name'])
   }
-}
+})
 </script>
