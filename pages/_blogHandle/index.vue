@@ -27,6 +27,10 @@
             />
           </div>
         </div>
+        <div
+            ref="fetchMore"
+            class="fetch-more-component"
+          />
       </div>
     </section>
   </div>
