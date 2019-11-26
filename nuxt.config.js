@@ -24,7 +24,7 @@ export default {
       {
         rel: 'stylesheet',
         type: 'text/css',
-        href: `//space-styles.s3.amazonaws.com/${process.env.NACELLE_SPACE_ID}/styles.css`
+        href: `//dmf8x4ovgacxs.cloudfront.net/${process.env.NACELLE_SPACE_ID}/styles.css`
       }
     ],
     script: [
