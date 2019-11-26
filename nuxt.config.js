@@ -58,7 +58,8 @@ export default {
     '@nuxtjs/dotenv',
     '@nacelle/nacelle-nuxt-module',
     '@nuxtjs/sitemap',
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    'vue-currency-filter/nuxt'
   ],
 
   sitemap: {
