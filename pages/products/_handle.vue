@@ -29,50 +29,20 @@
 <script>
 import { mapMutations, mapGetters } from 'vuex'
 import productMetafields from '@nacelle/nacelle-vue-components/dist/mixins/productMetafields'
+import { getProduct } from '@nacelle/nacelle-graphql-queries-mixins'
 import { fetchStatic } from '@nacelle/nacelle-tools'
 import ProductDetails from '~/components/ProductDetails'
 
 export default {
-  mixins: [productMetafields],
+  mixins: [getProduct(), productMetafields],
   components: {
     ProductDetails
-  },
-  data() {
-    return {
-      handle: this.$route.params.handle,
-      product: null
-    }
-  },
-  async asyncData(context) {
-    const { params } = context
-    const { handle } = params
-    const productData = await fetchStatic.productData(handle, context)
-      
-    return {
-      ...productData
-    }
   },
   computed: {
     ...mapGetters('space', ['getMetatag'])
   },
-  created() {
-    if (!this.product && !this.noProductData) {
-      this.$nacelleApollo.getProduct(
-        this.handle,
-        this.$apollo,
-        {
-          error: () => {
-            this.$nacelleHelpers.debugLog('No product data.')
-          }
-        }
-      )
-    }
-  },
   methods: {
     ...mapMutations('cart', ['showCart']),
-    pageError () {
-      this.$nuxt.error({ statusCode: 404, message: 'Product page does not exist' })
-    }
   },
   head() {
     if (this.product) {

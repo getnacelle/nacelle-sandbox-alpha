@@ -16,7 +16,7 @@
           <div
             v-for="article in filteredArticles"
             :key="article.id"
-            class="column is-4-desktop is-6-tablet"
+            class="column is-6-desktop is-6-tablet"
           >
             <article-preview
               :title="article.title || ''"
@@ -27,6 +27,10 @@
             />
           </div>
         </div>
+        <div
+            ref="fetchMore"
+            class="fetch-more-component"
+          />
       </div>
     </section>
   </div>
@@ -34,28 +38,15 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { fetchStatic } from '@nacelle/nacelle-tools'
+import nmerge from 'nuxt-merge-asyncdata'
+import { getBlog } from '@nacelle/nacelle-graphql-queries-mixins'
 import ArticlePreview from '~/components/ArticlePreview'
 
-export default {
+export default nmerge({
   components: {
     ArticlePreview
   },
-  data () {
-    return {
-      handle: this.$route.params.blogHandle,
-      blog: null
-    }
-  },
-  async asyncData(context) {
-    const { params } = context
-    const { blogHandle } = params
-    const blogData = await fetchStatic.blogData(blogHandle, context)
-      
-    return {
-      ...blogData
-    }
-  },
+  mixins: [getBlog({ itemsPerPage: 2 })],
   computed: {
     ...mapGetters('space', ['getMetatag']),
     blogProducts() {
@@ -64,13 +55,6 @@ export default {
       }
 
       return null
-    },
-    articles() {
-      if (this.blog && this.blog.articles && this.blog.articles.length > 0) {
-        return this.blog.articles
-      }
-
-      return []
     },
     featuredArticle() {
       if (this.articles.length > 0) {
@@ -82,24 +66,6 @@ export default {
     filteredArticles() {
       const copy = [...this.articles]
       return copy.splice(1, copy.length - 1)
-    }
-  },
-  created() {
-    if (!this.blog && !this.noBlogData) {
-      this.$nacelleApollo.getBlog(
-        this.handle,
-        this.$apollo,
-        {
-          error: () => {
-            this.$nacelleHelpers.debugLog('No blog data.')
-          }
-        }
-      )
-    }
-  },
-  methods: {
-    pageError () {
-      this.$nuxt.error({ statusCode: 404, message: 'Blog page does not exist' })
     }
   },
   head() {
@@ -125,7 +91,7 @@ export default {
       meta
     }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>
