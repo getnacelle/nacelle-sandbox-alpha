@@ -29,8 +29,8 @@
 <script>
 import { mapMutations, mapGetters } from 'vuex'
 import productMetafields from '@nacelle/nacelle-vue-components/dist/mixins/productMetafields'
-import { getProduct } from '@nacelle/nacelle-graphql-queries-mixins'
-import { fetchStatic } from '@nacelle/nacelle-tools'
+// import { getProduct } from '@nacelle/nacelle-graphql-queries-mixins'
+import { fetchStatic, getProduct } from '@nacelle/nacelle-tools'
 import ProductDetails from '~/components/ProductDetails'
 
 export default {

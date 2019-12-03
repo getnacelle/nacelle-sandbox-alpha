@@ -106,6 +106,6 @@ export default {
         useShortDoctype: true
       }
     },
-    transpile: ['@nacelle/nacelle-vue-components']
+    transpile: ['@nacelle/nacelle-vue-components', '@nacelle/nacelle-tools']
   }
 }
