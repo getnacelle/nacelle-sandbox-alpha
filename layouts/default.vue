@@ -4,6 +4,7 @@
     <nuxt :style="{'margin-top': `${headerHeight}px`}" />
     <site-footer />
     <event-dispatcher />
+    <error-modal/>
   </div>
 </template>
 
