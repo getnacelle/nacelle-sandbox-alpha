@@ -10,7 +10,8 @@
     "generate": "node node_modules/@nacelle/nacelle-tools/dist/scripts/npm-run-generate-script.js"
   },
   "dependencies": {
-    "@nacelle/nacelle-nuxt-module": "0.0.235",
+    "@nacelle/nacelle-nuxt-module": "dev",
+    "@nacelle/nacelle-tools": "dev",
     "@nuxtjs/apollo": "^4.0.0-rc8.2",
     "@nuxtjs/axios": "^5.3.6",
     "@nuxtjs/bulma": "^1.2.1",
