@@ -7,7 +7,8 @@
     "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
-    "generate": "node node_modules/@nacelle/nacelle-tools/dist/scripts/npm-run-generate-script.js"
+    "generate": "node node_modules/@nacelle/nacelle-tools/dist/scripts/npm-run-generate-script.js",
+    "serve": "npx http-server dist"
   },
   "dependencies": {
     "@nacelle/nacelle-nuxt-module": "dev",
