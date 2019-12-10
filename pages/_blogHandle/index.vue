@@ -39,7 +39,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import nmerge from 'nuxt-merge-asyncdata'
-import { getBlog } from '@nacelle/nacelle-graphql-queries-mixins'
+import { getBlog } from '@nacelle/nacelle-tools'
 import ArticlePreview from '~/components/ArticlePreview'
 
 export default nmerge({

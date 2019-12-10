@@ -7,10 +7,11 @@
     "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
-    "generate": "CI=1 nuxt-generate --fail-on-page-error -b"
+    "generate": "node node_modules/@nacelle/nacelle-tools/dist/scripts/npm-run-generate-script.js",
+    "serve": "npx http-server dist"
   },
   "dependencies": {
-    "@nacelle/nacelle-nuxt-module": "0.1.0",
+    "@nacelle/nacelle-nuxt-module": "^0.2.0",
     "@nuxtjs/apollo": "^4.0.0-rc8.2",
     "@nuxtjs/axios": "^5.3.6",
     "@nuxtjs/bulma": "^1.2.1",

@@ -12,7 +12,7 @@
 
 <script>
 import nmerge from 'nuxt-merge-asyncdata'
-import { getShopPage, getPage } from '@nacelle/nacelle-graphql-queries-mixins'
+import { getShopPage, getPage } from '@nacelle/nacelle-tools'
 import ProductGrid from '~/components/ProductGrid'
 
 export default nmerge({

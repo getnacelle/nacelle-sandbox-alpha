@@ -24,7 +24,7 @@
 <script>
 import { mapState, mapGetters, mapMutations } from 'vuex'
 import ProductGrid from '~/components/ProductGrid'
-import { getCollection } from '@nacelle/nacelle-graphql-queries-mixins'
+import { getCollection } from '@nacelle/nacelle-tools'
 
 export default {
   name: 'home',
