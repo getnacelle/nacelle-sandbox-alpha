@@ -7,11 +7,11 @@
     "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
-    "generate": "nuxt-generate --fail-on-page-error -b"
+    "generate": "node node_modules/@nacelle/nacelle-tools/dist/scripts/npm-run-generate-script.js",
+    "serve": "npx http-server dist"
   },
   "dependencies": {
-    "@nacelle/nacelle-nuxt-module": "dev",
-    "@nacelle/nacelle-tools": "^1.1.0",
+    "@nacelle/nacelle-nuxt-module": "^0.2.1",
     "@nuxtjs/apollo": "^4.0.0-rc8.2",
     "@nuxtjs/axios": "^5.3.6",
     "@nuxtjs/bulma": "^1.2.1",
@@ -33,7 +33,8 @@
     "nuxt-merge-asyncdata": "^0.1.1",
     "query-string": "^6.8.3",
     "sass-loader": "^7.1.0",
-    "search-params": "^2.1.3"
+    "search-params": "^2.1.3",
+    "vue-currency-filter": "^3.4.3"
   },
   "devDependencies": {
     "@vue/test-utils": "^1.0.0-beta.27",

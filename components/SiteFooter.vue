@@ -55,7 +55,7 @@ export default {
     ...mapGetters('space', ['getLinks']),
     logoSrc() {
       if (this.id) {
-        return `https://nacelle-assets.s3-us-west-2.amazonaws.com/space/${this.id}/logo.png`
+        return `https://d3ej2r3y1rjyfi.cloudfront.net/space/${this.id}/logo.png`
       }
 
       return ''

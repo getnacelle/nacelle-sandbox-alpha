@@ -16,7 +16,7 @@
           <div
             v-for="article in filteredArticles"
             :key="article.id"
-            class="column is-6-desktop is-6-tablet"
+            class="column is-4-desktop is-6-tablet"
           >
             <article-preview
               :title="article.title || ''"
@@ -39,14 +39,14 @@
 <script>
 import { mapGetters } from 'vuex'
 import nmerge from 'nuxt-merge-asyncdata'
-import { getBlog } from '@nacelle/nacelle-graphql-queries-mixins'
+import { getBlog } from '@nacelle/nacelle-tools'
 import ArticlePreview from '~/components/ArticlePreview'
 
 export default nmerge({
   components: {
     ArticlePreview
   },
-  mixins: [getBlog({ itemsPerPage: 2 })],
+  mixins: [getBlog()],
   computed: {
     ...mapGetters('space', ['getMetatag']),
     blogProducts() {

@@ -100,7 +100,7 @@
 <script>
 import nmerge from 'nuxt-merge-asyncdata'
 import { mapState } from 'vuex'
-import { getPage, getCollection } from '@nacelle/nacelle-graphql-queries-mixins'
+import { getPage, getCollection } from '@nacelle/nacelle-tools'
 
 export default nmerge({
   mixins: [

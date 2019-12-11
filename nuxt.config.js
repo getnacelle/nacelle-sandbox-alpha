@@ -24,7 +24,7 @@ export default {
       {
         rel: 'stylesheet',
         type: 'text/css',
-        href: `//space-styles.s3.amazonaws.com/${process.env.NACELLE_SPACE_ID}/styles.css`
+        href: `//dmf8x4ovgacxs.cloudfront.net/${process.env.NACELLE_SPACE_ID}/styles.css`
       }
     ],
     script: [
@@ -58,7 +58,8 @@ export default {
     '@nuxtjs/dotenv',
     '@nacelle/nacelle-nuxt-module',
     '@nuxtjs/sitemap',
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    'vue-currency-filter/nuxt'
   ],
 
   sitemap: {
@@ -106,6 +107,6 @@ export default {
         useShortDoctype: true
       }
     },
-    transpile: ['@nacelle/nacelle-vue-components']
+    transpile: ['@nacelle/nacelle-vue-components', '@nacelle/nacelle-tools']
   }
 }

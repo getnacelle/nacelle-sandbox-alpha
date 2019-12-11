@@ -49,7 +49,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import nmerge from 'nuxt-merge-asyncdata'
-import { getBlogArticle, getCollection } from '@nacelle/nacelle-graphql-queries-mixins'
+import { getBlogArticle, getCollection } from '@nacelle/nacelle-tools'
 
 export default nmerge({
   mixins: [ getCollection(), getBlogArticle({}) ],
