@@ -14,14 +14,25 @@
 
       <div class="main-nav-right">
         <div class="main-nav-menu">
-          <nuxt-link
-            v-for="(link, index) in mainMenu"
-            :key="index"
-            :to="link.to"
-            exact-active-class="is-active"
-            class="main-nav-item"
-            @click.native="disableMenu"
-          >{{ link.title }}</nuxt-link>
+          <template v-for="(link, index) in mainMenu">
+            <nuxt-link
+              v-if="link.type !== 'External'"
+              :key="index"
+              :to="link.to"
+              exact-active-class="is-active"
+              class="main-nav-item"
+              @click.native="disableMenu"
+              >{{ link.title }}</nuxt-link
+            >
+            <a
+              v-if="link.type === 'External'"
+              :key="index"
+              :href="link.to"
+              class="main-nav-item"
+            >
+              {{ link.title }}
+            </a>
+          </template>
         </div>
         <search-box class="is-hidden-mobile" />
         <main-nav-cart />
@@ -55,14 +66,25 @@
         <div class="nav-flyout-body">
           <slot name="flyout-menu">
             <search-box class="is-hidden-tablet" />
-            <nuxt-link
-              v-for="(link, index) in mobileMenu"
-              :key="index"
-              :to="link.to"
-              active-class="is-active"
-              class="main-nav-item"
-              @click.native="disableMenu"
-            >{{ link.title }}</nuxt-link>
+            <template v-for="(link, index) in mainMenu">
+              <nuxt-link
+                v-if="link.type !== 'External'"
+                :key="index"
+                :to="link.to"
+                exact-active-class="is-active"
+                class="main-nav-item"
+                @click.native="disableMenu"
+                >{{ link.title }}</nuxt-link
+              >
+              <a
+                v-if="link.type === 'External'"
+                :key="index"
+                :href="link.to"
+                class="main-nav-item"
+              >
+                {{ link.title }}
+              </a>
+            </template>
           </slot>
         </div>
       </div>
@@ -74,8 +96,8 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapGetters } from 'vuex'
-import Cart from '~/components/Cart'
+import { mapState, mapMutations, mapGetters } from "vuex";
+import Cart from "~/components/Cart";
 export default {
   components: { Cart },
   props: {
@@ -85,27 +107,27 @@ export default {
     }
   },
   computed: {
-    ...mapState('space', ['id', 'name', 'linklists']),
-    ...mapState('menu', ['menuVisible']),
-    ...mapGetters('space', ['getLinks']),
+    ...mapState("space", ["id", "name", "linklists"]),
+    ...mapState("menu", ["menuVisible"]),
+    ...mapGetters("space", ["getLinks"]),
     logoSrc() {
       if (this.id) {
-        return `https://d3ej2r3y1rjyfi.cloudfront.net/space/${this.id}/logo.png`
+        return `https://d3ej2r3y1rjyfi.cloudfront.net/space/${this.id}/logo.png`;
       }
 
-      return ''
+      return "";
     },
     mainMenu() {
-      return this.getLinks('main-menu')
+      return this.getLinks("main-menu");
     },
     mobileMenu() {
-      return this.getLinks('mobile-menu')
+      return this.getLinks("main-menu");
     }
   },
   methods: {
-    ...mapMutations('menu', ['disableMenu', 'toggleShowMenu'])
+    ...mapMutations("menu", ["disableMenu", "toggleShowMenu"])
   }
-}
+};
 </script>
 
 <style lang="scss">
