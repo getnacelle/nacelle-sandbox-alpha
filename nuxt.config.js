@@ -83,7 +83,8 @@ export default {
 
   generate: {
     workers: 4,
-    concurrency: 4
+    concurrency: 4,
+    dir: 'public'
   },
 
   build: {

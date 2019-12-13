@@ -1,0 +1,10 @@
+{
+  "name": "nacelle-secure-storefront",
+  "build": {
+    "env": {
+      "NACELLE_GRAPHQL_TOKEN": "@nacelle_graphql_token_starship_lite",
+      "NACELLE_SPACE_ID": "@nacelle_space_id_starship_lite",
+      "BUILD_MODE": "universal"
+    }
+  }
+}

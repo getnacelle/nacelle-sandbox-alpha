@@ -5,7 +5,7 @@
   "scripts": {
     "test": "jest",
     "dev": "nuxt",
-    "build": "nuxt build",
+    "build": "node node_modules/@nacelle/nacelle-tools/dist/scripts/npm-run-generate-script.js",
     "start": "nuxt start",
     "generate": "node node_modules/@nacelle/nacelle-tools/dist/scripts/npm-run-generate-script.js",
     "serve": "npx http-server dist"
