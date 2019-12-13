@@ -1,0 +1,22 @@
+[[headers]]
+  # Define which paths this specific [[headers]] block will cover.
+  for = "/*"
+
+  [headers.values]
+    Content-Security-Policy = """
+    script-src 'self' 'unsafe-inline' https:; 
+    style-src 'self' 'unsafe-inline' https:; 
+    font-src 'self' https://fonts.gstatic.com https://use.typekit.net; 
+    img-src 'self' https:; 
+    frame-ancestors 'none'; 
+    base-uri 'self'; 
+    form-action 'self'; 
+    connect-src 'self'; 
+    frame-src 'self'; 
+    object-src 'none'
+    """
+    Feature-Policy = "geolocation 'none'; microphone 'none'; camera 'none'"
+    Referrer-Policy = "no-referrer-when-downgrade"
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
