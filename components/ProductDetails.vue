@@ -5,6 +5,7 @@
         v-if="product && product.featuredMedia && product.media"
         :featuredMedia="product.featuredMedia"
         :media="product.media"
+        :fadeIn="2"
       />
     </div>
     <div class="column is-5 is-offset-1">
@@ -16,12 +17,9 @@
         :onlyOneOption="true"
         :metafields="[{key:'test', value:'hi'}]"
       />-->
-      <product-category
-        v-if="product.productType"
-        :category="product.productType"
-      />
+      <product-category v-if="product.productType" :category="product.productType" />
       <p class="price">
-        <product-price v-if="currentVariant" :price="currentVariant.price"  />
+        <product-price v-if="currentVariant" :price="currentVariant.price" />
       </p>
       <product-description :description="product.description" />
       <product-variant-select
@@ -44,7 +42,7 @@ export default {
     //export your components by name here:
     // ComponentName
   },
-  data () {
+  data() {
     return {
       selectedVariant: undefined
     }
@@ -56,7 +54,7 @@ export default {
     }
   },
   computed: {
-    currentVariant () {
+    currentVariant() {
       if (this.selectedVariant) {
         return this.selectedVariant
       } else if (
@@ -72,7 +70,7 @@ export default {
   },
   methods: {
     ...mapMutations('cart', ['showCart']),
-    onVariantSelected ({ selectedVariant }) {
+    onVariantSelected({ selectedVariant }) {
       this.selectedVariant = selectedVariant
     }
   }

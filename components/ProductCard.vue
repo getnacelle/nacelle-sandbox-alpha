@@ -1,7 +1,7 @@
 <template>
   <div class="product-card">
     <router-link :to="`${pathFragment}${product.handle}`">
-      <product-image :source="mediaSrc" ref="product-image" />
+      <product-image :source="mediaSrc" ref="product-image" :fadeIn="0.3" />
     </router-link>
     <div class="product-card-details">
       <router-link :to="`${pathFragment}${product.handle}`">
@@ -44,34 +44,34 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations } from "vuex";
 
-import allOptionsSelected from '@nacelle/nacelle-vue-components/dist/mixins/allOptionsSelected'
-import availableOptions from '@nacelle/nacelle-vue-components/dist/mixins/availableOptions'
+import allOptionsSelected from "@nacelle/nacelle-vue-components/dist/mixins/allOptionsSelected";
+import availableOptions from "@nacelle/nacelle-vue-components/dist/mixins/availableOptions";
 
 export default {
   mixins: [allOptionsSelected, availableOptions],
   props: {
     pathFragment: {
       type: String,
-      default: '/products/'
+      default: "/products/"
     },
     product: {
       type: Object,
       default: () => {
         return {
           priceRange: {
-            min: '0.0',
-            max: '0.00'
+            min: "0.0",
+            max: "0.00"
           },
           title: null,
           featuredMedia: {
             src: undefined
           },
           id: null,
-          handle: '',
+          handle: "",
           variants: []
-        }
+        };
       }
     },
     variant: {
@@ -90,24 +90,24 @@ export default {
     return {
       optionsModalVisible: false,
       confirmedSelection: false
-    }
+    };
   },
   computed: {
-    ...mapState('cart', ['lineItems']),
+    ...mapState("cart", ["lineItems"]),
 
     currentVariant() {
       if (this.product.variants && this.product.variants.length == 1) {
-        return this.product.variants[0]
+        return this.product.variants[0];
       } else {
-        return this.selectedVariant
+        return this.selectedVariant;
       }
     },
     currentVariantId() {
       if (this.currentVariant && this.currentVariant.id) {
-        return this.currentVariant.id
+        return this.currentVariant.id;
       }
 
-      return undefined
+      return undefined;
     },
     mediaSrc() {
       if (
@@ -115,10 +115,10 @@ export default {
         this.product.featuredMedia &&
         this.product.featuredMedia.src
       ) {
-        return this.product.featuredMedia.src
+        return this.product.featuredMedia.src;
       }
 
-      return undefined
+      return undefined;
     },
     cartProduct() {
       return {
@@ -128,13 +128,13 @@ export default {
         price: this.currentPrice,
         handle: this.product.handle,
         variant: this.currentVariant
-      }
+      };
     },
     productLineItems() {
-      let vm = this
+      let vm = this;
       return this.lineItems.filter(item => {
-        return item.productId == vm.product.id
-      })
+        return item.productId == vm.product.id;
+      });
     },
     onlyOneOption() {
       if (
@@ -142,23 +142,23 @@ export default {
         this.product.options.length == 1 &&
         this.product.options[0].values.length == 1
       ) {
-        return true
+        return true;
       } else {
-        return false
+        return false;
       }
     }
   },
 
   methods: {
-    ...mapMutations('cart', ['showCart']),
+    ...mapMutations("cart", ["showCart"]),
 
     handleAddToCartClick() {
       if (!this.allOptionsSelected) {
-        this.optionsModalVisible = true
+        this.optionsModalVisible = true;
       }
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
