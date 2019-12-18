@@ -21,7 +21,7 @@
             v-bind="section.data"
           >
             <template v-slot:body="{ title }">
-              <h1 class="special-title">{{ title }}</h4>
+              <h1 class="special-title">{{ title }}</h1>
             </template>
           </content-hero-banner>
       -->
