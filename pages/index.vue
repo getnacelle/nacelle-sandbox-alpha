@@ -9,7 +9,11 @@
         :title="name"
         ctaText="Shop Now"
         ctaUrl="/shop"
-        :ctaHandler="() => { this.$router.push('/shop') }"
+        :ctaHandler="
+          () => {
+            this.$router.push('/shop');
+          }
+        "
       />
       <content-side-by-side
         imageUrl="https://nacelle-assets.s3-us-west-2.amazonaws.com/starship1.jpg"
@@ -18,7 +22,11 @@
         ctaText="Shop Now"
         ctaUrl="/shop"
         backgroundColor="#f2eee8"
-        :ctaHandler="() => { this.$router.push('/shop') }"
+        :ctaHandler="
+          () => {
+            this.$router.push('/shop');
+          }
+        "
       />
       <content-side-by-side
         imageUrl="https://nacelle-assets.s3-us-west-2.amazonaws.com/starship2.jpg"
@@ -28,7 +36,11 @@
         ctaUrl="/shop"
         backgroundColor="#f2eee8"
         :reverseDesktop="true"
-        :ctaHandler="() => { this.$router.push('/shop') }"
+        :ctaHandler="
+          () => {
+            this.$router.push('/shop');
+          }
+        "
       />
     </div>
     <!-- End of default content -->
@@ -36,7 +48,7 @@
     <page-content :page="page" :products="products">
       <!-- 
         /****
-        /* Customize Your Nacelle Content
+        /* <h1 class="special-title">{{ title }}</h1>
         /****
       -->
 
@@ -98,17 +110,17 @@
 </template>
 
 <script>
-import nmerge from 'nuxt-merge-asyncdata'
-import { mapState } from 'vuex'
-import { getPage, getCollection } from '@nacelle/nacelle-tools'
+import nmerge from "nuxt-merge-asyncdata";
+import { mapState } from "vuex";
+import { getPage, getCollection } from "@nacelle/nacelle-tools";
 
 export default nmerge({
   mixins: [
-    getPage({ pageHandle: 'homepage' }),
-    getCollection({ pageHandle: 'homepage' })
+    getPage({ pageHandle: "homepage" }),
+    getCollection({ pageHandle: "homepage" })
   ],
   computed: {
-    ...mapState('space', ['name'])
+    ...mapState("space", ["name"])
   }
-})
+});
 </script>
