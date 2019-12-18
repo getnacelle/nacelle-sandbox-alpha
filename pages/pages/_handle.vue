@@ -3,11 +3,11 @@
     <page-content :page="page" :products="products">
       <!-- 
         /****
-        /* Customize Your Nacelle Content
+        /* <h1 class="special-title">{{ title }}</h1>
         /****
       -->
 
-        <!-- <template v-slot:section="{ section }"> -->
+      <!-- <template v-slot:section="{ section }"> -->
 
       <!-- 
             * Edit Hero Banner *
@@ -65,10 +65,10 @@
 </template>
 
 <script>
-import nmerge from 'nuxt-merge-asyncdata'
-import { getPage, getCollection } from '@nacelle/nacelle-tools'
+import nmerge from "nuxt-merge-asyncdata";
+import { getPage, getCollection } from "@nacelle/nacelle-tools";
 
 export default nmerge({
   mixins: [getPage(), getCollection()]
-})
+});
 </script>
