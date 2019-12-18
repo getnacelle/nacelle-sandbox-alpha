@@ -7,7 +7,7 @@
         /****
       -->
 
-        <!-- <template v-slot:section="{ section }"> -->
+      <!-- <template v-slot:section="{ section }"> -->
 
       <!-- 
             * Edit Hero Banner *
@@ -21,7 +21,7 @@
             v-bind="section.data"
           >
             <template v-slot:body="{ title }">
-              <h1 class="special-title">{{ title }}</h4>
+              <h1 class="special-title">{{ title }}</h1>
             </template>
           </content-hero-banner>
       -->
@@ -65,10 +65,10 @@
 </template>
 
 <script>
-import nmerge from 'nuxt-merge-asyncdata'
-import { getPage, getCollection } from '@nacelle/nacelle-tools'
+import nmerge from "nuxt-merge-asyncdata";
+import { getPage, getCollection } from "@nacelle/nacelle-tools";
 
 export default nmerge({
   mixins: [getPage(), getCollection()]
-})
+});
 </script>
