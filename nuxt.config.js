@@ -78,7 +78,13 @@ export default {
     token: process.env.NACELLE_GRAPHQL_TOKEN,
     gaID: process.env.NACELLE_GA_ID,
     fbID: process.env.NACELLE_FB_ID,
-    skipPrefetch: process.env.SKIP_PREFETCH === 'true'
+    skipPrefetch: process.env.SKIP_PREFETCH === 'true',
+    klaviyo: {
+      companyId: process.env.KLAVIYO_COMPANY_ID,
+      defaultListId: process.env.KLAVIYO_DEFAULT_LIST_ID,
+      defaultEmbedCode: process.env.KLAVIYO_DEFAULT_EMBED_CODE
+    },
+    justuno: process.env.JUSTUNO_ACCOUNT_ID
   },
 
   generate: {
