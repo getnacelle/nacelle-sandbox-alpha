@@ -33,7 +33,9 @@
         <product-options
           :options="allOptions"
           v-on:selectedOptionsSet="setSelected"
-          v-on:confirmedSelection="confirmedSelection = true, optionsModalVisible = false"
+          v-on:confirmedSelection="
+            (confirmedSelection = true), (optionsModalVisible = false)
+          "
           :onlyOneOption="onlyOneOption"
           :variant="currentVariant"
           :variants="product.variants"
@@ -45,7 +47,6 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex'
-
 import allOptionsSelected from '@nacelle/nacelle-vue-components/dist/mixins/allOptionsSelected'
 import availableOptions from '@nacelle/nacelle-vue-components/dist/mixins/availableOptions'
 
@@ -96,7 +97,7 @@ export default {
     ...mapState('cart', ['lineItems']),
 
     currentVariant() {
-      if (this.product.variants && this.product.variants.length == 1) {
+      if (this.product.variants && this.product.variants.length === 1) {
         return this.product.variants[0]
       } else {
         return this.selectedVariant
@@ -131,21 +132,10 @@ export default {
       }
     },
     productLineItems() {
-      let vm = this
+      const vm = this
       return this.lineItems.filter(item => {
-        return item.productId == vm.product.id
+        return item.productId === vm.product.id
       })
-    },
-    onlyOneOption() {
-      if (
-        this.product.options &&
-        this.product.options.length == 1 &&
-        this.product.options[0].values.length == 1
-      ) {
-        return true
-      } else {
-        return false
-      }
     }
   },
 
@@ -180,4 +170,3 @@ export default {
   bottom: 0;
 }
 </style>
-
