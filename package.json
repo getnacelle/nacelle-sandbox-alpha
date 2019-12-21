@@ -21,7 +21,6 @@
     "core-js": "^2.6.9",
     "dotenv": "^8.0.0",
     "es-cookie": "^1.2.0",
-    "figures": "^3.1.0",
     "fs": "0.0.2",
     "fs-extra": "^8.1.0",
     "graphql-tag": "^2.10.1",
