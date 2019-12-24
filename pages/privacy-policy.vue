@@ -1,9 +1,10 @@
 <template>
   <div class="page">
     <div class="container">
+      <h1>Your Privacy Policy Goes Here</h1>
       <p>
         It's important to provide your users with an explanation 
-        of your cookie policy in order to comply with data 
+        of your privacy policy in order to comply with data 
         privacy laws such as
         <a
           href="https://gdpr.eu/"
@@ -43,12 +44,15 @@
   max-width: 800px;
   padding-top: 2em;
   line-height: 1.5;
-  margin-bottom: 1em;
+  margin-top: 1em;
+  h1 {
+    margin-bottom: 0.5em;
+  }
   p {
     margin-bottom: 0.5em;
   }
   ul {
-    list-style-type: circle;
+    list-style-type: square;
     margin-top: 0.5em;
     margin-left: 2em;
   }
