@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <page-content :page="page" :products="products">
-      <!-- 
+      <!--
         /****
         /* Customize Your Nacelle Content
         /****
@@ -9,7 +9,7 @@
 
         <!-- <template v-slot:section="{ section }"> -->
 
-      <!-- 
+      <!--
             * Edit Hero Banner *
                 Available slots:
                 name: "background", data: "backgroundImgUrl", "mobileBackgroundImgUrl", "backgroundAltTag"
@@ -50,7 +50,7 @@
           />
       -->
 
-      <!-- 
+      <!--
             * Edit Testimonials *
 
           <content-testimonials

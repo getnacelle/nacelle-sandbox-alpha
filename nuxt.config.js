@@ -79,7 +79,8 @@ export default {
     gaID: process.env.NACELLE_GA_ID,
     fbID: process.env.NACELLE_FB_ID,
     skipPrefetch: process.env.SKIP_PREFETCH === 'true',
-    customEndpoint: process.env.NACELLE_CUSTOM_ENDPOINT
+    customEndpoint: process.env.NACELLE_CUSTOM_ENDPOINT,
+    locale: 'en-us'
   },
 
   generate: {
