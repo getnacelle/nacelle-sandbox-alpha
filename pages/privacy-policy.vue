@@ -3,12 +3,12 @@
     <article class="article">
       <div class="container">
         <div class="policy columns is-centered is-multiline">
-          <div class="article-header column is-6 has-text-centered">
-            <header>
-              <h1 class="article-title title is-4">Your Privacy Policy Goes Here</h1>
-            </header>
-          </div>
           <div class="column is-9 content">
+            <div class="article-header column has-text-centered">
+              <header>
+                <h1 class="article-title title">Your Privacy Policy Goes Here</h1>
+              </header>
+            </div>
             <p>
               It's important to provide your users with an explanation of your privacy
               policy in order to comply with data privacy laws such as
@@ -53,6 +53,15 @@
 
 <style lang="scss" scoped>
 .policy {
-  margin-top: 4em;
+  margin-top: 2em;
+}
+.article .container {
+  position: relative;
+  margin-top: -3rem;
+  padding: 2rem;
+  padding-bottom: 5rem;
+  background-color: #ffffff;
+  border: 1px solid #f5f5f5;
+  max-width: 1024px;
 }
 </style>
