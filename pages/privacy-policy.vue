@@ -23,7 +23,7 @@
                 target="_blank"
                 rel="noopener noreferrer"
               >CCPA</a>. As a merchant, it's your responsibility to have an active command of
-              the cookies served by your site, and to communicate to your users:
+              the cookies delivered by your site, and to communicate to your users:
             </p>
             <ul>
               <li>the purpose and scope of cookies on your site</li>
