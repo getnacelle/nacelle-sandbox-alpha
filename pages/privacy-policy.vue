@@ -44,7 +44,48 @@
               and act on the legal advice of an attorney before collecting or
               processing users' personal information.
             </p>
+            <p>
+              Enabling users to select their cookie preferences is an important
+              component of GDPR compliance. You can use Nacelle's built-in
+              <code>{{'opt-in-opt-out-form'}}</code> and
+              <code>{{'form-consent-field'}}</code> components to quickly create
+              forms for setting cookie preferences, such as the one below:
+            </p>
           </div>
+          <opt-in-opt-out-form class="column is-9">
+            <form-consent-field name="Marketing">
+              <template v-slot:title>Marketing</template>
+              <template v-slot:description>
+                Send you relevant marketing information and carry out market research
+                about our products and services so that you don't miss out on current
+                offers. We normally contact our customers by automated or electronic
+                means including email and phone (e.g. SMS, MMS). We sometimes use
+                other means such as web sites.
+              </template>
+            </form-consent-field>
+            <form-consent-field name="Profiling">
+              <template v-slot:title>Profiling</template>
+              <template v-slot:description>
+                Analyze your personal preferences, interests, or behaviors
+                so we can deliver you with personalized shopping experiences.
+              </template>
+            </form-consent-field>
+            <form-consent-field name="thirdParties">
+              <template v-slot:title>Communication of Data to Third Parties</template>
+              <template v-slot:description>
+                Share your data with companies in our group and selected partners
+                with whom we work closely so that they can send you relevant offers
+                which might interest you.
+              </template>
+            </form-consent-field>
+            <p class="tip">
+              Adding a new
+              <code>form-consent-field</code>
+              will provide the required template code which can be copied and pasted
+              to set the new section's title and description. For example:
+            </p>
+            <form-consent-field></form-consent-field>
+          </opt-in-opt-out-form>
         </div>
       </div>
     </article>
@@ -63,5 +104,8 @@
   background-color: #ffffff;
   border: 1px solid #f5f5f5;
   max-width: 1024px;
+}
+.tip {
+  margin-bottom: 2em;
 }
 </style>
