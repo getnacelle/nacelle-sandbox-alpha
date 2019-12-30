@@ -1,10 +1,11 @@
 <template>
   <div class="app nacelle">
     <global-header ref="header" />
-    <nuxt :style="{'margin-top': `${headerHeight}px`}" />
+    <nuxt :style="{ 'margin-top': `${headerHeight}px` }" />
     <site-footer />
+    <cookie-banner />
     <event-dispatcher />
-    <error-modal/>
+    <error-modal />
   </div>
 </template>
 
@@ -101,7 +102,6 @@ export default {
 }
 </script>
 
-
 <style lang="scss">
 .cart {
   z-index: 9999;
@@ -109,8 +109,8 @@ export default {
 }
 
 html {
-  font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-    Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 16px;
   word-spacing: 1px;
   -ms-text-size-adjust: 100%;
