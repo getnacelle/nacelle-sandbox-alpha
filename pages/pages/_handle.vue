@@ -65,10 +65,13 @@
 </template>
 
 <script>
-import nmerge from 'nuxt-merge-asyncdata'
-import { getPage, getCollection } from '@nacelle/nacelle-tools'
-
-export default nmerge({
-  mixins: [getPage(), getCollection()]
+import nacelleVue from "@nacelle/nacelle-vue-components/dist/nacelleVueInstance.js"
+import testMixin from '../../testmixin'
+export default nacelleVue({
+  // type defines the default Nacelle data objects to use for this route
+  type: "page",
+  mixins:[testMixin]
+  // add your own mixins and vue instance properties here
 })
+
 </script>

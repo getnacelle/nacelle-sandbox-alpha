@@ -50,12 +50,8 @@
 
 <script>
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
-import ProductGrid from '~/components/ProductGrid'
 
 export default {
-  components: {
-    ProductGrid
-  },
   data() {
     return {
       filteredData: null
