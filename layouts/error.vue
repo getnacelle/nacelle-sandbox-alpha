@@ -10,7 +10,8 @@
 <script>
 import nacelleVue from "@nacelle/nacelle-vue-components/dist/nacelleVueInstance.js"
 export default nacelleVue({
-  type: "error-layout"
+  type: "error-layout",
+  params: {}
 })
 </script>
 

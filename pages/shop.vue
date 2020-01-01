@@ -11,12 +11,9 @@
 </template>
 
 <script>
-import nmerge from 'nuxt-merge-asyncdata'
-import { getShopPage, getPage } from '@nacelle/nacelle-tools'
-
-export default nmerge({
-  name: 'shop',
-  mixins: [ getShopPage(), getPage({ pageHandle: 'shop' }) ]
+import nacelleVue from "@nacelle/nacelle-vue-components/dist/nacelleVueInstance.js"
+export default nacelleVue({
+  type: "shop",
 })
 </script>
 <style lang="scss" scoped>
