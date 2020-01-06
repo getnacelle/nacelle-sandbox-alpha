@@ -52,7 +52,6 @@
 import nacelleVue from "@nacelle/nacelle-vue-components/dist/nacelleVueInstance.js"
 export default nacelleVue({
   type: "search",
-  params: {}
 })
 </script>
 
