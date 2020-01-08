@@ -49,47 +49,10 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
-import ProductGrid from '~/components/ProductGrid'
-
-export default {
-  components: {
-    ProductGrid
-  },
-  data() {
-    return {
-      filteredData: null
-    }
-  },
-  computed: {
-    ...mapState('search', ['query', 'loadedData']),
-    ...mapGetters('search', ['productData']),
-  },
-  watch: {
-    loadedData(newVal) {
-      if (newVal) {
-        if (this.$route.query && this.$route.query.q) {
-          this.setQuery({
-            origin: 'in-page',
-            value: this.$route.query.q
-          })
-        }
-      }
-    }
-  },
-  created () {
-    if (process.browser) {
-      this.getProductData()
-    }
-  },
-  methods: {
-    ...mapMutations('search', ['setQuery']),
-    ...mapActions('search', ['getProductData']),
-    updateFilteredData(data) {
-      this.filteredData = data
-    }
-  }
-}
+import nacelleVue from "@nacelle/nacelle-vue-components/dist/nacelleVueInstance.js"
+export default nacelleVue({
+  type: "search",
+})
 </script>
 
 <style>
