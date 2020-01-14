@@ -65,13 +65,11 @@
 </template>
 
 <script>
-import nacelleVue from "@nacelle/nacelle-vue-components/dist/nacelleVueInstance.js"
-import testMixin from '../../testmixin'
+import nacelleVue from '@nacelle/nacelle-vue-components/dist/nacelleVueInstance.js'
+
 export default nacelleVue({
   // type defines the default Nacelle data objects to use for this route
-  type: "page",
-  mixins:[testMixin]
+  type: 'page',
   // add your own mixins and vue instance properties here
 })
-
 </script>
