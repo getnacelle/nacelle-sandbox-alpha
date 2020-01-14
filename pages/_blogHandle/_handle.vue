@@ -48,7 +48,7 @@
 
 <script>
 import nacelleVue from '@nacelle/nacelle-vue-components/dist/nacelleVueInstance.js'
-export default nacelleVue({type:'blogArticle'})
+export default nacelleVue({type:'blog-article'})
 </script>
 
 <style lang="scss" scoped>
