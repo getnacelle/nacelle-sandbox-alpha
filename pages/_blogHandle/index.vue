@@ -9,6 +9,7 @@
         :tags="featuredArticle.tags"
         :featured-media="featuredArticle.featuredMedia"
         :is-featured="true"
+        :path-fragment="`/${$route.params.blogHandle}/`"
       />
     </section>
     <section class="section">
@@ -25,6 +26,7 @@
               :excerpt="article.excerpt || ''"
               :tags="article.tags"
               :featured-media="article.featuredMedia"
+              :path-fragment="`/${$route.params.blogHandle}/`"
             />
           </div>
         </div>
