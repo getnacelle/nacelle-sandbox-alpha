@@ -36,7 +36,12 @@
                 :products="products"
               >
                 <!-- Extra HTML added after content -->
-                <nuxt-link :to="'/blog'" class="breadcrumb">Back to Blog</nuxt-link>
+                <nuxt-link
+                  :to="`/${$route.params.blogHandle}/`"
+                  class="breadcrumb"
+                >
+                  Back to Blog
+                </nuxt-link>
               </blog-article-content>
             </div>
           </div>
