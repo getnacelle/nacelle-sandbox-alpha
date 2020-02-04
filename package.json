@@ -11,8 +11,7 @@
     "serve": "npx http-server dist"
   },
   "dependencies": {
-    "@nacelle/nacelle-nuxt-module": "^0.2.2",
-    "@nacelle/nacelle-vue-components": "0.0.226",
+    "@nacelle/nacelle-nuxt-module": "^2.0.7",
     "@nuxtjs/apollo": "^4.0.0-rc8.2",
     "@nuxtjs/axios": "^5.3.6",
     "@nuxtjs/bulma": "^1.2.1",
@@ -20,16 +19,16 @@
     "@nuxtjs/pwa": "3.0.0-beta.16",
     "@nuxtjs/sitemap": "^1.2.0",
     "apollo-cache-inmemory": "^1.6.2",
-    "cookies": "^0.7.3",
+    "cookies": "^0.8.0",
     "core-js": "^2.6.9",
     "dotenv": "^8.0.0",
     "es-cookie": "^1.2.0",
-    "fs": "0.0.1-security",
+    "fs": "0.0.2",
     "fs-extra": "^8.1.0",
     "graphql-tag": "^2.10.1",
     "localforage": "^1.7.3",
     "node-sass": "^4.12.0",
-    "nuxt": "^2.8.1",
+    "nuxt": "^2.10.2",
     "nuxt-generate-cluster": "^2.6.0",
     "nuxt-merge-asyncdata": "^0.1.1",
     "query-string": "^6.8.3",
@@ -38,13 +37,13 @@
     "vue-currency-filter": "^3.4.3"
   },
   "devDependencies": {
+    "@babel/core": "^7.7.5",
     "@vue/test-utils": "^1.0.0-beta.27",
-    "babel-core": "7.0.0-bridge.0",
-    "babel-jest": "^24.1.0",
+    "babel-jest": "^24.9.0",
     "eslint-config-prettier": "^4.1.0",
     "eslint-plugin-prettier": "^3.0.1",
     "jest": "^24.1.0",
-    "nodemon": "^1.18.9",
+    "nodemon": "^2.0.2",
     "prettier": "^1.16.4",
     "vue-jest": "^3.0.3"
   }

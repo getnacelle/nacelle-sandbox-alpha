@@ -98,17 +98,11 @@
 </template>
 
 <script>
-import nmerge from 'nuxt-merge-asyncdata'
-import { mapState } from 'vuex'
-import { getPage, getCollection } from '@nacelle/nacelle-tools'
-
-export default nmerge({
-  mixins: [
-    getPage({ pageHandle: 'homepage' }),
-    getCollection({ pageHandle: 'homepage' })
-  ],
-  computed: {
-    ...mapState('space', ['name'])
+import nacelleVue from "@nacelle/nacelle-vue-components/dist/nacelleVueInstance.js"
+export default nacelleVue({
+  type: "homepage",
+  mounted() {
+    console.log("hi from homepage")
   }
 })
 </script>

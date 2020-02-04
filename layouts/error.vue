@@ -8,9 +8,11 @@
 </template>
 
 <script>
-export default {
-  props: ['error']
-}
+import nacelleVue from "@nacelle/nacelle-vue-components/dist/nacelleVueInstance.js"
+export default nacelleVue({
+  type: "error-layout",
+  params: {}
+})
 </script>
 
 
